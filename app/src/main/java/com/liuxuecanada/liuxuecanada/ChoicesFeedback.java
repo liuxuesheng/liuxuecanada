@@ -16,9 +16,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ChoicesFeedback extends Activity {
-
-    public String DEBUGSTRING = "app_debug";
-    TextView textViewButton;
+    private TextView textViewButton;
+    private ProcessUserData pud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,49 +28,14 @@ public class ChoicesFeedback extends Activity {
         textViewButton = (TextView) findViewById(R.id.getTextViewButton);
 
         //allow network access in the main thread for testing purpose
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);*/
+
+        pud = new ProcessUserData();
+        pud.execute("hi");
     }
 
-    private String readStream(InputStream in) {
-        StringBuilder sb = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in));) {
-
-            String nextLine = "";
-            while ((nextLine = reader.readLine()) != null) {
-                sb.append(nextLine);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return sb.toString();
-    }
-
-    public void getFeedBack(View view) {
-        URL url;
-        HttpURLConnection urlConnection = null;
-        try {
-            url = new URL("http://10.135.50.41/liuxuecanadaserver/index.php?sex=1");
-
-            urlConnection = (HttpURLConnection) url.openConnection();
-
-            //urlConnection.setRequestProperty("sex", "1");
-            //OutputStream out = urlConnection.getOutputStream();
-
-            InputStream in = urlConnection.getInputStream();
-
-            String out = readStream(in);
-            Log.d(DEBUGSTRING, " " + out);
-            textViewButton.setText(out);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                urlConnection.disconnect();
-            } catch (Exception e) {
-                e.printStackTrace(); //If you want further info on failure...
-            }
-        }
+    public void display(View view){
+        textViewButton.setText(pud.getFeedbackData());
     }
 }
