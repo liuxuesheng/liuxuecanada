@@ -6,6 +6,7 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,13 +18,15 @@ import java.net.URL;
 public class ChoicesFeedback extends Activity {
 
     public String DEBUGSTRING = "app_debug";
+    TextView textViewButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choices_feedback);
 
-        Button getFeedBackButton = (Button) findViewById(R.id.getFeedBackButton);
+        Button feedBackButton = (Button) findViewById(R.id.getFeedBackButton);
+        textViewButton = (TextView) findViewById(R.id.getTextViewButton);
 
         //allow network access in the main thread for testing purpose
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -48,7 +51,7 @@ public class ChoicesFeedback extends Activity {
         URL url;
         HttpURLConnection urlConnection = null;
         try {
-            url = new URL("http://192.168.0.17/liuxuecanadaserver/index.php?sex=1");
+            url = new URL("http://10.135.50.41/liuxuecanadaserver/index.php?sex=1");
 
             urlConnection = (HttpURLConnection) url.openConnection();
 
@@ -59,6 +62,7 @@ public class ChoicesFeedback extends Activity {
 
             String out = readStream(in);
             Log.d(DEBUGSTRING, " " + out);
+            textViewButton.setText(out);
 
         } catch (Exception e) {
             e.printStackTrace();
