@@ -10,10 +10,26 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ProcessUserData extends AsyncTask<String, Void, String> {
+public class ProcessUserData extends AsyncTask<String, Object, Object> {
     public String DEBUGSTRING = "app_debug";
+    private AsyncResponse delegate = null;
     private String out = "";
 
+    public ProcessUserData(AsyncResponse asyncResponse) {
+        this.delegate = asyncResponse;
+    }
+
+    @Override
+    protected void onPreExecute() {
+    }
+
+    @Override
+    protected void onPostExecute(Object result) {
+        Log.d(DEBUGSTRING, " POST " + result);
+        delegate.onTaskComplete(result);
+    }
+
+    @Override
     protected String doInBackground(String... urls) {
         URL url;
         HttpURLConnection urlConnection = null;
@@ -29,13 +45,9 @@ public class ProcessUserData extends AsyncTask<String, Void, String> {
             try {
                 urlConnection.disconnect();
             } catch (Exception e) {
-                e.printStackTrace(); //If you want further info on failure...
+                e.printStackTrace();
             }
         }
-        return null;
-    }
-
-    protected String getFeedbackData() {
         return out;
     }
 
