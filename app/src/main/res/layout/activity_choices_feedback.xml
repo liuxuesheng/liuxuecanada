@@ -6,4 +6,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Choice feedback!!"/>
+
+    <Button
+        android:id="@+id/getFeedBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Feedback"
+        android:layout_centerHorizontal="true"
+        android:onClick="getFeedBack"/>
 </RelativeLayout>
