@@ -21,16 +21,24 @@ public class ProcessUserData extends AsyncTask<String, Object, Object> {
 
     @Override
     protected void onPreExecute() {
+        super.onPreExecute();
+        delegate.onTaskStart();
     }
 
     @Override
     protected void onPostExecute(Object result) {
+        super.onPreExecute();
         Log.d(DEBUGSTRING, " POST " + result);
         delegate.onTaskComplete(result);
     }
 
     @Override
     protected String doInBackground(String... urls) {
+        try {
+            Thread.sleep(1000);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         URL url;
         HttpURLConnection urlConnection = null;
         try {
