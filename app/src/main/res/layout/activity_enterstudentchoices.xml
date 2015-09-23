@@ -1,9 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/student_Choices_Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="student choices!!"/>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/select_program_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/select_program_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="clickStudentProgramButton"
+            android:text="Select Program"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/arts_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/select_program_textview"
+            android:layout_margin="30dp"
+            android:onClick="clickStudentProgramButton"
+            android:text="Arts" />
+
+        <Button
+            android:id="@+id/science_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/select_program_textview"
+            android:layout_margin="30dp"
+            android:onClick="clickStudentProgramButton"
+            android:text="Science" />
+
+        <Button
+            android:id="@+id/engineering_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/arts_button"
+            android:layout_margin="30dp"
+            android:onClick="clickStudentProgramButton"
+            android:text="Engineering" />
+
+        <Button
+            android:id="@+id/business_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/science_button"
+            android:layout_margin="30dp"
+            android:onClick="clickStudentProgramButton"
+            android:text="Business" />
+
+        <Button
+            android:id="@+id/laws_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/engineering_button"
+            android:layout_margin="30dp"
+            android:onClick="clickStudentProgramButton"
+            android:text="laws" />
+
+        <Button
+            android:id="@+id/medical_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/business_button"
+            android:layout_margin="30dp"
+            android:onClick="clickStudentProgramButton"
+            android:text="Medical" />
+    </RelativeLayout>
+
 </RelativeLayout>
