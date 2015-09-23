@@ -19,11 +19,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".StudentChoices"
+            android:name=".SchoolMatch.EnterStudentChoicesActivity"
             android:label="@string/app_name"
             />
         <activity
-            android:name=".ChoicesFeedback"
+            android:name=".SchoolMatch.ChoicesFeedbackActivity"
             android:label="@string/app_name"
             />
     </application>

@@ -1,4 +1,4 @@
-package com.liuxuecanada.liuxuecanada;
+package com.liuxuecanada.liuxuecanada.Utils;
 
 public interface AsyncResponse {
 

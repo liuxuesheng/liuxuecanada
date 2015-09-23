@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackActivity;
+import com.liuxuecanada.liuxuecanada.SchoolMatch.EnterStudentChoicesActivity;
+
 public class MainActivity extends Activity {
 
     private Button studentchoices_button;
@@ -22,12 +25,12 @@ public class MainActivity extends Activity {
     }
 
     public void goStudentChoices(View view) {
-        Intent myIntent = new Intent(MainActivity.this, StudentChoices.class);
+        Intent myIntent = new Intent(MainActivity.this, EnterStudentChoicesActivity.class);
         MainActivity.this.startActivity(myIntent);
     }
 
     public void goChoicesFeedback(View view) {
-        Intent myIntent = new Intent(MainActivity.this, ChoicesFeedback.class);
+        Intent myIntent = new Intent(MainActivity.this, ChoicesFeedbackActivity.class);
         MainActivity.this.startActivity(myIntent);
     }
 

@@ -1,9 +1,11 @@
-package com.liuxuecanada.liuxuecanada;
+package com.liuxuecanada.liuxuecanada.SchoolMatch;
 
 import android.app.Activity;
 import android.os.Bundle;
 
-public class StudentChoices extends Activity {
+import com.liuxuecanada.liuxuecanada.R;
+
+public class EnterStudentChoicesActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

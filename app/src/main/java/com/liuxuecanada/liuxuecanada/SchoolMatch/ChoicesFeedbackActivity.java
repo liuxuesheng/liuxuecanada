@@ -1,4 +1,4 @@
-package com.liuxuecanada.liuxuecanada;
+package com.liuxuecanada.liuxuecanada.SchoolMatch;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,10 +7,14 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class ChoicesFeedback extends Activity implements AsyncResponse {
+import com.liuxuecanada.liuxuecanada.R;
+import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
+import com.liuxuecanada.liuxuecanada.Utils.ServerResponse;
+
+public class ChoicesFeedbackActivity extends Activity implements AsyncResponse {
     public String DEBUGSTRING = "app_debug";
     private TextView textViewButton;
-    private ProcessUserData pud;
+    private ServerResponse pud;
     private ProgressBar spinner = null;
 
     @Override
@@ -47,7 +51,7 @@ public class ChoicesFeedback extends Activity implements AsyncResponse {
     }
 
     public void display(View view) {
-        pud = new ProcessUserData(ChoicesFeedback.this);
+        pud = new ServerResponse(ChoicesFeedbackActivity.this);
         pud.execute("hi");
     }
 }

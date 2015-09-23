@@ -1,7 +1,9 @@
-package com.liuxuecanada.liuxuecanada;
+package com.liuxuecanada.liuxuecanada.Utils;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,12 +12,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ProcessUserData extends AsyncTask<String, Object, Object> {
+public class ServerResponse extends AsyncTask<String, Object, Object> {
     public String DEBUGSTRING = "app_debug";
     private AsyncResponse delegate = null;
     private String out = "";
 
-    public ProcessUserData(AsyncResponse asyncResponse) {
+    public ServerResponse(AsyncResponse asyncResponse) {
         this.delegate = asyncResponse;
     }
 
