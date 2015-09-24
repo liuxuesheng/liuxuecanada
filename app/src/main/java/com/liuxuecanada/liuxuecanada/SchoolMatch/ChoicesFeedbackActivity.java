@@ -20,7 +20,7 @@ public class ChoicesFeedbackActivity extends Activity implements AsyncResponse {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choicesfeedbackprogram);
+        setContentView(R.layout.activity_choicesfeedback);
 
         Button feedBackButton = (Button) findViewById(R.id.getFeedBackButton);
         textViewButton = (TextView) findViewById(R.id.getTextViewButton);
