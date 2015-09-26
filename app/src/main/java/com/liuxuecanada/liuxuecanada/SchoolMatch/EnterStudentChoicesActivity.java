@@ -42,9 +42,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, firstFragment).commit();
             } else if (whichFragment == "languagetest") {
-                animateFade(R.id.arts_button,true);
-
-
+                //animateFade(R.id.arts_button,true);
                 FragmentLanguagetest firstFragment = new FragmentLanguagetest();
                 // In case this activity was started with special instructions from an
                 // Intent, pass the Intent's extras to the fragment as arguments
