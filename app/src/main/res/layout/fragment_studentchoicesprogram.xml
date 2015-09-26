@@ -34,7 +34,8 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:onClick="clickStudentProgramButton"
-            android:text="Arts" />
+            android:text="Arts"
+            android:background="@drawable/button_red"/>
 
         <Button
             android:id="@+id/science_button"
