@@ -28,7 +28,7 @@
         android:layout_rowWeight="1"
         android:background="@drawable/button_red"
         android:onClick="clickStudentProgramButton"
-        android:text="Arts"
+        android:text="艺术类"
         android:textColor="@color/white" />
 
     <Button
@@ -52,7 +52,7 @@
         android:layout_rowWeight="1"
         android:background="@drawable/button_purple"
         android:onClick="clickStudentProgramButton"
-        android:text="Engineering"
+        android:text="工程类"
         android:textColor="@color/white" />
 
     <Button
@@ -64,7 +64,7 @@
         android:layout_rowWeight="1"
         android:background="@drawable/button_pink"
         android:onClick="clickStudentProgramButton"
-        android:text="Business"
+        android:text="商科"
         android:textColor="@color/white" />
 
     <Button
@@ -76,7 +76,7 @@
         android:layout_rowWeight="1"
         android:background="@drawable/button_green"
         android:onClick="clickStudentProgramButton"
-        android:text="laws"
+        android:text="法学"
         android:textColor="@color/white" />
 
     <Button
@@ -88,7 +88,7 @@
         android:layout_rowWeight="1"
         android:background="@drawable/button_amber"
         android:onClick="clickStudentProgramButton"
-        android:text="Medical"
+        android:text="医学"
         android:textColor="@color/white" />
 
     <Space

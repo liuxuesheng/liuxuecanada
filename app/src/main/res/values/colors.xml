@@ -52,7 +52,20 @@
     <color name="Yellow500">#FFEB3B</color>
 
     <!-- Amber -->
+    <color name="Amber50">#FFF8E1</color>
+    <color name="Amber100">#FFECB3</color>
+    <color name="Amber200">#FFE082</color>
+    <color name="Amber300">#FFD54F</color>
+    <color name="Amber400">#FFCA28</color>
     <color name="Amber500">#FFC107</color>
+    <color name="Amber600">#FFB300</color>
+    <color name="Amber700">#FFA000</color>
+    <color name="Amber800">#FF8F00</color>
+    <color name="Amber900">#FF6F00</color>
+    <color name="AmberA100">#FFE57F</color>
+    <color name="AmberA200">#FFD740</color>
+    <color name="AmberA400">#FFC400</color>
+    <color name="AmberA700">#FFAB00</color>
 
     <!-- Orange -->
     <color name="Orange500">#FF9800</color>
