@@ -4,6 +4,10 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 
 import com.liuxuecanada.liuxuecanada.R;
 
@@ -38,6 +42,9 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, firstFragment).commit();
             } else if (whichFragment == "languagetest") {
+                animateFade(R.id.arts_button,true);
+
+
                 FragmentLanguagetest firstFragment = new FragmentLanguagetest();
                 // In case this activity was started with special instructions from an
                 // Intent, pass the Intent's extras to the fragment as arguments
@@ -50,6 +57,12 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
 
             }
         }
+    }
+
+    private void animateFade(int id, boolean dofadeout){
+        Button bt = (Button)findViewById(id);
+        Animation fadeout = AnimationUtils.loadAnimation(this, R.anim.fadeout);
+        bt.startAnimation(fadeout);
     }
 
     public void clickStudentProgramButton(View view) {
