@@ -38,7 +38,7 @@
         android:layout_gravity="center"
         android:layout_row="1"
         android:layout_rowWeight="1"
-        android:background="@drawable/button_blue"
+        android:background="@drawable/ic_group_black_24dp"
         android:onClick="clickStudentProgramButton"
         android:text="Science"
         android:textColor="@color/white" />
