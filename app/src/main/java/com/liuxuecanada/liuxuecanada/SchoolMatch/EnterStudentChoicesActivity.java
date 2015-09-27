@@ -1,10 +1,9 @@
 package com.liuxuecanada.liuxuecanada.SchoolMatch;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -12,6 +11,10 @@ import android.widget.Button;
 import com.liuxuecanada.liuxuecanada.R;
 
 public class EnterStudentChoicesActivity extends FragmentActivity {
+
+    private Fragment frag = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,35 +38,48 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
             }*/
 
             if (whichFragment == "program") {
-                FragmentProgram firstFragment = new FragmentProgram();
-                // In case this activity was started with special instructions from an
-                // Intent, pass the Intent's extras to the fragment as arguments
-                firstFragment.setArguments(getIntent().getExtras());
-                // Add the fragment to the 'fragment_container' FrameLayout
-                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, firstFragment).commit();
+                frag = new FragmentProgram();
             } else if (whichFragment == "languagetest") {
-                //animateFade(R.id.arts_button,true);
-                FragmentLanguagetest firstFragment = new FragmentLanguagetest();
-                // In case this activity was started with special instructions from an
-                // Intent, pass the Intent's extras to the fragment as arguments
-                firstFragment.setArguments(getIntent().getExtras());
-                // Add the fragment to the 'fragment_container' FrameLayout
-                FragmentTransaction transactionLanguagetest = getSupportFragmentManager().beginTransaction();
-                transactionLanguagetest.replace(R.id.fragment_container, firstFragment);
-                transactionLanguagetest.addToBackStack(null);
-                transactionLanguagetest.commit();
-
+                frag = new FragmentLanguageTest();
+            } else if (whichFragment == "toefl") {
+                frag = new FragmentTOEFL();
+            } else if (whichFragment == "ielts") {
+                frag = new FragmentIELTS();
+            }else if (whichFragment == "gpa") {
+                frag = new FragmentGPA();
+            }else if (whichFragment == "gpacalculator") {
+                frag = new FragmentGPACalculator();
             }
+
+            frag.setArguments(getIntent().getExtras());
+            //getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, frag).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, frag).addToBackStack(null).commit();
         }
     }
 
-    private void animateFade(int id, boolean dofadeout){
-        Button bt = (Button)findViewById(id);
+    private void animateFade(int id, boolean dofadeout) {
+        Button bt = (Button) findViewById(id);
         Animation fadeout = AnimationUtils.loadAnimation(this, R.anim.fadeout);
         bt.startAnimation(fadeout);
     }
 
     public void clickStudentProgramButton(View view) {
         setFragmentView("languagetest");
+    }
+
+    public void clickTOEFLButton(View view) {
+        setFragmentView("toefl");
+    }
+
+    public void clickIELTSButton(View view) {
+        setFragmentView("ielts");
+    }
+
+    public void clickTOEFLProceedButton(View view) {
+        setFragmentView("gpa");
+    }
+
+    public void clickIELTSProceedButton(View view) {
+        setFragmentView("gpa");
     }
 }
