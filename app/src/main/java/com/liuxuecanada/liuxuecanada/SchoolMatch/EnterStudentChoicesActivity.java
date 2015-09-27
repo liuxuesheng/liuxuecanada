@@ -14,7 +14,6 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
 
     private Fragment frag = null;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +21,6 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
 
         FragmentProgram firstFragment = new FragmentProgram();
         setFragmentView("program");
-
     }
 
     private void setFragmentView(String whichFragment) {
@@ -45,9 +43,9 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
                 frag = new FragmentTOEFL();
             } else if (whichFragment == "ielts") {
                 frag = new FragmentIELTS();
-            }else if (whichFragment == "gpa") {
+            } else if (whichFragment == "gpa") {
                 frag = new FragmentGPA();
-            }else if (whichFragment == "gpacalculator") {
+            } else if (whichFragment == "gpacalculator") {
                 frag = new FragmentGPACalculator();
             }
 
