@@ -21,6 +21,16 @@
             android:textColor="@color/white"
             android:textSize="32dip" />
 
+        <ProgressBar
+            android:id="@+id/yourId"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/circular" />
+
     </LinearLayout>
 
     <LinearLayout
