@@ -19,17 +19,12 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
     private String nextFragment = null;
     private String nextTitle = null;
     private Button proceedButton = null;
-    private TextView tv = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_studentchoicesmain);
 
-        proceedButton = (Button) findViewById(R.id.proceed_studentchoices_button);
-        setTitleText("选择方向");
-
-        FragmentProgram firstFragment = new FragmentProgram();
         setFragmentView("program");
     }
 
@@ -76,60 +71,54 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
         bt.startAnimation(fadeout);
     }
 
-    private void setTitleText(String titleText){
-        if (this.tv == null)
-            tv = (TextView) findViewById(R.id.topTextString);
-        Log.d("adg ", titleText);
-        tv.setText(titleText);
-    }
-
-    private void setCurrentFragment(String currentFragment){
-        this.currentFragment = currentFragment;
-    }
-
-    private String getCurrentFragment(){
+    private String getCurrentFragment() {
         return this.currentFragment;
     }
 
-    private String getNextTitle(){
+    private void setCurrentFragment(String currentFragment) {
+        this.currentFragment = currentFragment;
+    }
+
+    private String getNextTitle() {
         if (getCurrentFragment() == "program")
             nextFragment = "选择语言考试";
-        else if(getCurrentFragment() == "languagetest")
+        else if (getCurrentFragment() == "languagetest")
             nextFragment = "雅思成绩";
-        else if(getCurrentFragment() == "toefl")
+        else if (getCurrentFragment() == "toefl")
             nextFragment = "GPA数值";
-        else if(getCurrentFragment() == "ielts")
+        else if (getCurrentFragment() == "ielts")
             nextFragment = "GPA数值";
-        else if(getCurrentFragment() == "gpa")
+        else if (getCurrentFragment() == "gpa")
             nextFragment = "GPA计算器";
         return this.nextFragment;
     }
 
-    private String getNextFragment(){
+    private String getNextFragment() {
         if (getCurrentFragment() == "program")
             nextTitle = "languagetest";
-        else if(getCurrentFragment() == "languagetest")
+        else if (getCurrentFragment() == "languagetest")
             nextTitle = "ielts";
-        else if(getCurrentFragment() == "toefl")
+        else if (getCurrentFragment() == "toefl")
             nextTitle = "gpa";
-        else if(getCurrentFragment() == "ielts")
+        else if (getCurrentFragment() == "ielts")
             nextTitle = "gpa";
-        else if(getCurrentFragment() == "gpa")
+        else if (getCurrentFragment() == "gpa")
             nextTitle = "gpacalculator";
         return this.nextTitle;
     }
 
-    public void clickProceedButton(View view){
+    public void clickProceedButton(View view) {
         proceedButton.setVisibility(View.INVISIBLE);
-        setTitleText(getNextTitle());
         setFragmentView(getNextFragment());
     }
 
-    public void clickProgramButton(View view){
+    public void clickProgramButton(View view) {
+        proceedButton = (Button) findViewById(R.id.proceed_studentchoices_button);
         proceedButton.setVisibility(View.VISIBLE);
     }
 
-    public void clickLanguageTestButton(View view){
+    public void clickLanguageTestButton(View view) {
+        proceedButton = (Button) findViewById(R.id.proceed_studentchoices_button);
         proceedButton.setVisibility(View.VISIBLE);
     }
 }
