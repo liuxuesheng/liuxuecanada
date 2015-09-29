@@ -34,4 +34,15 @@ public class MainActivity extends Activity {
         MainActivity.this.startActivity(myIntent);
     }
 
+/*    <?xml version="1.0" encoding="utf-8"?>
+    <shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="ring"
+    android:innerRadius="25dp"
+    android:thickness="3dp"
+    android:useLevel="false">
+
+    <solid android:color="@color/Orange500" />
+
+    </shape>*/
+
 }

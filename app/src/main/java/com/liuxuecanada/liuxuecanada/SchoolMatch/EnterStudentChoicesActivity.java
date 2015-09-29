@@ -29,6 +29,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, frag).addToBackStack(null).commit();
             setCurrentFragment("program");
         }
+
     }
 
     @Override
