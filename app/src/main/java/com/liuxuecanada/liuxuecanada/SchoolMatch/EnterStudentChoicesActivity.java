@@ -3,12 +3,10 @@ package com.liuxuecanada.liuxuecanada.SchoolMatch;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.R;
 
@@ -17,7 +15,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
     private Fragment frag = null;
     private String currentFragment = null;
     private String nextFragment = null;
-    private String nextTitle = null;
+    private String previousFragment = null;
     private Button proceedButton = null;
 
     @Override
@@ -25,12 +23,28 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_studentchoicesmain);
 
-        setFragmentView("program");
+        if (findViewById(R.id.fragment_container) != null) {
+            frag = new FragmentProgram();
+            frag.setArguments(getIntent().getExtras());
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, frag).addToBackStack(null).commit();
+            setCurrentFragment("program");
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getPreviousFragment() == null) {
+            finish();
+        } else {
+            setFragmentView(getPreviousFragment());
+            setCurrentFragment(getPreviousFragment());
+        }
     }
 
     private void setFragmentView(String whichFragment) {
         // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
+
         if (findViewById(R.id.fragment_container) != null) {
 
             // However, if we're being restored from a previous state,
@@ -39,29 +53,24 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
 /*            if (savedInstanceState != null) {
                 return;
             }*/
-
             if (whichFragment == "program") {
                 frag = new FragmentProgram();
-                frag.setArguments(getIntent().getExtras());
-                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, frag).commit();
-                setCurrentFragment(whichFragment);
-            } else {
-                if (whichFragment == "languagetest") {
-                    frag = new FragmentLanguageTest();
-                } else if (whichFragment == "toefl") {
-                    frag = new FragmentTOEFL();
-                } else if (whichFragment == "ielts") {
-                    frag = new FragmentIELTS();
-                } else if (whichFragment == "gpa") {
-                    frag = new FragmentGPA();
-                } else if (whichFragment == "gpacalculator") {
-                    frag = new FragmentGPACalculator();
-                }
-                frag.setArguments(getIntent().getExtras());
-                //getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, frag).commit();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, frag).addToBackStack(null).commit();
-                setCurrentFragment(whichFragment);
+            } else if (whichFragment == "languagetest") {
+                frag = new FragmentLanguageTest();
+            } else if (whichFragment == "toefl") {
+                frag = new FragmentTOEFL();
+            } else if (whichFragment == "ielts") {
+                frag = new FragmentIELTS();
+            } else if (whichFragment == "gpa") {
+                frag = new FragmentGPA();
+            } else if (whichFragment == "gpacalculator") {
+                frag = new FragmentGPACalculator();
             }
+            frag.setArguments(getIntent().getExtras());
+            //getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, frag).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, frag).addToBackStack(null).commit();
+            //addToBackStack(null)
+
         }
     }
 
@@ -75,41 +84,42 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
         return this.currentFragment;
     }
 
-    private void setCurrentFragment(String currentFragment) {
-        this.currentFragment = currentFragment;
+    private void setCurrentFragment(String fragment) {
+        this.currentFragment = fragment;
     }
 
-    private String getNextTitle() {
+    private String getPreviousFragment() {
         if (getCurrentFragment() == "program")
-            nextFragment = "选择语言考试";
+            previousFragment = null;
         else if (getCurrentFragment() == "languagetest")
-            nextFragment = "雅思成绩";
+            previousFragment = "program";
         else if (getCurrentFragment() == "toefl")
-            nextFragment = "GPA数值";
+            previousFragment = "languagetest";
         else if (getCurrentFragment() == "ielts")
-            nextFragment = "GPA数值";
+            previousFragment = "languagetest";
         else if (getCurrentFragment() == "gpa")
-            nextFragment = "GPA计算器";
-        return this.nextFragment;
+            previousFragment = "languagetest";
+        return this.previousFragment;
     }
 
     private String getNextFragment() {
         if (getCurrentFragment() == "program")
-            nextTitle = "languagetest";
+            nextFragment = "languagetest";
         else if (getCurrentFragment() == "languagetest")
-            nextTitle = "ielts";
+            nextFragment = "ielts";
         else if (getCurrentFragment() == "toefl")
-            nextTitle = "gpa";
+            nextFragment = "gpa";
         else if (getCurrentFragment() == "ielts")
-            nextTitle = "gpa";
+            nextFragment = "gpa";
         else if (getCurrentFragment() == "gpa")
-            nextTitle = "gpacalculator";
-        return this.nextTitle;
+            nextFragment = "gpacalculator";
+        return this.nextFragment;
     }
 
     public void clickProceedButton(View view) {
         proceedButton.setVisibility(View.INVISIBLE);
         setFragmentView(getNextFragment());
+        setCurrentFragment(getNextFragment());
     }
 
     public void clickProgramButton(View view) {
