@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import com.liuxuecanada.liuxuecanada.R;
 public class FragmentIELTS extends Fragment {
     private static SeekBar seekBar;
     private static TextView ieltsScore;
+    private static Button proceedButton;
     private View v;
 
     @Override
@@ -44,6 +46,9 @@ public class FragmentIELTS extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 ieltsScore.setText("Score: " + score);
+                proceedButton = (Button) v.findViewById(R.id.proceed_studentchoices_button);
+                if (proceedButton.getVisibility() == View.INVISIBLE)
+                    proceedButton.setVisibility(View.VISIBLE);
             }
         });
 
