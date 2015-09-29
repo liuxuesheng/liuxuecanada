@@ -14,7 +14,7 @@
         android:layout_row="3"
         android:layout_rowWeight="1"
         android:background="@drawable/button_green"
-        android:onClick="clickTOEFLButton"
+        android:onClick="clickLanguageTestButton"
         android:text="托福"
         android:textColor="@color/white" />
 
@@ -28,7 +28,7 @@
         android:layout_row="3"
         android:layout_rowWeight="1"
         android:background="@drawable/button_amber"
-        android:onClick="clickIELTSButton"
+        android:onClick="clickLanguageTestButton"
         android:text="雅思"
         android:textColor="@color/white" />
 
