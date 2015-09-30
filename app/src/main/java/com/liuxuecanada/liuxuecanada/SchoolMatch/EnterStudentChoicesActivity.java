@@ -38,12 +38,12 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
         if (getPreviousFragment() == null) {
             finish();
         } else {
-            setFragmentView(getPreviousFragment());
+            setFragmentView(getPreviousFragment(),false);
             setCurrentFragment(getPreviousFragment());
         }
     }
 
-    private void setFragmentView(String whichFragment) {
+    private void setFragmentView(String whichFragment,Boolean forward) {
         // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
 
@@ -71,7 +71,10 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
             frag.setArguments(getIntent().getExtras());
             //getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, frag).commit();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.setCustomAnimations(R.anim.enter,R.anim.exit,R.anim.popenter,R.anim.popexit);
+            if (forward)
+                transaction.setCustomAnimations(R.anim.enter,R.anim.exit);
+            else
+                transaction.setCustomAnimations(R.anim.popenter, R.anim.popexit);
             transaction.replace(R.id.fragment_container, frag).addToBackStack(null).commit();
             //addToBackStack(null)
 
@@ -122,7 +125,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
 
     public void clickProceedButton(View view) {
         proceedButton.setVisibility(View.INVISIBLE);
-        setFragmentView(getNextFragment());
+        setFragmentView(getNextFragment(),true);
         setCurrentFragment(getNextFragment());
     }
 
