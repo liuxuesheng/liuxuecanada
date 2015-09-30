@@ -3,6 +3,7 @@ package com.liuxuecanada.liuxuecanada.SchoolMatch;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -69,7 +70,9 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
             }
             frag.setArguments(getIntent().getExtras());
             //getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, frag).commit();
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, frag).addToBackStack(null).commit();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.enter,R.anim.exit,R.anim.popenter,R.anim.popexit);
+            transaction.replace(R.id.fragment_container, frag).addToBackStack(null).commit();
             //addToBackStack(null)
 
         }
@@ -77,7 +80,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
 
     private void animateFade(int id, boolean dofadeout) {
         Button bt = (Button) findViewById(id);
-        Animation fadeout = AnimationUtils.loadAnimation(this, R.anim.fadeout);
+        Animation fadeout = AnimationUtils.loadAnimation(this, R.anim.exit);
         bt.startAnimation(fadeout);
     }
 
