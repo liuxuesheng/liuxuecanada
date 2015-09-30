@@ -24,7 +24,7 @@
             android:layout_height="fill_parent"
             android:layout_gravity="center"
             android:max="100"
-            android:progress="50"
+            android:progress="0"
             android:progressDrawable="@drawable/circular" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="progress" />
+            android:text="0/0" />
     </RelativeLayout>
 
 </LinearLayout>

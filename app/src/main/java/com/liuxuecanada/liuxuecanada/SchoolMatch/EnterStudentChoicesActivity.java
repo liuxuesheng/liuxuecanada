@@ -8,10 +8,13 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.R;
 
-public class EnterStudentChoicesActivity extends FragmentActivity implements FragmentIELTS.OnSeekBarUpdateListener {
+public class EnterStudentChoicesActivity extends FragmentActivity
+        implements FragmentIELTS.OnSeekBarUpdateListener, FragmentTop.OnProgressCirclePageUpdateListener {
 
     private Fragment fragTop = null;
     private Fragment fragBottom = null;
@@ -20,6 +23,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity implements Fra
     private String nextFragment = null;
     private String previousFragment = null;
     private Button proceedButton = null;
+    private TextView topText = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +42,6 @@ public class EnterStudentChoicesActivity extends FragmentActivity implements Fra
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, frag).addToBackStack(null).commit();
             setCurrentFragment("program");
         }
-
     }
 
     @Override
@@ -46,8 +49,10 @@ public class EnterStudentChoicesActivity extends FragmentActivity implements Fra
         if (getPreviousFragment() == null) {
             finish();
         } else {
-            setFragmentView(getPreviousFragment(), false);
-            setCurrentFragment(getPreviousFragment());
+            String fragment = getPreviousFragment();
+            setFragmentView(fragment, false);
+            setCurrentFragment(fragment);
+            updateTitleText(fragment);
         }
     }
 
@@ -57,6 +62,17 @@ public class EnterStudentChoicesActivity extends FragmentActivity implements Fra
 
     }
 
+    public void updateTitleText(String fragmentName) {
+        topText = (TextView) findViewById(R.id.topTextString);
+        topText.setText(fragmentName);
+    }
+
+    public void updateProgressCircle() {
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressbarid);
+        progressBar.setProgress(3);
+        TextView textProgress = (TextView) findViewById(R.id.textView1);
+        textProgress.setText("2/5");
+    }
 
     private void setFragmentView(String whichFragment, Boolean forward) {
         // Check that the activity is using the layout version with
@@ -84,15 +100,12 @@ public class EnterStudentChoicesActivity extends FragmentActivity implements Fra
                 frag = new FragmentGPACalculator();
             }
             frag.setArguments(getIntent().getExtras());
-            //getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, frag).commit();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             if (forward)
                 transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
             else
                 transaction.setCustomAnimations(R.anim.popenter, R.anim.popexit);
             transaction.replace(R.id.fragment_container, frag).addToBackStack(null).commit();
-            //addToBackStack(null)
-
         }
     }
 
@@ -140,8 +153,10 @@ public class EnterStudentChoicesActivity extends FragmentActivity implements Fra
 
     public void clickProceedButton(View view) {
         proceedButton.setVisibility(View.INVISIBLE);
-        setFragmentView(getNextFragment(), true);
-        setCurrentFragment(getNextFragment());
+        String fragment = getNextFragment();
+        setFragmentView(fragment, true);
+        setCurrentFragment(fragment);
+        updateTitleText(fragment);
     }
 
     public void clickProgramButton(View view) {

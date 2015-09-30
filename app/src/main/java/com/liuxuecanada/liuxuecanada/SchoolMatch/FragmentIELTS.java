@@ -17,6 +17,7 @@ public class FragmentIELTS extends Fragment {
     private static TextView ieltsScore;
     private static Button proceedButton;
     private View v;
+    OnSeekBarUpdateListener mCallback;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -25,8 +26,6 @@ public class FragmentIELTS extends Fragment {
         createSeekBar();
         return v;
     }
-
-    OnSeekBarUpdateListener mCallback;
 
     // Container Activity must implement this interface
     public interface OnSeekBarUpdateListener {
@@ -47,7 +46,6 @@ public class FragmentIELTS extends Fragment {
                     + " must implement OnSeekBarUpdateListener");
         }
     }
-
 
     public void createSeekBar() {
         seekBar = (SeekBar) v.findViewById(R.id.intensitySlider);
