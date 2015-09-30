@@ -30,7 +30,7 @@ public class FragmentIELTS extends Fragment {
 
     // Container Activity must implement this interface
     public interface OnSeekBarUpdateListener {
-        public void updateProceedButton();
+        void updateProceedButton();
     }
 
 
@@ -71,9 +71,6 @@ public class FragmentIELTS extends Fragment {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 ieltsScore.setText("Score: " + score);
                 mCallback.updateProceedButton();
-/*                proceedButton = (Button) v.findViewById(R.id.proceed_studentchoices_button);
-                if (proceedButton.getVisibility() == View.INVISIBLE)
-                    proceedButton.setVisibility(View.VISIBLE);*/
             }
         });
 

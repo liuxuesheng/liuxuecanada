@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import com.liuxuecanada.liuxuecanada.R;
 
-public class EnterStudentChoicesActivity extends FragmentActivity implements FragmentIELTS.OnSeekBarUpdateListener{
+public class EnterStudentChoicesActivity extends FragmentActivity implements FragmentIELTS.OnSeekBarUpdateListener {
 
     private Fragment fragTop = null;
     private Fragment fragBottom = null;
@@ -26,7 +26,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity implements Fra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_studentchoicesmain);
 
-        if ((findViewById(R.id.fragment_container) != null)&&(findViewById(R.id.fragment_top_container) != null)&&(findViewById(R.id.fragment_bottom_container) != null)) {
+        if ((findViewById(R.id.fragment_container) != null) && (findViewById(R.id.fragment_top_container) != null) && (findViewById(R.id.fragment_bottom_container) != null)) {
             frag = new FragmentProgram();
             fragTop = new FragmentTop();
             fragBottom = new FragmentBottom();
@@ -46,22 +46,19 @@ public class EnterStudentChoicesActivity extends FragmentActivity implements Fra
         if (getPreviousFragment() == null) {
             finish();
         } else {
-            setFragmentView(getPreviousFragment(),false);
+            setFragmentView(getPreviousFragment(), false);
             setCurrentFragment(getPreviousFragment());
         }
     }
 
     public void updateProceedButton() {
-        // The user selected the headline of an article from the HeadlinesFragment
-        // Do something here to display that article
-
         proceedButton = (Button) findViewById(R.id.proceed_studentchoices_button);
         proceedButton.setVisibility(View.VISIBLE);
 
     }
 
 
-    private void setFragmentView(String whichFragment,Boolean forward) {
+    private void setFragmentView(String whichFragment, Boolean forward) {
         // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
 
@@ -90,7 +87,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity implements Fra
             //getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, frag).commit();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             if (forward)
-                transaction.setCustomAnimations(R.anim.enter,R.anim.exit);
+                transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
             else
                 transaction.setCustomAnimations(R.anim.popenter, R.anim.popexit);
             transaction.replace(R.id.fragment_container, frag).addToBackStack(null).commit();
@@ -143,13 +140,12 @@ public class EnterStudentChoicesActivity extends FragmentActivity implements Fra
 
     public void clickProceedButton(View view) {
         proceedButton.setVisibility(View.INVISIBLE);
-        setFragmentView(getNextFragment(),true);
+        setFragmentView(getNextFragment(), true);
         setCurrentFragment(getNextFragment());
     }
 
     public void clickProgramButton(View view) {
-        proceedButton = (Button) findViewById(R.id.proceed_studentchoices_button);
-        proceedButton.setVisibility(View.VISIBLE);
+        updateProceedButton();
     }
 
     public void clickLanguageTestButton(View view) {
