@@ -13,6 +13,8 @@ import com.liuxuecanada.liuxuecanada.R;
 
 public class EnterStudentChoicesActivity extends FragmentActivity {
 
+    private Fragment fragTop = null;
+    private Fragment fragBottom = null;
     private Fragment frag = null;
     private String currentFragment = null;
     private String nextFragment = null;
@@ -24,9 +26,15 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_studentchoicesmain);
 
-        if (findViewById(R.id.fragment_container) != null) {
+        if ((findViewById(R.id.fragment_container) != null)&&(findViewById(R.id.fragment_top_container) != null)&&(findViewById(R.id.fragment_bottom_container) != null)) {
             frag = new FragmentProgram();
+            fragTop = new FragmentTop();
+            fragBottom = new FragmentBottom();
             frag.setArguments(getIntent().getExtras());
+            fragTop.setArguments(getIntent().getExtras());
+            fragBottom.setArguments(getIntent().getExtras());
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_top_container, fragTop).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_bottom_container, fragBottom).addToBackStack(null).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, frag).addToBackStack(null).commit();
             setCurrentFragment("program");
         }
