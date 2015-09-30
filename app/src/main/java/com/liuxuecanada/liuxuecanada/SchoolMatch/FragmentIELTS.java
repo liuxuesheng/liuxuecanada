@@ -1,5 +1,6 @@
 package com.liuxuecanada.liuxuecanada.SchoolMatch;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -25,6 +26,29 @@ public class FragmentIELTS extends Fragment {
         return v;
     }
 
+    OnSeekBarUpdateListener mCallback;
+
+    // Container Activity must implement this interface
+    public interface OnSeekBarUpdateListener {
+        public void updateProceedButton();
+    }
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (OnSeekBarUpdateListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnSeekBarUpdateListener");
+        }
+    }
+
+
     public void createSeekBar() {
         seekBar = (SeekBar) v.findViewById(R.id.intensitySlider);
         ieltsScore = (TextView) v.findViewById(R.id.select_ieltsscore_textview);
@@ -46,9 +70,10 @@ public class FragmentIELTS extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 ieltsScore.setText("Score: " + score);
-                proceedButton = (Button) v.findViewById(R.id.proceed_studentchoices_button);
+                mCallback.updateProceedButton();
+/*                proceedButton = (Button) v.findViewById(R.id.proceed_studentchoices_button);
                 if (proceedButton.getVisibility() == View.INVISIBLE)
-                    proceedButton.setVisibility(View.VISIBLE);
+                    proceedButton.setVisibility(View.VISIBLE);*/
             }
         });
 

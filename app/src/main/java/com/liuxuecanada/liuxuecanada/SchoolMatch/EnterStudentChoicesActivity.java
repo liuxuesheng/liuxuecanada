@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import com.liuxuecanada.liuxuecanada.R;
 
-public class EnterStudentChoicesActivity extends FragmentActivity {
+public class EnterStudentChoicesActivity extends FragmentActivity implements FragmentIELTS.OnSeekBarUpdateListener{
 
     private Fragment fragTop = null;
     private Fragment fragBottom = null;
@@ -50,6 +50,16 @@ public class EnterStudentChoicesActivity extends FragmentActivity {
             setCurrentFragment(getPreviousFragment());
         }
     }
+
+    public void updateProceedButton() {
+        // The user selected the headline of an article from the HeadlinesFragment
+        // Do something here to display that article
+
+        proceedButton = (Button) findViewById(R.id.proceed_studentchoices_button);
+        proceedButton.setVisibility(View.VISIBLE);
+
+    }
+
 
     private void setFragmentView(String whichFragment,Boolean forward) {
         // Check that the activity is using the layout version with
