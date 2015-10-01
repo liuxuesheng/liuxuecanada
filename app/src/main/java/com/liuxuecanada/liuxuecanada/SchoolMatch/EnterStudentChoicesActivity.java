@@ -1,5 +1,6 @@
 package com.liuxuecanada.liuxuecanada.SchoolMatch;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -58,13 +59,28 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
     public void updateProceedButton() {
         proceedButton = (Button) findViewById(R.id.proceed_studentchoices_button);
-        proceedButton.setVisibility(View.VISIBLE);
-
+        //proceedButton.setVisibility(View.VISIBLE);
+        proceedButton.setEnabled(true);
+        proceedButton.setBackgroundColor(getResources().getColor(R.color.Green500));
     }
 
     public void updateTitleText(String fragmentName) {
+        String chineseName = null;
+        if (fragmentName == "program") {
+            chineseName = "专业方向";
+        } else if (fragmentName == "languagetest") {
+            chineseName = "语言考试";
+        } else if (fragmentName == "toefl") {
+            chineseName = "托福";
+        } else if (fragmentName == "ielts") {
+            chineseName = "雅思";
+        } else if (fragmentName == "gpa") {
+            chineseName = "GPA成绩";
+        } else if (fragmentName == "gpacalculator") {
+            chineseName = "GPA计算器";
+        }
         topText = (TextView) findViewById(R.id.topTextString);
-        topText.setText(fragmentName);
+        topText.setText(chineseName);
     }
 
     public void updateProgressCircle() {
@@ -152,11 +168,12 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     }
 
     public void clickProceedButton(View view) {
-        proceedButton.setVisibility(View.INVISIBLE);
+        proceedButton.setBackgroundColor(getResources().getColor(R.color.Grey500));
         String fragment = getNextFragment();
         setFragmentView(fragment, true);
         setCurrentFragment(fragment);
         updateTitleText(fragment);
+        proceedButton.setEnabled(false);
     }
 
     public void clickProgramButton(View view) {
@@ -164,7 +181,6 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     }
 
     public void clickLanguageTestButton(View view) {
-        proceedButton = (Button) findViewById(R.id.proceed_studentchoices_button);
-        proceedButton.setVisibility(View.VISIBLE);
+        updateProceedButton();
     }
 }
