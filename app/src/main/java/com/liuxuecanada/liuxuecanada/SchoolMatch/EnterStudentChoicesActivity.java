@@ -1,15 +1,16 @@
 package com.liuxuecanada.liuxuecanada.SchoolMatch;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.R;
@@ -18,6 +19,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         implements FragmentIELTS.OnSeekBarUpdateListener, FragmentTop.OnProgressCirclePageUpdateListener {
 
     private Fragment fragTop = null;
+    private Fragment fragTutorial = null;
     private Fragment fragBottom = null;
     private Fragment frag = null;
     private String currentFragment = null;
@@ -25,6 +27,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     private String previousFragment = null;
     private Button proceedButton = null;
     private TextView topText = null;
+    private boolean disabledButton = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_bottom_container, fragBottom).addToBackStack(null).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, frag).addToBackStack(null).commit();
             setCurrentFragment("program");
+
         }
     }
 
@@ -59,9 +63,8 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
     public void updateProceedButton() {
         proceedButton = (Button) findViewById(R.id.proceed_studentchoices_button);
-        //proceedButton.setVisibility(View.VISIBLE);
-        proceedButton.setEnabled(true);
         proceedButton.setBackgroundColor(getResources().getColor(R.color.Green500));
+        disabledButton = false;
     }
 
     public void updateTitleText(String fragmentName) {
@@ -125,6 +128,19 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         }
     }
 
+    private void addTutorialFragment(){
+        if (fragTutorial == null)
+            fragTutorial = new FragmentTutorial();
+        fragTutorial.setArguments(getIntent().getExtras());
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_tutorial_container, fragTutorial).addToBackStack(null).commit();
+    }
+
+    private void removeTutorialFragment(){
+        Fragment fragment = (FragmentTutorial)getSupportFragmentManager().findFragmentById(R.id.fragment_tutorial_container);
+        if (fragment != null)
+            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+    }
+
     private void animateFade(int id, boolean dofadeout) {
         Button bt = (Button) findViewById(id);
         Animation fadeout = AnimationUtils.loadAnimation(this, R.anim.exit);
@@ -168,13 +184,23 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     }
 
     public void clickProceedButton(View view) {
-        proceedButton.setBackgroundColor(getResources().getColor(R.color.Grey500));
-        String fragment = getNextFragment();
-        setFragmentView(fragment, true);
-        setCurrentFragment(fragment);
-        updateTitleText(fragment);
-        proceedButton.setEnabled(false);
+        Log.d("asddasd", "sadasd");
+        if (disabledButton) {
+            addTutorialFragment();
+        } else {
+            proceedButton.setBackgroundColor(getResources().getColor(R.color.Grey500));
+            String fragment = getNextFragment();
+            setFragmentView(fragment, true);
+            setCurrentFragment(fragment);
+            updateTitleText(fragment);
+            disabledButton = true;
+        }
     }
+
+    public void clickTutorialButton(View view){
+        removeTutorialFragment();
+    }
+
 
     public void clickProgramButton(View view) {
         updateProceedButton();

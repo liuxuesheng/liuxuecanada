@@ -1,32 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/fragment_top_container"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:background="@color/Indigo300"
-        android:orientation="vertical"></LinearLayout>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.618"
-        android:background="@color/Indigo500"
-        android:orientation="vertical"></LinearLayout>
+        <LinearLayout
+            android:id="@+id/fragment_top_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:background="@color/Indigo300"
+            android:orientation="vertical"></LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/fragment_bottom_container"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:background="@color/Indigo300"
-        android:orientation="vertical"></LinearLayout>
+        <LinearLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.618"
+            android:background="@color/Indigo500"
+            android:orientation="vertical"></LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/fragment_bottom_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:background="@color/Indigo300"
+            android:orientation="vertical"></LinearLayout>
+    </LinearLayout>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/fragment_tutorial_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+    </RelativeLayout>
+</FrameLayout>
