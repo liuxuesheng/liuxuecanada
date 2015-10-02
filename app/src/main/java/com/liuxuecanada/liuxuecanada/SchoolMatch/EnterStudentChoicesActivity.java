@@ -139,6 +139,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         Fragment fragment = (FragmentTutorial) getSupportFragmentManager().findFragmentById(R.id.fragment_tutorial_container);
         if (fragment != null)
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+        fragTutorial = null;
     }
 
     private void animateFade(int id, boolean dofadeout) {
@@ -184,16 +185,18 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     }
 
     private void setBlurBackground() {
-        View beneathView = findViewById(R.id.fragment_top_container);
+        View beneathView = findViewById(R.id.fragment_main_container);
         View blurView = findViewById(R.id.fragment_tutorial_container);
-        BlurDrawable blurDrawable = new BlurDrawable(beneathView, 30);
+        BlurDrawable blurDrawable = new BlurDrawable(beneathView, 40);
         blurView.setBackground(blurDrawable);
     }
 
     public void clickProceedButton(View view) {
         if (disabledButton) {
-            addTutorialFragment();
-            setBlurBackground();
+            if (fragTutorial == null) {
+                addTutorialFragment();
+                setBlurBackground();
+            }
         } else {
             proceedButton.setBackgroundColor(getResources().getColor(R.color.Grey500));
             String fragment = getNextFragment();
@@ -209,7 +212,6 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         blurView.setBackgroundResource(0);
         removeTutorialFragment();
     }
-
 
     public void clickProgramButton(View view) {
         updateProceedButton();
