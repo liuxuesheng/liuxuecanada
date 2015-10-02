@@ -4,16 +4,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.R;
+import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
 
 public class EnterStudentChoicesActivity extends FragmentActivity
         implements FragmentIELTS.OnSeekBarUpdateListener, FragmentTop.OnProgressCirclePageUpdateListener {
@@ -128,15 +127,16 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         }
     }
 
-    private void addTutorialFragment(){
-        if (fragTutorial == null)
+    private void addTutorialFragment() {
+        if (fragTutorial == null) {
             fragTutorial = new FragmentTutorial();
-        fragTutorial.setArguments(getIntent().getExtras());
+            fragTutorial.setArguments(getIntent().getExtras());
+        }
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_tutorial_container, fragTutorial).addToBackStack(null).commit();
     }
 
-    private void removeTutorialFragment(){
-        Fragment fragment = (FragmentTutorial)getSupportFragmentManager().findFragmentById(R.id.fragment_tutorial_container);
+    private void removeTutorialFragment() {
+        Fragment fragment = (FragmentTutorial) getSupportFragmentManager().findFragmentById(R.id.fragment_tutorial_container);
         if (fragment != null)
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
     }
@@ -183,10 +183,17 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         return this.nextFragment;
     }
 
+    private void setBlurBackground() {
+        View beneathView = findViewById(R.id.fragment_top_container);
+        View blurView = findViewById(R.id.fragment_tutorial_container);
+        BlurDrawable blurDrawable = new BlurDrawable(beneathView, 30);
+        blurView.setBackground(blurDrawable);
+    }
+
     public void clickProceedButton(View view) {
-        Log.d("asddasd", "sadasd");
         if (disabledButton) {
             addTutorialFragment();
+            setBlurBackground();
         } else {
             proceedButton.setBackgroundColor(getResources().getColor(R.color.Grey500));
             String fragment = getNextFragment();
@@ -197,7 +204,9 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         }
     }
 
-    public void clickTutorialButton(View view){
+    public void clickTutorialButton(View view) {
+        View blurView = findViewById(R.id.fragment_tutorial_container);
+        blurView.setBackgroundResource(0);
         removeTutorialFragment();
     }
 
