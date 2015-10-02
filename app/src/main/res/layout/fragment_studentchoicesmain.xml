@@ -22,7 +22,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1.618"
-            android:background="@color/Indigo500"
+            android:background="@drawable/gradient_indigo"
             android:orientation="vertical"></LinearLayout>
 
         <LinearLayout
