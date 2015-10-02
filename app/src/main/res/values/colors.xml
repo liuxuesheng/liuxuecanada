@@ -28,7 +28,16 @@
     <color name="Indigo900">#1A237E</color>
 
     <!-- Blue -->
+    <color name="Blue50">#e3f2fd</color>
+    <color name="Blue100">#bbdefb</color>
+    <color name="Blue200">#90caf9</color>
+    <color name="Blue300">#64b5f6</color>
+    <color name="Blue400">#42a5f5</color>
     <color name="Blue500">#2196F3</color>
+    <color name="Blue600">#1e88e5</color>
+    <color name="Blue700">#1976d2</color>
+    <color name="Blue800">#1565c0</color>
+    <color name="Blue900">#0d47a1</color>
 
     <!-- Light Blue -->
     <color name="LightBlue500">#03A9F4</color>
@@ -77,7 +86,16 @@
     <color name="Brown500">#795548</color>
 
     <!-- Grey -->
+    <color name="Grey50">#fafafa</color>
+    <color name="Grey100">#f5f5f5</color>
+    <color name="Grey200">#eeeeee</color>
+    <color name="Grey300">#e0e0e0</color>
+    <color name="Grey400">#bdbdbd</color>
     <color name="Grey500">#9E9E9E</color>
+    <color name="Grey600">#757575</color>
+    <color name="Grey700">#616161</color>
+    <color name="Grey800">#424242</color>
+    <color name="Grey900">#212121</color>
 
     <!-- Blue Grey -->
     <color name="BlueGrey500">#607D8B</color>

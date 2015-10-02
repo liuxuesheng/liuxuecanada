@@ -8,7 +8,7 @@
             android:thickness="3dp"
             android:useLevel="false">
 
-            <solid android:color="@color/Orange500" />
+            <solid android:color="@color/Blue300" />
         </shape>
     </item>
     <item android:id="@android:id/progress">
@@ -16,7 +16,7 @@
             android:innerRadius="25dp"
             android:shape="ring"
             android:thickness="3dp">
-            <solid android:color="@color/Red500" />
+            <solid android:color="@color/Blue500" />
         </shape>
     </item>
 </layer-list>

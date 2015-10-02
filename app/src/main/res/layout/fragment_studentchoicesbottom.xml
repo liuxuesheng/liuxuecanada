@@ -6,12 +6,12 @@
 
     <Button
         android:id="@+id/proceed_studentchoices_button"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/Grey500"
+        android:background="#00ffffff"
         android:onClick="clickProceedButton"
         android:text="继续"
-        android:textColor="@color/white"
+        android:textColor="@color/Blue300"
         android:visibility="visible" />
 </LinearLayout>

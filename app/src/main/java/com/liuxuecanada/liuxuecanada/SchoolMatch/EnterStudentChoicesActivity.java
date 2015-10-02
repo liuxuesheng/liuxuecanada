@@ -62,7 +62,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
     public void updateProceedButton() {
         proceedButton = (Button) findViewById(R.id.proceed_studentchoices_button);
-        proceedButton.setBackgroundColor(getResources().getColor(R.color.Green500));
+        proceedButton.setBackgroundColor(getResources().getColor(R.color.Blue700));
         disabledButton = false;
     }
 
