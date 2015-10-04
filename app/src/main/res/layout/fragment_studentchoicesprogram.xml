@@ -24,7 +24,8 @@
             android:background="#00ffffff"
             android:onClick="clickProgramButton"
             android:text="艺术类"
-            android:textColor="@color/Blue200" />
+            android:textColor="@color/Blue200"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/science_button"
@@ -37,8 +38,9 @@
             android:layout_rowWeight="1"
             android:background="#00ffffff"
             android:onClick="clickProgramButton"
-            android:text="Science"
-            android:textColor="@color/Blue200" />
+            android:text="理科"
+            android:textColor="@color/Blue200"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/engineering_button"
@@ -52,7 +54,8 @@
             android:background="#00ffffff"
             android:onClick="clickProgramButton"
             android:text="工程类"
-            android:textColor="@color/Blue300" />
+            android:textColor="@color/Blue300"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/business_button"
@@ -66,7 +69,8 @@
             android:background="#00ffffff"
             android:onClick="clickProgramButton"
             android:text="商科"
-            android:textColor="@color/Blue300" />
+            android:textColor="@color/Blue300"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/laws_button"
@@ -80,7 +84,8 @@
             android:background="#00ffffff"
             android:onClick="clickProgramButton"
             android:text="法学"
-            android:textColor="@color/Blue400" />
+            android:textColor="@color/Blue400"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/medical_button"
@@ -94,7 +99,8 @@
             android:background="#00ffffff"
             android:onClick="clickProgramButton"
             android:text="医学"
-            android:textColor="@color/Blue400" />
+            android:textColor="@color/Blue400"
+            android:textSize="18sp" />
     </GridLayout>
 
 </LinearLayout>
