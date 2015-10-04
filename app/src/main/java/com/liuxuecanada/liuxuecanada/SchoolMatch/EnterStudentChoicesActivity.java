@@ -1,7 +1,12 @@
 package com.liuxuecanada.liuxuecanada.SchoolMatch;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.LinearGradient;
+import android.graphics.Paint;
 import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.PaintDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
@@ -9,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -22,8 +28,10 @@ import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
 
 public class EnterStudentChoicesActivity extends FragmentActivity
-        implements FragmentIELTS.OnSeekBarUpdateListener, FragmentTop.OnProgressCirclePageUpdateListener {
+        implements FragmentIELTS.OnSeekBarUpdateListener, FragmentTop.OnProgressCirclePageUpdateListener, FragmentProgram.OnTextColorUpdateListener {
 
+    int color = 0;
+    Bitmap bm = null;
     private Fragment fragTop = null;
     private Fragment fragTutorial = null;
     private Fragment fragBottom = null;
@@ -57,29 +65,29 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         }
 
-        ShapeDrawable.ShaderFactory shaderFactory = new ShapeDrawable.ShaderFactory() {
-            @Override
-            public Shader resize(int width, int height) {
-                LinearGradient linearGradient = new LinearGradient(0, 0, width, height,
-                        new int[]{
-                                0xFFce8905,
-                                0xFF0f6748,
-                                0xFF01095a}, //substitute the correct colors for these
-                        new float[]{
-                                0.40f, 0.60f, 1},
-                        Shader.TileMode.REPEAT);
-                return linearGradient;
-            }
-        };
-        PaintDrawable paint = new PaintDrawable();
-        paint.setShape(new RectShape());
-        paint.setShaderFactory(shaderFactory);
-
-        //        android:background="@drawable/gradient_indigo"
-
-// Retrieve our Relative layout from our main layout we just set to our view.
         LinearLayout layout = (LinearLayout) findViewById(R.id.fragment_main_container);
-        layout.setBackground(paint);
+        LinearLayout layout2 = (LinearLayout) findViewById(R.id.fragment_container);
+
+/*
+        int width = layout.getWidth();
+        int height = layout.getHeight();
+*/
+
+        int width = 150;
+        int height = 300;
+
+        Log.d("asdasdas"," "+width+" "+height);
+
+        bm = Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bm);
+        LinearGradient linearGradient = new LinearGradient(0, 0, width, height, new int[]{0xFFce8905, 0xFF0f6748, 0xFF01095a}, new float[]{0.40f, 0.60f, 1}, Shader.TileMode.REPEAT);
+        Paint paint = new Paint();
+        paint.setShader(linearGradient);
+        paint.setDither(true);
+        canvas.drawRect(0, 0, width, height, paint);
+
+        layout.setBackground(new BitmapDrawable(getResources(), bm));
+
     }
 
     @Override
@@ -125,6 +133,20 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         TextView textProgress = (TextView) findViewById(R.id.textView1);
         textProgress.setText("3/5");
     }
+
+    public int updateTextColor() {
+        int myx = 100;
+        int myy = 200;
+
+        Log.d("asdasdas"," "+myx+" "+myy);
+
+        color = bm.getPixel( myx, myy);
+
+        Log.d("asdasdas"," "+color+" !"+ Color.RED);
+        return color;
+
+    }
+
 
     private void setFragmentView(String whichFragment, Boolean forward) {
         // Check that the activity is using the layout version with
