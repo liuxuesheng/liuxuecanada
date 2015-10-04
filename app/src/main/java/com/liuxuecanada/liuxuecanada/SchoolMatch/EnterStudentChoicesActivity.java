@@ -80,7 +80,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         bm = Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bm);
-        LinearGradient linearGradient = new LinearGradient(0, 0, width, height, new int[]{0xFFce8905, 0xFF0f6748, 0xFF01095a}, new float[]{0.40f, 0.60f, 1}, Shader.TileMode.REPEAT);
+        LinearGradient linearGradient = new LinearGradient(0, 0, width, height, new int[]{0xFFce8905, 0xFF0f6748, 0xFF01095a}, new float[]{0.33f, 0.66f, 1}, Shader.TileMode.REPEAT);
         Paint paint = new Paint();
         paint.setShader(linearGradient);
         paint.setDither(true);

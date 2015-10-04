@@ -20,7 +20,7 @@
             android:layout_rowWeight="1"
             android:text="score"
             android:textColor="@color/white"
-            android:textSize="32dip" />
+            android:textSize="24sp" />
 
         <SeekBar
             android:id="@+id/intensitySlider"

@@ -19,10 +19,11 @@
             android:layout_gravity="center"
             android:layout_row="3"
             android:layout_rowWeight="1"
-            android:background="@drawable/button_green"
+            android:background="#00ffffff"
             android:onClick="clickLanguageTestButton"
             android:text="托福"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/ielts_button"
@@ -33,10 +34,11 @@
             android:layout_gravity="center"
             android:layout_row="3"
             android:layout_rowWeight="1"
-            android:background="@drawable/button_amber"
+            android:background="#00ffffff"
             android:onClick="clickLanguageTestButton"
             android:text="雅思"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="24sp" />
 
     </LinearLayout>
 
