@@ -8,7 +8,7 @@
             android:thickness="3dp"
             android:useLevel="false">
 
-            <solid android:color="@color/Blue300" />
+            <solid android:color="@color/white" />
         </shape>
     </item>
     <item android:id="@android:id/progress">

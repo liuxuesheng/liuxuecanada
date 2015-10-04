@@ -9,9 +9,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="#00ffffff"
         android:onClick="clickProceedButton"
+        android:background="#00ffffff"
         android:text="继续"
-        android:textColor="@color/Blue300"
-        android:visibility="visible" />
+        android:textColor="@color/white" />
 </LinearLayout>
