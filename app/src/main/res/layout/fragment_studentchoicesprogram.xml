@@ -5,8 +5,8 @@
     android:orientation="vertical">
 
     <GridLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_weight="1.618"
         android:columnCount="2"
         android:orientation="vertical"

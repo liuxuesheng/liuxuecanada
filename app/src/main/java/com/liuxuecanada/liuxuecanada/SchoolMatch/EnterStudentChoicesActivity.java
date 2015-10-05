@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -26,10 +27,11 @@ import android.widget.TextView;
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
 
+import java.util.LinkedList;
+
 public class EnterStudentChoicesActivity extends FragmentActivity
         implements FragmentIELTS.OnSeekBarUpdateListener, FragmentTop.OnProgressCirclePageUpdateListener, FragmentProgram.OnTextColorUpdateListener, ViewTreeObserver.OnGlobalLayoutListener {
 
-    int color = 0;
     Bitmap bm = null;
     LinearLayout layout = null;
     private Fragment fragTop = null;
@@ -42,6 +44,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     private Button proceedButton = null;
     private TextView topText = null;
     private boolean disabledButton = true;
+    LinkedList<TextView> ll = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,51 +90,82 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         layout.setBackground(new BitmapDrawable(getResources(), bm));
 
-        //
-        LinearLayout topc = (LinearLayout) findViewById(R.id.fragment_top_container);
-        LinearLayout mopc = (LinearLayout) findViewById(R.id.fragment_container);
+        ll = new LinkedList<TextView>();
 
 
+        LinkedList<TextView> tvlist = findAllTextView(layout);
+        Log.d("asdasdas", " ll " + ll.size());
+
+        for(TextView tv: tvlist){
+            int[] k = getViewCoordinates(tv);
+            Log.d("asdasdas", " k0 " + k[0] + " k1 " + k[1]);
+
+            //int convertedColor = convertColor(bm.getPixel(k[0], k[1]));
+
+            //((TextView) tv).setTextColor(bm.getPixel(k[0], k[1]));
+        }
+
+/*        View tempView = findViewById(R.id.proceed_studentchoices_button);
+        int[] k = getViewCoordinates(tempView);
+
+        int convertedColor = convertColor(bm.getPixel(k[0], k[1]));
+
+        ((Button) tempView).setTextColor(bm.getPixel(k[0], k[1]));
+        //((Button) tempView).setTextColor(convertedColor);*/
+    }
+
+    private LinkedList<TextView> findAllTextView(ViewGroup viewgroup){
+        int count = viewgroup.getChildCount();
+
+        for (int i = 0; i < count; i++){
+            View view = viewgroup.getChildAt(i);
+            if (view instanceof ViewGroup)
+                findAllTextView((ViewGroup) view);
+            else if(view instanceof TextView)
+                ll.addLast((TextView) view);
+        }
+
+        return ll;
+    }
+
+    private int[] getViewCoordinates(View view) {
         View globalView = findViewById(R.id.fragment_main_container);
-        ; // the main view of my activity/application
-
         DisplayMetrics dm = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(dm);
         int topOffset = dm.heightPixels - globalView.getMeasuredHeight();
 
-        View tempView = findViewById(R.id.proceed_studentchoices_button);
-        ; // the view you'd like to locate
+        // the view to locate
         int[] loc = new int[2];
-        tempView.getLocationOnScreen(loc);
+        view.getLocationOnScreen(loc);
 
-        final int x = loc[0];
-        final int y = loc[1] - topOffset;
+        int centreX = (int) (view.getX() + view.getWidth() / 2);
+        int centreY = (int) (view.getHeight() / 2);
 
-        Button btbt = (Button) findViewById(R.id.proceed_studentchoices_button);
-
-        int centreX = (int) (btbt.getX() + btbt.getWidth() / 2);
-        int centreY = (int) (btbt.getY() + btbt.getHeight() / 2);
+        int x = loc[0]+centreX;
+        int y = loc[1] - topOffset+centreY;
+        Log.d("asdasdas", " loc0 " + loc[0] + " loc1 " + loc[1]);
 
         Log.d("asdasdas", " x " + x + " y " + y + " offset " + topOffset);
-        Log.d("asdasdas", " centreX " + centreX + " centreY " + centreY+" "+btbt.getHeight()+" "+btbt.getY());
-        color = bm.getPixel(x + centreX, y);
-        Log.d("asdasdas", " color0" + color);
+        Log.d("asdasdas", " centreX " + centreX + " centreY " + centreY + " " + view.getHeight() + " " + view.getY());
+        return new int[]{x, y};
 
-        int red = Color.red(color);
-        int green = Color.green(color);
-        int blue = Color.blue(color);
+    }
+
+    private int convertColor(int colorCode) {
+        int red = Color.red(colorCode);
+        int green = Color.green(colorCode);
+        int blue = Color.blue(colorCode);
         float[] hsv = new float[3];
 
         Color.RGBToHSV(red, green, blue, hsv);
         Log.d("asdasdas", " H " + hsv[0] + " S " + hsv[1] + " V " + hsv[2]);
-        float s = hsv[1] /2;
-        float v = (1 - hsv[2])/2 + hsv[2];
+
+        float s = hsv[1] + 0.1f;
+        float v = hsv[2] + 0.1f;
         hsv[1] = s;
         hsv[2] = v;
 
-        int c1 = Color.HSVToColor( hsv );
-
-        btbt.setTextColor(c1);
+        return Color.HSVToColor(hsv);
     }
 
     @Override
