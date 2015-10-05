@@ -16,22 +16,17 @@ public class FragmentIELTS extends Fragment {
     private static SeekBar seekBar;
     private static TextView ieltsScore;
     private static Button proceedButton;
-    private View v;
     OnSeekBarUpdateListener mCallback;
+    private View v;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_studentchoicesielts, container, false);
+        mCallback.resetTextColorCount();
         createSeekBar();
         return v;
     }
-
-    // Container Activity must implement this interface
-    public interface OnSeekBarUpdateListener {
-        void updateProceedButton();
-    }
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -72,5 +67,12 @@ public class FragmentIELTS extends Fragment {
             }
         });
 
+    }
+
+    // Container Activity must implement this interface
+    public interface OnSeekBarUpdateListener {
+        void updateProceedButton();
+
+        void resetTextColorCount();
     }
 }

@@ -30,15 +30,22 @@ import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
 import java.util.LinkedList;
 
 public class EnterStudentChoicesActivity extends FragmentActivity
-        implements FragmentIELTS.OnSeekBarUpdateListener, FragmentTop.OnProgressCirclePageUpdateListener, FragmentProgram.OnTextColorUpdateListener, ViewTreeObserver.OnGlobalLayoutListener {
+        implements FragmentIELTS.OnSeekBarUpdateListener,
+            FragmentTop.OnProgressCirclePageUpdateListener,
+            FragmentProgram.OnFragmentChangeListener,
+            FragmentLanguageTest.OnFragmentChangeListener,
+            ViewTreeObserver.OnGlobalLayoutListener {
 
     Bitmap bm = null;
     LinearLayout layout = null;
     LinkedList<TextView> ll = null;
+    private int backgroundColorChangeCounter = 0;
+    private int textColorChangeCounter = 0;
     private Fragment fragTop = null;
     private Fragment fragTutorial = null;
     private Fragment fragBottom = null;
     private Fragment frag = null;
+    private String intendedFragment = null;
     private String currentFragment = null;
     private String nextFragment = null;
     private String previousFragment = null;
@@ -74,34 +81,48 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     public void onGlobalLayout() {
         //layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-        int width = layout.getMeasuredWidth();
-        int height = layout.getMeasuredHeight();
-        Log.d("asdasdas", " " + width + " " + height);
+        Log.d("asdasdas1", " 2" + getCurrentFragment() + " " + getIntendedFragment());
 
-        bm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bm);
-        LinearGradient linearGradient = new LinearGradient(0, 0, width, height, new int[]{0xFFce8905, 0xFF0f6748, 0xFF01095a}, new float[]{0.33f, 0.66f, 1}, Shader.TileMode.REPEAT);
-        Paint paint = new Paint();
-        paint.setShader(linearGradient);
-        paint.setDither(true);
-        canvas.drawRect(0, 0, width, height, paint);
+        if (backgroundColorChangeCounter == 0) {
+            Log.d("asdasdas1", " back");
+            int width = layout.getMeasuredWidth();
+            int height = layout.getMeasuredHeight();
+            Log.d("asdasdas", " " + width + " " + height);
 
-        layout.setBackground(new BitmapDrawable(getResources(), bm));
+            bm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bm);
+            LinearGradient linearGradient = new LinearGradient(0, 0, width, height, new int[]{0xFFce8905, 0xFF0f6748, 0xFF01095a}, new float[]{0.33f, 0.66f, 1}, Shader.TileMode.REPEAT);
+            Paint paint = new Paint();
+            paint.setShader(linearGradient);
+            paint.setDither(true);
+            canvas.drawRect(0, 0, width, height, paint);
 
-        ll = new LinkedList<TextView>();
-
-
-        LinkedList<TextView> tvlist = findAllTextView(layout);
-        Log.d("asdasdas", " ll " + ll.size());
-
-        for (TextView tv : tvlist) {
-            int[] k = getViewCoordinates(tv);
-            Log.d("asdasdas", " k0 " + k[0] + " k1 " + k[1]);
-
-            int convertedColor = convertColor(bm.getPixel(k[0], k[1]));
-
-            ((TextView) tv).setTextColor(convertedColor);
+            layout.setBackground(new BitmapDrawable(getResources(), bm));
+            backgroundColorChangeCounter++;
         }
+
+        if (textColorChangeCounter == 0) {
+            Log.d("asdasdas1", " text");
+            ll = new LinkedList<TextView>();
+
+            LinkedList<TextView> tvlist = findAllTextView(layout);
+            Log.d("asdasdas", " ll " + ll.size());
+
+            for (TextView tv : tvlist) {
+                int[] k = getViewCoordinates(tv);
+                Log.d("asdasdas", " k0 " + k[0] + " k1 " + k[1]);
+
+                int convertedColor = convertColor(bm.getPixel(k[0], k[1]));
+
+                ((TextView) tv).setTextColor(convertedColor);
+            }
+            textColorChangeCounter++;
+        }
+
+    }
+
+    public void resetTextColorCount() {
+        this.textColorChangeCounter = 0;
     }
 
     public void updateColor() {
@@ -285,6 +306,14 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         bt.startAnimation(fadeout);
     }
 
+    private String getIntendedFragment() {
+        return this.intendedFragment;
+    }
+
+    private void setIntendedFragment(String fragment) {
+        this.intendedFragment = fragment;
+    }
+
     private String getCurrentFragment() {
         return this.currentFragment;
     }
@@ -335,12 +364,16 @@ public class EnterStudentChoicesActivity extends FragmentActivity
                 setBlurBackground();
             }
         } else {
+
+            setIntendedFragment(getCurrentFragment());
+            Log.d("asdasdas1", " 1" + getCurrentFragment() + " " + getIntendedFragment());
             proceedButton.setTextColor(getResources().getColor(R.color.white));
             String fragment = getNextFragment();
             setFragmentView(fragment, true);
             setCurrentFragment(fragment);
-            //updateTitleText(fragment);
+            updateTitleText(fragment);
             disabledButton = true;
+
             //updateColor();
         }
     }

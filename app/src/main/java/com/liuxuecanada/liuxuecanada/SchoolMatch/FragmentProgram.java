@@ -12,22 +12,23 @@ import com.liuxuecanada.liuxuecanada.R;
 
 public class FragmentProgram extends Fragment {
 
-    OnTextColorUpdateListener mCallback;
+    OnFragmentChangeListener mCallback;
     int colorCode = 0;
     View v = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        mCallback.resetTextColorCount();
         v =  inflater.inflate(R.layout.fragment_studentchoicesprogram, container, false);
         return v;
     }
 
     // Container Activity must implement this interface
-    public interface OnTextColorUpdateListener {
+    public interface OnFragmentChangeListener {
         void updateTextColor();
+        void resetTextColorCount();
     }
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -36,10 +37,10 @@ public class FragmentProgram extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            mCallback = (OnTextColorUpdateListener) activity;
+            mCallback = (OnFragmentChangeListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnTextColorUpdateListener");
+                    + " must implement OnFragmentChangeListener");
         }
     }
 
