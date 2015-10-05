@@ -34,6 +34,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
     Bitmap bm = null;
     LinearLayout layout = null;
+    LinkedList<TextView> ll = null;
     private Fragment fragTop = null;
     private Fragment fragTutorial = null;
     private Fragment fragBottom = null;
@@ -44,7 +45,6 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     private Button proceedButton = null;
     private TextView topText = null;
     private boolean disabledButton = true;
-    LinkedList<TextView> ll = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +65,10 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_bottom_container, fragBottom).addToBackStack(null).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, frag).addToBackStack(null).commit();
             setCurrentFragment("program");
-
         }
 
         layout = (LinearLayout) findViewById(R.id.fragment_main_container);
         layout.getViewTreeObserver().addOnGlobalLayoutListener(this);
-
     }
 
     public void onGlobalLayout() {
@@ -96,7 +94,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         LinkedList<TextView> tvlist = findAllTextView(layout);
         Log.d("asdasdas", " ll " + ll.size());
 
-        for(TextView tv: tvlist){
+        for (TextView tv : tvlist) {
             int[] k = getViewCoordinates(tv);
             Log.d("asdasdas", " k0 " + k[0] + " k1 " + k[1]);
 
@@ -106,14 +104,14 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         }
     }
 
-    public void updateColor(){
+    public void updateColor() {
         ll = new LinkedList<TextView>();
 
 
         LinkedList<TextView> tvlist = findAllTextView(layout);
         Log.d("asdasdas", " ll " + ll.size());
 
-        for(TextView tv: tvlist){
+        for (TextView tv : tvlist) {
             int[] k = getViewCoordinates(tv);
             Log.d("asdasdas", " k0 " + k[0] + " k1 " + k[1]);
 
@@ -123,14 +121,14 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         }
     }
 
-    private LinkedList<TextView> findAllTextView(ViewGroup viewgroup){
+    private LinkedList<TextView> findAllTextView(ViewGroup viewgroup) {
         int count = viewgroup.getChildCount();
 
-        for (int i = 0; i < count; i++){
+        for (int i = 0; i < count; i++) {
             View view = viewgroup.getChildAt(i);
             if (view instanceof ViewGroup)
                 findAllTextView((ViewGroup) view);
-            else if(view instanceof TextView)
+            else if (view instanceof TextView)
                 ll.addLast((TextView) view);
         }
 
@@ -150,8 +148,8 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         int centreX = (int) (view.getWidth() / 2);
         int centreY = (int) (view.getHeight() / 2);
 
-        int x = loc[0]+centreX;
-        int y = loc[1] - topOffset+centreY;
+        int x = loc[0] + centreX;
+        int y = loc[1] - topOffset + centreY;
         Log.d("asdasdas", " loc0 " + loc[0] + " loc1 " + loc[1]);
         Log.d("asdasdas", " x " + x + " y " + y + " offset " + topOffset);
         Log.d("asdasdas", " centreX " + centreX + " centreY " + centreY + " " + view.getHeight() + " " + view.getY());
@@ -166,22 +164,17 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         float[] hsv = new float[3];
 
         Color.RGBToHSV(red, green, blue, hsv);
-        Log.d("asdasdas", " H " + hsv[0] + " S " + hsv[1] + " V " + hsv[2]);
+        Log.d("asdasdas", "Before H " + hsv[0] + " S " + hsv[1] + " V " + hsv[2]);
 
-        float s = hsv[1] - 0.2f;
-        float v = hsv[2] + 0.2f;
+        if (hsv[2] < 0.6f) {
+            hsv[2] = 1.0f;
+        } else {
+            hsv[0] = (hsv[0] - 10.0f) < 0 ? hsv[0] + 350.0f : hsv[0] - 10.0f;
+            hsv[1] = hsv[1] > 0.5 ? hsv[1] - 0.3f : hsv[1] + 0.3f;
+            hsv[2] = 1.0f;
+        }
 
-
-        if (s < 0 )
-            hsv[1] = 0;
-        else
-            hsv[1] = s;
-
-        if (v > 1)
-            hsv[2] = 1;
-        else
-            hsv[2] = v;
-
+        Log.d("asdasdas", "After H " + hsv[0] + " S " + hsv[1] + " V " + hsv[2]);
 
         return Color.HSVToColor(hsv);
     }
@@ -346,7 +339,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             String fragment = getNextFragment();
             setFragmentView(fragment, true);
             setCurrentFragment(fragment);
-            updateTitleText(fragment);
+            //updateTitleText(fragment);
             disabledButton = true;
             //updateColor();
         }

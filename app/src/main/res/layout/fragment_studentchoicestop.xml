@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left|center_vertical"
         android:background="#00ffffff"
-        android:text="选择方向"
-        android:textSize="32sp"
-        android:textColor="@color/white" />
+        android:text="专业方向"
+        android:textColor="@color/white"
+        android:textSize="32sp" />
 
 
     <RelativeLayout
@@ -37,7 +37,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="0/0"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
     </RelativeLayout>
 
 </LinearLayout>
