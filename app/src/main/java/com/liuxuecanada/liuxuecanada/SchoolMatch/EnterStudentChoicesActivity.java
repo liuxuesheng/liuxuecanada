@@ -7,15 +7,14 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.PaintDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -28,10 +27,11 @@ import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
 
 public class EnterStudentChoicesActivity extends FragmentActivity
-        implements FragmentIELTS.OnSeekBarUpdateListener, FragmentTop.OnProgressCirclePageUpdateListener, FragmentProgram.OnTextColorUpdateListener {
+        implements FragmentIELTS.OnSeekBarUpdateListener, FragmentTop.OnProgressCirclePageUpdateListener, FragmentProgram.OnTextColorUpdateListener, ViewTreeObserver.OnGlobalLayoutListener {
 
     int color = 0;
     Bitmap bm = null;
+    LinearLayout layout = null;
     private Fragment fragTop = null;
     private Fragment fragTutorial = null;
     private Fragment fragBottom = null;
@@ -65,20 +65,19 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         }
 
-        LinearLayout layout = (LinearLayout) findViewById(R.id.fragment_main_container);
-        LinearLayout layout2 = (LinearLayout) findViewById(R.id.fragment_container);
+        layout = (LinearLayout) findViewById(R.id.fragment_main_container);
+        layout.getViewTreeObserver().addOnGlobalLayoutListener(this);
 
-/*
-        int width = layout.getWidth();
-        int height = layout.getHeight();
-*/
+    }
 
-        int width = 150;
-        int height = 300;
+    public void onGlobalLayout() {
+        layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-        Log.d("asdasdas"," "+width+" "+height);
+        int width = layout.getMeasuredWidth();
+        int height = layout.getMeasuredHeight();
+        Log.d("asdasdas", " " + width + " " + height);
 
-        bm = Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
+        bm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bm);
         LinearGradient linearGradient = new LinearGradient(0, 0, width, height, new int[]{0xFFce8905, 0xFF0f6748, 0xFF01095a}, new float[]{0.33f, 0.66f, 1}, Shader.TileMode.REPEAT);
         Paint paint = new Paint();
@@ -88,6 +87,51 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         layout.setBackground(new BitmapDrawable(getResources(), bm));
 
+        //
+        LinearLayout topc = (LinearLayout) findViewById(R.id.fragment_top_container);
+        LinearLayout mopc = (LinearLayout) findViewById(R.id.fragment_container);
+
+
+        View globalView = findViewById(R.id.fragment_main_container);
+        ; // the main view of my activity/application
+
+        DisplayMetrics dm = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int topOffset = dm.heightPixels - globalView.getMeasuredHeight();
+
+        View tempView = findViewById(R.id.proceed_studentchoices_button);
+        ; // the view you'd like to locate
+        int[] loc = new int[2];
+        tempView.getLocationOnScreen(loc);
+
+        final int x = loc[0];
+        final int y = loc[1] - topOffset;
+
+        Button btbt = (Button) findViewById(R.id.proceed_studentchoices_button);
+
+        int centreX = (int) (btbt.getX() + btbt.getWidth() / 2);
+        int centreY = (int) (btbt.getY() + btbt.getHeight() / 2);
+
+        Log.d("asdasdas", " x " + x + " y " + y + " offset " + topOffset);
+        Log.d("asdasdas", " centreX " + centreX + " centreY " + centreY+" "+btbt.getHeight()+" "+btbt.getY());
+        color = bm.getPixel(x + centreX, y);
+        Log.d("asdasdas", " color0" + color);
+
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+        float[] hsv = new float[3];
+
+        Color.RGBToHSV(red, green, blue, hsv);
+        Log.d("asdasdas", " H " + hsv[0] + " S " + hsv[1] + " V " + hsv[2]);
+        float s = hsv[1] /2;
+        float v = (1 - hsv[2])/2 + hsv[2];
+        hsv[1] = s;
+        hsv[2] = v;
+
+        int c1 = Color.HSVToColor( hsv );
+
+        btbt.setTextColor(c1);
     }
 
     @Override
@@ -135,6 +179,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     }
 
     public int updateTextColor() {
+/*
         int myx = 100;
         int myy = 200;
 
@@ -142,9 +187,10 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         color = bm.getPixel( myx, myy);
 
-        Log.d("asdasdas"," "+color+" !"+ Color.RED);
+        Log.d("asdasdas", " " + color + " !" + Color.RED);
         return color;
-
+*/
+        return -213516;
     }
 
 
