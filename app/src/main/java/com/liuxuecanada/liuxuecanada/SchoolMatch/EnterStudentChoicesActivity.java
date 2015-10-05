@@ -74,7 +74,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     }
 
     public void onGlobalLayout() {
-        layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+        //layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
         int width = layout.getMeasuredWidth();
         int height = layout.getMeasuredHeight();
@@ -104,14 +104,23 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
             ((TextView) tv).setTextColor(convertedColor);
         }
+    }
 
-/*        View tempView = findViewById(R.id.proceed_studentchoices_button);
-        int[] k = getViewCoordinates(tempView);
+    public void updateColor(){
+        ll = new LinkedList<TextView>();
 
-        int convertedColor = convertColor(bm.getPixel(k[0], k[1]));
 
-        ((Button) tempView).setTextColor(bm.getPixel(k[0], k[1]));
-        //((Button) tempView).setTextColor(convertedColor);*/
+        LinkedList<TextView> tvlist = findAllTextView(layout);
+        Log.d("asdasdas", " ll " + ll.size());
+
+        for(TextView tv: tvlist){
+            int[] k = getViewCoordinates(tv);
+            Log.d("asdasdas", " k0 " + k[0] + " k1 " + k[1]);
+
+            int convertedColor = convertColor(bm.getPixel(k[0], k[1]));
+
+            ((TextView) tv).setTextColor(convertedColor);
+        }
     }
 
     private LinkedList<TextView> findAllTextView(ViewGroup viewgroup){
@@ -144,7 +153,6 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         int x = loc[0]+centreX;
         int y = loc[1] - topOffset+centreY;
         Log.d("asdasdas", " loc0 " + loc[0] + " loc1 " + loc[1]);
-
         Log.d("asdasdas", " x " + x + " y " + y + " offset " + topOffset);
         Log.d("asdasdas", " centreX " + centreX + " centreY " + centreY + " " + view.getHeight() + " " + view.getY());
         return new int[]{x, y};
@@ -160,10 +168,20 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         Color.RGBToHSV(red, green, blue, hsv);
         Log.d("asdasdas", " H " + hsv[0] + " S " + hsv[1] + " V " + hsv[2]);
 
-        float s = hsv[1] + 0.1f;
-        float v = hsv[2] + 0.1f;
-        hsv[1] = s;
-        hsv[2] = v;
+        float s = hsv[1] - 0.2f;
+        float v = hsv[2] + 0.2f;
+
+
+        if (s < 0 )
+            hsv[1] = 0;
+        else
+            hsv[1] = s;
+
+        if (v > 1)
+            hsv[2] = 1;
+        else
+            hsv[2] = v;
+
 
         return Color.HSVToColor(hsv);
     }
@@ -212,19 +230,9 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         textProgress.setText("3/5");
     }
 
-    public int updateTextColor() {
-/*
-        int myx = 100;
-        int myy = 200;
+    public void updateTextColor() {
 
-        Log.d("asdasdas"," "+myx+" "+myy);
 
-        color = bm.getPixel( myx, myy);
-
-        Log.d("asdasdas", " " + color + " !" + Color.RED);
-        return color;
-*/
-        return -213516;
     }
 
 
@@ -340,6 +348,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             setCurrentFragment(fragment);
             updateTitleText(fragment);
             disabledButton = true;
+            //updateColor();
         }
     }
 

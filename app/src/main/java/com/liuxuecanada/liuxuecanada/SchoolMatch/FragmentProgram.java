@@ -25,7 +25,7 @@ public class FragmentProgram extends Fragment {
 
     // Container Activity must implement this interface
     public interface OnTextColorUpdateListener {
-        int updateTextColor();
+        void updateTextColor();
     }
 
 
@@ -46,10 +46,7 @@ public class FragmentProgram extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
-        colorCode = mCallback.updateTextColor();
-        Button bt = (Button) v.findViewById(R.id.arts_button);
-        bt.setTextColor(colorCode);
-
+        mCallback.updateTextColor();
     }
 
 
