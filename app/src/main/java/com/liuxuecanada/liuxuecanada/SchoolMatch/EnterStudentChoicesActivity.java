@@ -100,9 +100,9 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             int[] k = getViewCoordinates(tv);
             Log.d("asdasdas", " k0 " + k[0] + " k1 " + k[1]);
 
-            //int convertedColor = convertColor(bm.getPixel(k[0], k[1]));
+            int convertedColor = convertColor(bm.getPixel(k[0], k[1]));
 
-            //((TextView) tv).setTextColor(bm.getPixel(k[0], k[1]));
+            ((TextView) tv).setTextColor(convertedColor);
         }
 
 /*        View tempView = findViewById(R.id.proceed_studentchoices_button);
@@ -138,7 +138,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         int[] loc = new int[2];
         view.getLocationOnScreen(loc);
 
-        int centreX = (int) (view.getX() + view.getWidth() / 2);
+        int centreX = (int) (view.getWidth() / 2);
         int centreY = (int) (view.getHeight() / 2);
 
         int x = loc[0]+centreX;
