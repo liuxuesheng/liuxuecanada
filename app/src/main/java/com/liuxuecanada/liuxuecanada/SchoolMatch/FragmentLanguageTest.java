@@ -16,7 +16,7 @@ public class FragmentLanguageTest extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mCallback.resetTextColorCount();
-        return inflater.inflate(R.layout.fragment_studentchoiceslanguagetest, container, false);
+        return inflater.inflate(R.layout.fragment_studentchoices_languagetest, container, false);
     }
 
     @Override

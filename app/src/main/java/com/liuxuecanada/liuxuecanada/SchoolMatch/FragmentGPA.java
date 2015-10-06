@@ -14,14 +14,14 @@ public class FragmentGPA extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_studentchoicesgpa, container, false);
+        View v = inflater.inflate(R.layout.fragment_studentchoices_gpa, container, false);
         startAuto();
         return v;
     }
 
     private void
     startAuto(){
-        ObjectAnimator animation = ObjectAnimator.ofInt ( R.layout.fragment_studentchoicesgpa, "progress", 1, 100);
+        ObjectAnimator animation = ObjectAnimator.ofInt ( R.layout.fragment_studentchoices_gpa, "progress", 1, 100);
         animation.setDuration (5000); //in milliseconds
         animation.setInterpolator (new DecelerateInterpolator());
         animation.start ();

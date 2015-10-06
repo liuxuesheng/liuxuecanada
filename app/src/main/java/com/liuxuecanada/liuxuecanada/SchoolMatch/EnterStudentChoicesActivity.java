@@ -59,7 +59,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().hide();
 
-        setContentView(R.layout.fragment_studentchoicesmain);
+        setContentView(R.layout.fragment_studentchoices_main);
 
         if ((findViewById(R.id.fragment_container) != null) && (findViewById(R.id.fragment_top_container) != null) && (findViewById(R.id.fragment_bottom_container) != null)) {
             frag = new FragmentProgram();

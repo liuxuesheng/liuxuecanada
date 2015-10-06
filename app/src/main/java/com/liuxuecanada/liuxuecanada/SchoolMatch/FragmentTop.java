@@ -6,8 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.R;
 
@@ -18,7 +16,7 @@ public class FragmentTop extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_studentchoicestop, container, false);
+        return inflater.inflate(R.layout.fragment_studentchoices_top, container, false);
     }
 
     // Container Activity must implement this interface
