@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left|center_vertical"
         android:background="#00ffffff"
-        android:text="专业方向"
+        android:text="Select Acdemic Study"
         android:textColor="@color/white"
-        android:textSize="32sp" />
+        android:textSize="30sp" />
 
 
     <RelativeLayout

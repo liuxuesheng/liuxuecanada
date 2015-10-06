@@ -9,14 +9,22 @@ import android.view.ViewGroup;
 
 import com.liuxuecanada.liuxuecanada.R;
 
-public class FragmentLanguageTest extends Fragment {
+public class FragmentAcdemicType extends Fragment{
     OnFragmentCreatedListener mCallback;
+    int colorCode = 0;
+    View v = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mCallback.resetTextColorCount();
-        return inflater.inflate(R.layout.fragment_studentchoices_languagetest, container, false);
+        v =  inflater.inflate(R.layout.fragment_studentchoices_acdemictype, container, false);
+        return v;
+    }
+
+    // Container Activity must implement this interface
+    public interface OnFragmentCreatedListener {
+        void resetTextColorCount();
     }
 
     @Override
@@ -31,10 +39,5 @@ public class FragmentLanguageTest extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentChangeListener");
         }
-    }
-
-    // Container Activity must implement this interface
-    public interface OnFragmentCreatedListener {
-        void resetTextColorCount();
     }
 }

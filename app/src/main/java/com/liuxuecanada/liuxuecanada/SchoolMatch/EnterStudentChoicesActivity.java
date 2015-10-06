@@ -31,10 +31,11 @@ import java.util.LinkedList;
 
 public class EnterStudentChoicesActivity extends FragmentActivity
         implements FragmentIELTS.OnSeekBarUpdateListener,
-            FragmentTop.OnProgressCirclePageUpdateListener,
-            FragmentProgram.OnFragmentChangeListener,
-            FragmentLanguageTest.OnFragmentChangeListener,
-            ViewTreeObserver.OnGlobalLayoutListener {
+        FragmentTop.OnProgressCirclePageUpdateListener,
+        FragmentAcdemicType.OnFragmentCreatedListener,
+        FragmentProgram.OnFragmentCreatedListener,
+        FragmentLanguageTest.OnFragmentCreatedListener,
+        ViewTreeObserver.OnGlobalLayoutListener {
 
     Bitmap bm = null;
     LinearLayout layout = null;
@@ -62,7 +63,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         setContentView(R.layout.fragment_studentchoices_main);
 
         if ((findViewById(R.id.fragment_container) != null) && (findViewById(R.id.fragment_top_container) != null) && (findViewById(R.id.fragment_bottom_container) != null)) {
-            frag = new FragmentProgram();
+            frag = new FragmentAcdemicType();
             fragTop = new FragmentTop();
             fragBottom = new FragmentBottom();
             frag.setArguments(getIntent().getExtras());
@@ -71,7 +72,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_top_container, fragTop).addToBackStack(null).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_bottom_container, fragBottom).addToBackStack(null).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, frag).addToBackStack(null).commit();
-            setCurrentFragment("program");
+            setCurrentFragment("acdemicstudy");
         }
 
         layout = (LinearLayout) findViewById(R.id.fragment_main_container);
@@ -220,18 +221,20 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
     public void updateTitleText(String fragmentName) {
         String chineseName = null;
+        if (fragmentName == "acdemicstudy")
+            chineseName = "Choose Acdemic Study";
         if (fragmentName == "program") {
-            chineseName = "专业方向";
+            chineseName = "Choose Acdemic Area";
         } else if (fragmentName == "languagetest") {
-            chineseName = "语言考试";
+            chineseName = "Choose Language Test";
         } else if (fragmentName == "toefl") {
-            chineseName = "托福";
+            chineseName = "Enter TOEFL Results";
         } else if (fragmentName == "ielts") {
-            chineseName = "雅思";
+            chineseName = "Enter IELTS Results";
         } else if (fragmentName == "gpa") {
-            chineseName = "GPA成绩";
+            chineseName = "Enter your GPA";
         } else if (fragmentName == "gpacalculator") {
-            chineseName = "GPA计算器";
+            chineseName = "Use GPA Calculator";
         }
         topText = (TextView) findViewById(R.id.topTextString);
         topText.setText(chineseName);
@@ -243,12 +246,6 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         TextView textProgress = (TextView) findViewById(R.id.textView1);
         textProgress.setText("3/5");
     }
-
-    public void updateTextColor() {
-
-
-    }
-
 
     private void setFragmentView(String whichFragment, Boolean forward) {
         // Check that the activity is using the layout version with
@@ -262,19 +259,21 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 /*            if (savedInstanceState != null) {
                 return;
             }*/
-            if (whichFragment == "program") {
+            if (whichFragment == "acdemicstudy")
+                frag = new FragmentAcdemicType();
+            else if (whichFragment == "program")
                 frag = new FragmentProgram();
-            } else if (whichFragment == "languagetest") {
+            else if (whichFragment == "languagetest")
                 frag = new FragmentLanguageTest();
-            } else if (whichFragment == "toefl") {
+            else if (whichFragment == "toefl")
                 frag = new FragmentTOEFL();
-            } else if (whichFragment == "ielts") {
+            else if (whichFragment == "ielts")
                 frag = new FragmentIELTS();
-            } else if (whichFragment == "gpa") {
+            else if (whichFragment == "gpa")
                 frag = new FragmentGPA();
-            } else if (whichFragment == "gpacalculator") {
+            else if (whichFragment == "gpacalculator")
                 frag = new FragmentGPACalculator();
-            }
+
             frag.setArguments(getIntent().getExtras());
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             if (forward)
@@ -323,8 +322,10 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     }
 
     private String getPreviousFragment() {
-        if (getCurrentFragment() == "program")
+        if (getCurrentFragment() == "acdemicstudy")
             previousFragment = null;
+        else if (getCurrentFragment() == "program")
+            previousFragment = "acdemicstudy";
         else if (getCurrentFragment() == "languagetest")
             previousFragment = "program";
         else if (getCurrentFragment() == "toefl")
@@ -337,7 +338,9 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     }
 
     private String getNextFragment() {
-        if (getCurrentFragment() == "program")
+        if (getCurrentFragment() == "acdemicstudy")
+            nextFragment = "program";
+        else if (getCurrentFragment() == "program")
             nextFragment = "languagetest";
         else if (getCurrentFragment() == "languagetest")
             nextFragment = "ielts";

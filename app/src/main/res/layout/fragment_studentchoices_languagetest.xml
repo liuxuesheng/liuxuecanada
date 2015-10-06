@@ -21,7 +21,7 @@
             android:layout_rowWeight="1"
             android:background="#00ffffff"
             android:onClick="clickLanguageTestButton"
-            android:text="托福"
+            android:text="TOEFL"
             android:textColor="@color/white"
             android:textSize="24sp" />
 
@@ -36,7 +36,7 @@
             android:layout_rowWeight="1"
             android:background="#00ffffff"
             android:onClick="clickLanguageTestButton"
-            android:text="雅思"
+            android:text="IELTS"
             android:textColor="@color/white"
             android:textSize="24sp" />
 

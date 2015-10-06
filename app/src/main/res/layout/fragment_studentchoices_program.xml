@@ -7,7 +7,6 @@
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.618"
         android:columnCount="2"
         android:orientation="vertical"
         android:rowCount="3">
@@ -23,7 +22,7 @@
             android:layout_rowWeight="1"
             android:background="#00ffffff"
             android:onClick="clickProgramButton"
-            android:text="艺术类"
+            android:text="Arts"
             android:textColor="@color/white"
             android:textSize="24sp" />
 
@@ -38,7 +37,7 @@
             android:layout_rowWeight="1"
             android:background="#00ffffff"
             android:onClick="clickProgramButton"
-            android:text="理科"
+            android:text="Science"
             android:textColor="@color/white"
             android:textSize="24sp" />
 
@@ -53,7 +52,7 @@
             android:layout_rowWeight="1"
             android:background="#00ffffff"
             android:onClick="clickProgramButton"
-            android:text="工程类"
+            android:text="Engineering"
             android:textColor="@color/white"
             android:textSize="24sp" />
 
@@ -68,7 +67,7 @@
             android:layout_rowWeight="1"
             android:background="#00ffffff"
             android:onClick="clickProgramButton"
-            android:text="商科"
+            android:text="Business"
             android:textColor="@color/white"
             android:textSize="24sp" />
 
@@ -83,7 +82,7 @@
             android:layout_rowWeight="1"
             android:background="#00ffffff"
             android:onClick="clickProgramButton"
-            android:text="法学"
+            android:text="Law School"
             android:textColor="@color/white"
             android:textSize="24sp" />
 
@@ -98,7 +97,7 @@
             android:layout_rowWeight="1"
             android:background="#00ffffff"
             android:onClick="clickProgramButton"
-            android:text="医学"
+            android:text="Medical Shool"
             android:textColor="@color/white"
             android:textSize="24sp" />
     </GridLayout>
