@@ -1,18 +1,27 @@
 package com.liuxuecanada.liuxuecanada.SchoolMatch;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.RadialGradient;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -22,11 +31,18 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
+import com.liuxuecanada.liuxuecanada.Utils.WheelView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class EnterStudentChoicesActivity extends FragmentActivity
@@ -37,22 +53,27 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         FragmentLanguageTest.OnFragmentCreatedListener,
         ViewTreeObserver.OnGlobalLayoutListener {
 
+    private static final String[] acdemictypeitems = {"Undergraduate", "Postgraduate"};
     Bitmap bm = null;
     LinearLayout layout = null;
     LinkedList<TextView> ll = null;
+    LinkedList<JSONArray> pagell = null;
+    JSONArray jsonArray0 = null;
+    JSONArray jsonArray1 = null;
+    JSONArray jsonArray2 = null;
+    JSONArray jsonArray3 = null;
+
+
+    private LinkedList<String> allFlowItemNames = null;
     private int backgroundColorChangeCounter = 0;
     private int textColorChangeCounter = 0;
-    private Fragment fragTop = null;
     private Fragment fragTutorial = null;
-    private Fragment fragBottom = null;
     private Fragment frag = null;
-    private String intendedFragment = null;
     private String currentFragment = null;
-    private String nextFragment = null;
-    private String previousFragment = null;
     private Button proceedButton = null;
     private TextView topText = null;
     private boolean disabledButton = true;
+    private static final String[] PLANETS = new String[]{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Uranus", "Neptune", "Pluto"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +81,27 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().hide();
 
+        allFlowItemNames = new LinkedList<>();
+        pagell = new LinkedList<>();
+
+        Log.d("asdasdasize ", " now " + pagell.size());
+
         setContentView(R.layout.fragment_studentchoices_main);
 
-        if ((findViewById(R.id.fragment_container) != null) && (findViewById(R.id.fragment_top_container) != null) && (findViewById(R.id.fragment_bottom_container) != null)) {
+        asda();
+
+
+        createTopObjects();
+        createPage1Objects();
+        createBottomObjects();
+
+        createPage2Objects();
+
+        addObjectsToView(jsonArray0, R.id.fragment_top_container);
+        addObjectsToView(jsonArray1, R.id.fragment_container);
+        addObjectsToView(jsonArray2, R.id.fragment_bottom_container);
+
+/*        if ((findViewById(R.id.fragment_container) != null) && (findViewById(R.id.fragment_top_container) != null) && (findViewById(R.id.fragment_bottom_container) != null)) {
             frag = new FragmentAcdemicType();
             fragTop = new FragmentTop();
             fragBottom = new FragmentBottom();
@@ -73,18 +112,247 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_bottom_container, fragBottom).addToBackStack(null).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, frag).addToBackStack(null).commit();
             setCurrentFragment("acdemicstudy");
-        }
+            allFlowItemNames.addLast("acdemicstudy");
+        }*/
 
         layout = (LinearLayout) findViewById(R.id.fragment_main_container);
         layout.getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 
+    private WheelView createWheelView(){
+        WheelView wv = new WheelView(this);
+        wv.setItems(Arrays.asList(PLANETS));
+        wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+            @Override
+            public void onSelected(int selectedIndex, String item) {
+            }
+        });
+        return wv;
+    }
+
+    private TextView createTextView(int id, String name, int relation, int relationid, int textsize) {
+        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        p.addRule(RelativeLayout.CENTER_IN_PARENT);
+
+        if ((relation != 0) && (relationid != 0)) {
+            p.addRule(relation, relationid);
+        }
+        final TextView tv = new TextView(this);
+        tv.setId(id);
+        tv.setText(name);
+        tv.setLayoutParams(p);
+        tv.setBackgroundColor(Color.TRANSPARENT);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, textsize);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearMiddleContainer();
+                addObjectsToView(jsonArray3, R.id.fragment_container);
+                Log.d("asdasdasize ", " now2 " + pagell.size() + " tv name " + tv.getText());
+                pagell.addLast(jsonArray3);
+                Log.d("asdasdasize ", " now3 " + pagell.size());
+            }
+        });
+        return tv;
+    }
+
+    private void clearMiddleContainer() {
+        ((RelativeLayout) findViewById(R.id.fragment_container)).removeAllViews();
+    }
+
+    private ProgressBar createProgressBar(int id, int relation, int relationid) {
+
+        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        if ((relation != 0) && (relationid != 0))
+            p.addRule(relation, relationid);
+        ProgressBar pb = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
+        pb.setId(id);
+        pb.setLayoutParams(p);
+        pb.setBackgroundColor(Color.TRANSPARENT);
+        pb.setProgressDrawable(createDrawable(this));
+        return pb;
+    }
+
+    private Drawable createDrawable(Context context) {
+
+        ShapeDrawable shape = new ShapeDrawable();
+        shape.getPaint().setStyle(Paint.Style.FILL);
+        shape.getPaint().setColor(
+                context.getResources().getColor(R.color.Blue700));
+
+        shape.getPaint().setStyle(Paint.Style.STROKE);
+        shape.getPaint().setStrokeWidth(4);
+        shape.getPaint().setColor(
+                context.getResources().getColor(R.color.Red500));
+
+        ShapeDrawable shapeD = new ShapeDrawable();
+        shapeD.getPaint().setStyle(Paint.Style.FILL);
+        shapeD.getPaint().setColor(
+                context.getResources().getColor(R.color.Grey500));
+        ClipDrawable clipDrawable = new ClipDrawable(shapeD, Gravity.LEFT,
+                ClipDrawable.HORIZONTAL);
+
+        LayerDrawable layerDrawable = new LayerDrawable(new Drawable[]{
+                clipDrawable, shape});
+        return layerDrawable;
+    }
+
+    private void addObjectsToView(JSONArray jsonArray, int viewId) {
+        RelativeLayout middleView = (RelativeLayout) findViewById(viewId);
+        LinkedList<View> ll = new LinkedList<>();
+        TextView tv = null;
+        ProgressBar pb = null;
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                JSONObject item = jsonArray.getJSONObject(i);
+                if (item.getString("type").equals("textview")) {
+                    tv = createTextView(item.getInt("id"), item.getString("name"), item.getInt("relation"), item.getInt("relationid"), 24);
+                    ll.addLast(tv);
+                } else if (item.getString("type").equals("progressbar")) {
+                    pb = createProgressBar(item.getInt("id"), item.getInt("relation"), item.getInt("relationid"));
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        for (View view : ll) {
+            middleView.addView(view);
+        }
+    }
+
+    private void createTopObjects() {
+        jsonArray0 = new JSONArray();
+
+        JSONObject item1 = new JSONObject();
+        try {
+            item1.put("id", 730);
+            item1.put("type", "textview");
+            item1.put("name", "Title");
+            item1.put("relation", 0);
+            item1.put("relationid", 0);
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        JSONObject item2 = new JSONObject();
+        try {
+            item2.put("id", 731);
+            item2.put("type", "textview");
+            item2.put("name", "Progress");
+            item2.put("relation", RelativeLayout.RIGHT_OF);
+            item2.put("relationid", 730);
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        JSONObject item3 = new JSONObject();
+        try {
+            item3.put("id", 732);
+            item3.put("type", "progressbar");
+            item3.put("relation", RelativeLayout.RIGHT_OF);
+            item3.put("relationid", 730);
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        jsonArray0.put(item1);
+        jsonArray0.put(item2);
+        jsonArray0.put(item3);
+    }
+
+    private void createBottomObjects() {
+        jsonArray2 = new JSONArray();
+
+        JSONObject item1 = new JSONObject();
+        try {
+            item1.put("id", 649);
+            item1.put("type", "textview");
+            item1.put("name", "Continue");
+            item1.put("relation", 0);
+            item1.put("relationid", 0);
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        jsonArray2.put(item1);
+    }
+
+    private void createPage1Objects() {
+        jsonArray1 = new JSONArray();
+
+        JSONObject item1 = new JSONObject();
+        try {
+            item1.put("id", 1);
+            item1.put("type", "textview");
+            item1.put("name", "Undergraduate");
+            item1.put("relation", 0);
+            item1.put("relationid", 0);
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        JSONObject item2 = new JSONObject();
+        try {
+            item2.put("id", 2);
+            item2.put("type", "textview");
+            item2.put("name", "Postgraduate");
+            item2.put("relation", RelativeLayout.BELOW);
+            item2.put("relationid", 1);
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        jsonArray1.put(item1);
+        jsonArray1.put(item2);
+
+        pagell.addLast(jsonArray1);
+    }
+
+    private void createPage2Objects() {
+        jsonArray3 = new JSONArray();
+
+        JSONObject item1 = new JSONObject();
+        try {
+            item1.put("id", 1);
+            item1.put("type", "textview");
+            item1.put("name", "Page 2");
+            item1.put("relation", 0);
+            item1.put("relationid", 0);
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        jsonArray3.put(item1);
+
+    }
+
+    private void asda(){
+        RelativeLayout middleView = (RelativeLayout) findViewById(R.id.fragment_container);
+        middleView.addView(createWheelView());
+    }
+
     public void onGlobalLayout() {
         //layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-        Log.d("asdasdas1", " 2" + getCurrentFragment() + " " + getIntendedFragment());
-
+        Log.d("asdasdas1", " 2" + getCurrentFragment());
         if (backgroundColorChangeCounter == 0) {
+
+/*            Paint paint2 = new Paint();
+            paint2.setColor(Color.GREEN);
+
+            Paint paint3 = new Paint();
+            paint3.setColor(Color.RED);
+
+            Paint paint4 = new Paint();
+            paint4.setColor(Color.BLUE);
+
+            Paint paint5 = new Paint();
+            paint5.setColor(Color.YELLOW);*/
+
+
+
             Log.d("asdasdas1", " back");
             int width = layout.getMeasuredWidth();
             int height = layout.getMeasuredHeight();
@@ -92,11 +360,20 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
             bm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bm);
-            LinearGradient linearGradient = new LinearGradient(0, 0, width, height, new int[]{0xFFce8905, 0xFF0f6748, 0xFF01095a}, new float[]{0.33f, 0.66f, 1}, Shader.TileMode.REPEAT);
+            //LinearGradient linearGradient = new LinearGradient(0, 0, width, height, new int[]{0xFFce8905, 0xFF0f6748, 0xFF01095a}, new float[]{0.33f, 0.66f, 1}, Shader.TileMode.REPEAT);
+            RadialGradient radicalGradient = new RadialGradient(width, (int)(height*1.3), (int) (Math.sqrt(height*height+width*width)*1.5), new int[]{0xFFce8905, 0xFF0f6748, 0xFF01095a}, new float[]{0.3f, 0.6f, 0.9f}, Shader.TileMode.REPEAT);
             Paint paint = new Paint();
-            paint.setShader(linearGradient);
+            paint.setShader(radicalGradient);
             paint.setDither(true);
             canvas.drawRect(0, 0, width, height, paint);
+
+  /*          RectF rf = new RectF();
+            rf.set(40  , 10, 280, 250);
+            canvas.drawArc(rf, 0,360,true,paint2);
+            canvas.drawArc(rf, 0,240,true,paint3);*/
+            //canvas.drawArc(rf, 90,180,false,paint4);
+            //canvas.drawArc(rf, 180,260,false,paint5);
+
 
             layout.setBackground(new BitmapDrawable(getResources(), bm));
             backgroundColorChangeCounter++;
@@ -148,7 +425,9 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         for (int i = 0; i < count; i++) {
             View view = viewgroup.getChildAt(i);
-            if (view instanceof ViewGroup)
+            if (view instanceof WheelView)
+                continue;
+            else if (view instanceof ViewGroup)
                 findAllTextView((ViewGroup) view);
             else if (view instanceof TextView)
                 ll.addLast((TextView) view);
@@ -203,13 +482,18 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
     @Override
     public void onBackPressed() {
-        if (getPreviousFragment() == null) {
+        if (pagell.size() == 1) {
             finish();
         } else {
-            String fragment = getPreviousFragment();
+            Log.d("asdasdasize ", "" + pagell.size());
+            pagell.removeLast();
+            clearMiddleContainer();
+            addObjectsToView(pagell.getLast(), R.id.fragment_container);
+
+/*            String fragment = getPreviousFragment(getCurrentFragment());
             setFragmentView(fragment, false);
             setCurrentFragment(fragment);
-            updateTitleText(fragment);
+            updateTitleText(fragment);*/
         }
     }
 
@@ -281,6 +565,11 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             else
                 transaction.setCustomAnimations(R.anim.popenter, R.anim.popexit);
             transaction.replace(R.id.fragment_container, frag).addToBackStack(null).commit();
+
+            if (forward)
+                allFlowItemNames.addLast(whichFragment);
+            else
+                allFlowItemNames.removeLast();
         }
     }
 
@@ -305,14 +594,6 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         bt.startAnimation(fadeout);
     }
 
-    private String getIntendedFragment() {
-        return this.intendedFragment;
-    }
-
-    private void setIntendedFragment(String fragment) {
-        this.intendedFragment = fragment;
-    }
-
     private String getCurrentFragment() {
         return this.currentFragment;
     }
@@ -321,36 +602,34 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         this.currentFragment = fragment;
     }
 
-    private String getPreviousFragment() {
-        if (getCurrentFragment() == "acdemicstudy")
-            previousFragment = null;
-        else if (getCurrentFragment() == "program")
-            previousFragment = "acdemicstudy";
-        else if (getCurrentFragment() == "languagetest")
-            previousFragment = "program";
-        else if (getCurrentFragment() == "toefl")
-            previousFragment = "languagetest";
-        else if (getCurrentFragment() == "ielts")
-            previousFragment = "languagetest";
-        else if (getCurrentFragment() == "gpa")
-            previousFragment = "languagetest";
-        return this.previousFragment;
+    private String getPreviousFragment(String currentFragment) {
+        int index = -1;
+        for (int i = 0; i < allFlowItemNames.size(); i++) {
+            if (allFlowItemNames.get(i).equals(currentFragment)) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index == -1 || index == 0)
+            return null;
+        else
+            return allFlowItemNames.get(index - 1);
     }
 
-    private String getNextFragment() {
-        if (getCurrentFragment() == "acdemicstudy")
-            nextFragment = "program";
-        else if (getCurrentFragment() == "program")
-            nextFragment = "languagetest";
-        else if (getCurrentFragment() == "languagetest")
-            nextFragment = "ielts";
-        else if (getCurrentFragment() == "toefl")
-            nextFragment = "gpa";
-        else if (getCurrentFragment() == "ielts")
-            nextFragment = "gpa";
-        else if (getCurrentFragment() == "gpa")
-            nextFragment = "gpacalculator";
-        return this.nextFragment;
+    private String getNextFragment(String currentFragment) {
+        int index = -1;
+        for (int i = 0; i < allFlowItemNames.size(); i++) {
+            if (allFlowItemNames.get(i).equals(currentFragment)) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index == -1 || index == allFlowItemNames.size() - 1)
+            return null;
+        else
+            return allFlowItemNames.get(index + 1);
     }
 
     private void setBlurBackground() {
@@ -367,17 +646,12 @@ public class EnterStudentChoicesActivity extends FragmentActivity
                 setBlurBackground();
             }
         } else {
-
-            setIntendedFragment(getCurrentFragment());
-            Log.d("asdasdas1", " 1" + getCurrentFragment() + " " + getIntendedFragment());
             proceedButton.setTextColor(getResources().getColor(R.color.white));
-            String fragment = getNextFragment();
+            String fragment = getNextFragment(getCurrentFragment());
             setFragmentView(fragment, true);
             setCurrentFragment(fragment);
             updateTitleText(fragment);
             disabledButton = true;
-
-            //updateColor();
         }
     }
 

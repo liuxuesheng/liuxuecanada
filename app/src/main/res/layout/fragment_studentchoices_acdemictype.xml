@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:background="#00ffffff"
-        android:onClick="clickProgramButton"
         android:text="Undergraduate"
         android:textColor="@color/white"
         android:textSize="24sp" />
@@ -22,7 +21,6 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:background="#00ffffff"
-        android:onClick="clickProgramButton"
         android:text="Postgraduate"
         android:textColor="@color/white"
         android:textSize="24sp" />
