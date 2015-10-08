@@ -4,10 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.RadialGradient;
-import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ClipDrawable;
@@ -15,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -42,6 +41,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -54,6 +59,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         ViewTreeObserver.OnGlobalLayoutListener {
 
     private static final String[] acdemictypeitems = {"Undergraduate", "Postgraduate"};
+    private static final String[] PLANETS = new String[]{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Uranus", "Neptune", "Pluto"};
     Bitmap bm = null;
     LinearLayout layout = null;
     LinkedList<TextView> ll = null;
@@ -62,8 +68,8 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     JSONArray jsonArray1 = null;
     JSONArray jsonArray2 = null;
     JSONArray jsonArray3 = null;
-
-
+    JSONObject jObj = null;
+    JSONArray arr = null;
     private LinkedList<String> allFlowItemNames = null;
     private int backgroundColorChangeCounter = 0;
     private int textColorChangeCounter = 0;
@@ -73,7 +79,33 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     private Button proceedButton = null;
     private TextView topText = null;
     private boolean disabledButton = true;
-    private static final String[] PLANETS = new String[]{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Uranus", "Neptune", "Pluto"};
+
+    private static String convertStreamToString(InputStream is) {
+    /*
+     * To convert the InputStream to String we use the BufferedReader.readLine()
+     * method. We iterate until the BufferedReader return null which means
+     * there's no more data to read. Each line will appended to a StringBuilder
+     * and returned as String.
+     */
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+
+        String line = null;
+        try {
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return sb.toString();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,14 +122,19 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         asda();
 
-
         createTopObjects();
+
+        connect();
+
+
         createPage1Objects();
         createBottomObjects();
 
         createPage2Objects();
 
-        addObjectsToView(jsonArray0, R.id.fragment_top_container);
+        Log.d("asd3cs23 ", " HERE A");
+        addObjectsToView(arr, R.id.fragment_top_container);
+        Log.d("asd3cs23 ", " HERE B");
         addObjectsToView(jsonArray1, R.id.fragment_container);
         addObjectsToView(jsonArray2, R.id.fragment_bottom_container);
 
@@ -117,9 +154,62 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         layout = (LinearLayout) findViewById(R.id.fragment_main_container);
         layout.getViewTreeObserver().addOnGlobalLayoutListener(this);
+
+
     }
 
-    private WheelView createWheelView(){
+    public void connect() {
+        StrictMode.ThreadPolicy policy = new
+                StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        String out = "";
+
+        Log.d("sa8ah3n", " " + 19);
+
+        URL url;
+        HttpURLConnection urlConnection = null;
+        try {
+            url = new URL("http://10.135.50.41/liuxuecanadaserver/index.php");
+            Log.d("sa8ah3n", " " + 20);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            Log.d("sa8ah3n", " " + 21);
+            InputStream in = urlConnection.getInputStream();
+            Log.d("sa8ah3n", " " + 22);
+            out = readStream(in);
+            Log.d("sa8ah3n", " " + out);
+            arr = new JSONArray();
+            jObj = new JSONObject(out);
+            arr.put(jObj);
+
+            Log.d("sa8ah3n", " " + 23);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                urlConnection.disconnect();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    private String readStream(InputStream in) {
+        StringBuilder sb = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in));) {
+            String nextLine = "";
+            while ((nextLine = reader.readLine()) != null) {
+                sb.append(nextLine);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
+
+    private WheelView createWheelView() {
         WheelView wv = new WheelView(this);
         wv.setItems(Arrays.asList(PLANETS));
         wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
@@ -203,9 +293,12 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         TextView tv = null;
         ProgressBar pb = null;
 
+        Log.d("asd3cs23 ", " HERE " + jsonArray.length());
+        Log.d("asd3cs23 ", " HERE " + jsonArray.toString());
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject item = jsonArray.getJSONObject(i);
+                Log.d("asd3cs23 ", " HERE " + item.toString());
                 if (item.getString("type").equals("textview")) {
                     tv = createTextView(item.getInt("id"), item.getString("name"), item.getInt("relation"), item.getInt("relationid"), 24);
                     ll.addLast(tv);
@@ -328,7 +421,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
     }
 
-    private void asda(){
+    private void asda() {
         RelativeLayout middleView = (RelativeLayout) findViewById(R.id.fragment_container);
         middleView.addView(createWheelView());
     }
@@ -339,19 +432,6 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         Log.d("asdasdas1", " 2" + getCurrentFragment());
         if (backgroundColorChangeCounter == 0) {
 
-/*            Paint paint2 = new Paint();
-            paint2.setColor(Color.GREEN);
-
-            Paint paint3 = new Paint();
-            paint3.setColor(Color.RED);
-
-            Paint paint4 = new Paint();
-            paint4.setColor(Color.BLUE);
-
-            Paint paint5 = new Paint();
-            paint5.setColor(Color.YELLOW);*/
-
-
 
             Log.d("asdasdas1", " back");
             int width = layout.getMeasuredWidth();
@@ -361,19 +441,11 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             bm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bm);
             //LinearGradient linearGradient = new LinearGradient(0, 0, width, height, new int[]{0xFFce8905, 0xFF0f6748, 0xFF01095a}, new float[]{0.33f, 0.66f, 1}, Shader.TileMode.REPEAT);
-            RadialGradient radicalGradient = new RadialGradient(width, (int)(height*1.3), (int) (Math.sqrt(height*height+width*width)*1.5), new int[]{0xFFce8905, 0xFF0f6748, 0xFF01095a}, new float[]{0.3f, 0.6f, 0.9f}, Shader.TileMode.REPEAT);
+            RadialGradient radicalGradient = new RadialGradient(width, (int) (height * 1.3), (int) (Math.sqrt(height * height + width * width) * 1.5), new int[]{0xFFce8905, 0xFF0f6748, 0xFF01095a}, new float[]{0.3f, 0.6f, 0.9f}, Shader.TileMode.REPEAT);
             Paint paint = new Paint();
             paint.setShader(radicalGradient);
             paint.setDither(true);
             canvas.drawRect(0, 0, width, height, paint);
-
-  /*          RectF rf = new RectF();
-            rf.set(40  , 10, 280, 250);
-            canvas.drawArc(rf, 0,360,true,paint2);
-            canvas.drawArc(rf, 0,240,true,paint3);*/
-            //canvas.drawArc(rf, 90,180,false,paint4);
-            //canvas.drawArc(rf, 180,260,false,paint5);
-
 
             layout.setBackground(new BitmapDrawable(getResources(), bm));
             backgroundColorChangeCounter++;

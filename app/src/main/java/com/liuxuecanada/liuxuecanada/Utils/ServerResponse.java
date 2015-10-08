@@ -44,7 +44,7 @@ public class ServerResponse extends AsyncTask<String, Object, Object> {
         URL url;
         HttpURLConnection urlConnection = null;
         try {
-            url = new URL("http://10.135.50.41/liuxuecanadaserver/database.php");
+            url = new URL("http://10.135.50.41/liuxuecanadaserver/index.php");
             urlConnection = (HttpURLConnection) url.openConnection();
             InputStream in = urlConnection.getInputStream();
             out = readStream(in);
