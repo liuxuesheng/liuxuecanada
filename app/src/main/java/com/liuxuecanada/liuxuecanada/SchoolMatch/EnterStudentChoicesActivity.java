@@ -1,13 +1,8 @@
 package com.liuxuecanada.liuxuecanada.SchoolMatch;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RadialGradient;
-import android.graphics.Shader;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -17,12 +12,10 @@ import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -37,6 +30,7 @@ import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.adapters.ArrayWheelAdapter;
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
+import com.liuxuecanada.liuxuecanada.Utils.PaintService;
 import com.liuxuecanada.liuxuecanada.Utils.WheelView;
 
 import org.json.JSONArray;
@@ -62,7 +56,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
     private static final String[] acdemictypeitems = {"Undergraduate", "Postgraduate"};
     private static final String[] PLANETS = new String[]{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Uranus", "Neptune", "Pluto"};
-    Bitmap bm = null;
+
     LinearLayout layout = null;
     LinkedList<TextView> ll = null;
     LinkedList<JSONArray> pagell = null;
@@ -112,6 +106,8 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PaintService.setBackgroundPainted(false);
+
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().hide();
 
@@ -445,126 +441,22 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         //layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
         Log.d("asdasdas1", " 2" + getCurrentFragment());
-        if (backgroundColorChangeCounter == 0) {
 
-
-            Log.d("asdasdas1", " back");
-            int width = layout.getMeasuredWidth();
-            int height = layout.getMeasuredHeight();
-            Log.d("asdasdas", " " + width + " " + height);
-
-            bm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(bm);
-            //LinearGradient linearGradient = new LinearGradient(0, 0, width, height, new int[]{0xFFce8905, 0xFF0f6748, 0xFF01095a}, new float[]{0.33f, 0.66f, 1}, Shader.TileMode.REPEAT);
-            RadialGradient radicalGradient = new RadialGradient(width, (int) (height * 1.3), (int) (Math.sqrt(height * height + width * width) * 1.5), new int[]{0xFFce8905, 0xFF0f6748, 0xFF01095a}, new float[]{0.3f, 0.6f, 0.9f}, Shader.TileMode.REPEAT);
-            Paint paint = new Paint();
-            paint.setShader(radicalGradient);
-            paint.setDither(true);
-            canvas.drawRect(0, 0, width, height, paint);
-
-            layout.setBackground(new BitmapDrawable(getResources(), bm));
-            backgroundColorChangeCounter++;
+        if (PaintService.getBackgroundPainted() == false) {
+            PaintService.paintBackground(this, layout);
+            PaintService.setBackgroundPainted(true);
         }
 
-        if (textColorChangeCounter == 0) {
-            Log.d("asdasdas1", " text");
-            ll = new LinkedList<TextView>();
-
-            LinkedList<TextView> tvlist = findAllTextView(layout);
-            Log.d("asdasdas", " ll " + ll.size());
-
-            for (TextView tv : tvlist) {
-                int[] k = getViewCoordinates(tv);
-                Log.d("asdasdas", " k0 " + k[0] + " k1 " + k[1]);
-
-                int convertedColor = convertColor(bm.getPixel(k[0], k[1]));
-
-                ((TextView) tv).setTextColor(convertedColor);
-            }
-            textColorChangeCounter++;
+        if (PaintService.getTextPainted() == false) {
+            Log.d("asdasdas1", " @ ");
+            PaintService.paintText(this, layout);
+            PaintService.setTextPainted(true);
         }
 
     }
 
     public void resetTextColorCount() {
         this.textColorChangeCounter = 0;
-    }
-
-    public void updateColor() {
-        ll = new LinkedList<TextView>();
-
-
-        LinkedList<TextView> tvlist = findAllTextView(layout);
-        Log.d("asdasdas", " ll " + ll.size());
-
-        for (TextView tv : tvlist) {
-            int[] k = getViewCoordinates(tv);
-            Log.d("asdasdas", " k0 " + k[0] + " k1 " + k[1]);
-
-            int convertedColor = convertColor(bm.getPixel(k[0], k[1]));
-
-            ((TextView) tv).setTextColor(convertedColor);
-        }
-    }
-
-    private LinkedList<TextView> findAllTextView(ViewGroup viewgroup) {
-        int count = viewgroup.getChildCount();
-
-        for (int i = 0; i < count; i++) {
-            View view = viewgroup.getChildAt(i);
-            if (view instanceof WheelView)
-                continue;
-            else if (view instanceof ViewGroup)
-                findAllTextView((ViewGroup) view);
-            else if (view instanceof TextView)
-                ll.addLast((TextView) view);
-        }
-
-        return ll;
-    }
-
-    private int[] getViewCoordinates(View view) {
-        View globalView = findViewById(R.id.fragment_main_container);
-        DisplayMetrics dm = new DisplayMetrics();
-        this.getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int topOffset = dm.heightPixels - globalView.getMeasuredHeight();
-
-        // the view to locate
-        int[] loc = new int[2];
-        view.getLocationOnScreen(loc);
-
-        int centreX = (int) (view.getWidth() / 2);
-        int centreY = (int) (view.getHeight() / 2);
-
-        int x = loc[0] + centreX;
-        int y = loc[1] - topOffset + centreY;
-        Log.d("asdasdas", " loc0 " + loc[0] + " loc1 " + loc[1]);
-        Log.d("asdasdas", " x " + x + " y " + y + " offset " + topOffset);
-        Log.d("asdasdas", " centreX " + centreX + " centreY " + centreY + " " + view.getHeight() + " " + view.getY());
-        return new int[]{x, y};
-
-    }
-
-    private int convertColor(int colorCode) {
-        int red = Color.red(colorCode);
-        int green = Color.green(colorCode);
-        int blue = Color.blue(colorCode);
-        float[] hsv = new float[3];
-
-        Color.RGBToHSV(red, green, blue, hsv);
-        Log.d("asdasdas", "Before H " + hsv[0] + " S " + hsv[1] + " V " + hsv[2]);
-
-        if (hsv[2] < 0.6f) {
-            hsv[2] = 1.0f;
-        } else {
-            hsv[0] = (hsv[0] - 10.0f) < 0 ? hsv[0] + 350.0f : hsv[0] - 10.0f;
-            hsv[1] = hsv[1] > 0.5 ? hsv[1] - 0.3f : hsv[1] + 0.3f;
-            hsv[2] = 1.0f;
-        }
-
-        Log.d("asdasdas", "After H " + hsv[0] + " S " + hsv[1] + " V " + hsv[2]);
-
-        return Color.HSVToColor(hsv);
     }
 
     @Override
