@@ -33,6 +33,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.WheelSelector;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.adapters.ArrayWheelAdapter;
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
 import com.liuxuecanada.liuxuecanada.Utils.WheelView;
@@ -120,11 +122,11 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         setContentView(R.layout.fragment_studentchoices_main);
 
-        asda();
+        createWheelSelector();
 
         createTopObjects();
 
-        connect();
+        //connect();
 
 
         createPage1Objects();
@@ -133,7 +135,8 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         createPage2Objects();
 
         Log.d("asd3cs23 ", " HERE A");
-        addObjectsToView(arr, R.id.fragment_top_container);
+        //addObjectsToView(arr, R.id.fragment_top_container);
+        addObjectsToView(jsonArray0, R.id.fragment_top_container);
         Log.d("asd3cs23 ", " HERE B");
         addObjectsToView(jsonArray1, R.id.fragment_container);
         addObjectsToView(jsonArray2, R.id.fragment_bottom_container);
@@ -421,9 +424,21 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
     }
 
-    private void asda() {
+    private void createWheelSelector() {
+        final String[] universities = new String[]{"北京大学", "清华大学", "复旦大学", "武汉大学", "中国人民大学", "浙江大学", "上海交通大学", "南京大学", "中国科学技术大学", "国防科学技术大学"};
+
+        final WheelSelector universitySelector = new WheelSelector(this);
+
+        ArrayWheelAdapter<String> adapter =
+                new ArrayWheelAdapter<String>(this, universities);
+        adapter.setTextSize(12);
+        universitySelector.setViewAdapter(adapter);
+        universitySelector.setCurrentItem(universities.length / 2);
+        universitySelector.setVisibleItems(5);
+
         RelativeLayout middleView = (RelativeLayout) findViewById(R.id.fragment_container);
-        middleView.addView(createWheelView());
+        middleView.addView(universitySelector);
+
     }
 
     public void onGlobalLayout() {
