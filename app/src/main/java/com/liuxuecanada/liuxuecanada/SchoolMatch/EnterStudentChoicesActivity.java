@@ -475,7 +475,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
     @Override
     public void onBackPressed() {
-        if (pagell.size() == 1) {
+        if (pagell.size() <= 1) {
             finish();
         } else {
             Log.d("asdasdasize ", "" + pagell.size());
