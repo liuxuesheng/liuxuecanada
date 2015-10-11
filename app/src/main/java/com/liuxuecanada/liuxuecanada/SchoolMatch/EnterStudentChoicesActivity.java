@@ -108,6 +108,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PaintService.setBackgroundPainted(false);
+        PaintService.setTextPainted(false);
 
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().hide();
