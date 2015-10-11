@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -384,7 +385,7 @@ public class WheelSelector extends View {
         }else{
                 height = getDesiredHeight(itemsLayout);
         }
-
+        Log.d("asdasdasad ", " Z " + width+" "+height);
         setMeasuredDimension(width, height);
 
    /*     int desiredWidth = 100;

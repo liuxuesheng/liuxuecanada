@@ -73,7 +73,7 @@ public class JSONService {
         String[] universities = values.split(",");
 
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        p.addRule(RelativeLayout.CENTER_IN_PARENT);
+        p.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
         Log.d("asdasdasad ", " X ");
         if ((relation != 0) && (relationid != 0)) {
