@@ -37,7 +37,7 @@ public class JSONService {
         }
 
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        p.addRule(RelativeLayout.CENTER_IN_PARENT);
+        p.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
         if ((relation != 0) && (relationid != 0)) {
             Log.d("asdasdasad ", " k " + relation+ " "+relationid);

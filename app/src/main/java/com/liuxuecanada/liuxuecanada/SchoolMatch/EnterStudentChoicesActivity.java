@@ -320,7 +320,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         try {
             item1.put("id", 730);
             item1.put("type", "textview");
-            item1.put("name", "Title");
+            item1.put("name", "学术背景");
             item1.put("relation", 0);
             item1.put("relationid", 0);
             item1.put("size", 24);
@@ -332,7 +332,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         try {
             item2.put("id", 731);
             item2.put("type", "textview");
-            item2.put("name", "Progress");
+            item2.put("name", "进度");
             item2.put("relation", RelativeLayout.RIGHT_OF);
             item2.put("relationid", 730);
             item2.put("size", 18);
@@ -362,7 +362,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         try {
             item1.put("id", 649);
             item1.put("type", "textview");
-            item1.put("name", "Continue");
+            item1.put("name", "下一步");
             item1.put("relation", 0);
             item1.put("relationid", 0);
             item1.put("size", 18);
@@ -382,8 +382,8 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             item0.put("type", "wheelselectorview");
             item0.put("name", "universities");
             item0.put("values", "北京大学,清华大学,复旦大学,武汉大学,中国人民大学,浙江大学,上海交通大学,南京大学,中国科学技术大学,国防科学技术大学");
-            item0.put("relation", 0);
-            item0.put("relationid", 0);
+            item0.put("relation", RelativeLayout.BELOW);
+            item0.put("relationid", 311);
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
@@ -392,17 +392,43 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         JSONObject item1 = new JSONObject();
         try {
-            item1.put("id", 4);
+            item1.put("id", 310);
             item1.put("type", "wheelselectorview");
             item1.put("name", "majorcategory");
             item1.put("values", "哲学,经济学,法学,教育学,文学,历史学,理学,工学,农学,医学,军事学,管理学");
             item1.put("relation", RelativeLayout.BELOW);
-            item1.put("relationid", 309);
+            item1.put("relationid", 312);
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
 
+        JSONObject item2 = new JSONObject();
+        try {
+            item2.put("id", 311);
+            item2.put("type", "textview");
+            item2.put("name", "毕业院校");
+            item2.put("relation", 0);
+            item2.put("relationid", 0);
+            item2.put("size", 18);
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        JSONObject item3 = new JSONObject();
+        try {
+            item3.put("id", 312);
+            item3.put("type", "textview");
+            item3.put("name", "主修专业");
+            item3.put("relation", RelativeLayout.BELOW);
+            item3.put("relationid", 309);
+            item3.put("size", 18);
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        jsonArray1.put(item2);
         jsonArray1.put(item0);
+        jsonArray1.put(item3);
         jsonArray1.put(item1);
 
         pagell.addLast(jsonArray1);
@@ -415,7 +441,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         try {
             item1.put("id", 1);
             item1.put("type", "textview");
-            item1.put("name", "Page 2");
+            item1.put("name", "page 2");
             item1.put("relation", 0);
             item1.put("relationid", 0);
         } catch (JSONException ex) {
