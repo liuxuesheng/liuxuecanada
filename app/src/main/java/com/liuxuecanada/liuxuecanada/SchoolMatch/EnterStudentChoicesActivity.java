@@ -30,6 +30,7 @@ import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.adapters.ArrayWheelAdapter;
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
+import com.liuxuecanada.liuxuecanada.Utils.JSONService;
 import com.liuxuecanada.liuxuecanada.Utils.PaintService;
 import com.liuxuecanada.liuxuecanada.Utils.WheelView;
 
@@ -219,31 +220,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         return wv;
     }
 
-    private TextView createTextView(int id, String name, int relation, int relationid, int textsize) {
-        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        p.addRule(RelativeLayout.CENTER_IN_PARENT);
 
-        if ((relation != 0) && (relationid != 0)) {
-            p.addRule(relation, relationid);
-        }
-        final TextView tv = new TextView(this);
-        tv.setId(id);
-        tv.setText(name);
-        tv.setLayoutParams(p);
-        tv.setBackgroundColor(Color.TRANSPARENT);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, textsize);
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clearMiddleContainer();
-                addObjectsToView(jsonArray3, R.id.fragment_container);
-                Log.d("asdasdasize ", " now2 " + pagell.size() + " tv name " + tv.getText());
-                pagell.addLast(jsonArray3);
-                Log.d("asdasdasize ", " now3 " + pagell.size());
-            }
-        });
-        return tv;
-    }
 
     private void clearMiddleContainer() {
         ((RelativeLayout) findViewById(R.id.fragment_container)).removeAllViews();
@@ -291,6 +268,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         LinkedList<View> ll = new LinkedList<>();
         TextView tv = null;
         ProgressBar pb = null;
+        WheelSelector ws = null;
 
         Log.d("asd3cs23 ", " HERE " + jsonArray.length());
         Log.d("asd3cs23 ", " HERE " + jsonArray.toString());
@@ -299,10 +277,26 @@ public class EnterStudentChoicesActivity extends FragmentActivity
                 JSONObject item = jsonArray.getJSONObject(i);
                 Log.d("asd3cs23 ", " HERE " + item.toString());
                 if (item.getString("type").equals("textview")) {
-                    tv = createTextView(item.getInt("id"), item.getString("name"), item.getInt("relation"), item.getInt("relationid"), 24);
+                    tv = JSONService.createTextView(item,this);
+                    /*
+                            tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearMiddleContainer();
+                addObjectsToView(jsonArray3, R.id.fragment_container);
+                Log.d("asdasdasize ", " now2 " + pagell.size() + " tv name " + tv.getText());
+                pagell.addLast(jsonArray3);
+                Log.d("asdasdasize ", " now3 " + pagell.size());
+            }
+        });
+                    * */
                     ll.addLast(tv);
                 } else if (item.getString("type").equals("progressbar")) {
                     pb = createProgressBar(item.getInt("id"), item.getInt("relation"), item.getInt("relationid"));
+                } else if (item.getString("type").equals("wheelselectorview")){
+                    ws = JSONService.createWheelSelectorView(item, this);
+                    Log.d("asdasdasad ", " Y "+ws.getVisibleItems());
+                    ll.addLast(ws);
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -310,7 +304,11 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         }
 
         for (View view : ll) {
+            try{
             middleView.addView(view);
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -324,6 +322,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             item1.put("name", "Title");
             item1.put("relation", 0);
             item1.put("relationid", 0);
+            item1.put("size", 24);
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
@@ -335,6 +334,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             item2.put("name", "Progress");
             item2.put("relation", RelativeLayout.RIGHT_OF);
             item2.put("relationid", 730);
+            item2.put("size", 18);
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
@@ -364,6 +364,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             item1.put("name", "Continue");
             item1.put("relation", 0);
             item1.put("relationid", 0);
+            item1.put("size", 18);
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
@@ -374,30 +375,34 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     private void createPage1Objects() {
         jsonArray1 = new JSONArray();
 
+        JSONObject item0 = new JSONObject();
+        try {
+            item0.put("id", 309);
+            item0.put("type", "wheelselectorview");
+            item0.put("name", "universities");
+            item0.put("values", "北京大学,清华大学,复旦大学,武汉大学,中国人民大学,浙江大学,上海交通大学,南京大学,中国科学技术大学,国防科学技术大学");
+            item0.put("relation", 0);
+            item0.put("relationid", 0);
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        //final String[] universities = new String[]{"北京大学", "清华大学", "复旦大学", "武汉大学", "中国人民大学", "浙江大学", "上海交通大学", "南京大学", "中国科学技术大学", "国防科学技术大学"};
+
         JSONObject item1 = new JSONObject();
         try {
-            item1.put("id", 1);
-            item1.put("type", "textview");
-            item1.put("name", "Undergraduate");
-            item1.put("relation", 0);
-            item1.put("relationid", 0);
+            item1.put("id", 4);
+            item1.put("type", "wheelselectorview");
+            item1.put("name", "majorcategory");
+            item1.put("values", "哲学,经济学,法学,教育学,文学,历史学,理学,工学,农学,医学,军事学,管理学");
+            item1.put("relation", RelativeLayout.BELOW);
+            item1.put("relationid", 309);
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
 
-        JSONObject item2 = new JSONObject();
-        try {
-            item2.put("id", 2);
-            item2.put("type", "textview");
-            item2.put("name", "Postgraduate");
-            item2.put("relation", RelativeLayout.BELOW);
-            item2.put("relationid", 1);
-        } catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-
+        jsonArray1.put(item0);
         jsonArray1.put(item1);
-        jsonArray1.put(item2);
 
         pagell.addLast(jsonArray1);
     }
@@ -421,19 +426,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     }
 
     private void createWheelSelector() {
-        final String[] universities = new String[]{"北京大学", "清华大学", "复旦大学", "武汉大学", "中国人民大学", "浙江大学", "上海交通大学", "南京大学", "中国科学技术大学", "国防科学技术大学"};
 
-        final WheelSelector universitySelector = new WheelSelector(this);
-
-        ArrayWheelAdapter<String> adapter =
-                new ArrayWheelAdapter<String>(this, universities);
-        adapter.setTextSize(12);
-        universitySelector.setViewAdapter(adapter);
-        universitySelector.setCurrentItem(universities.length / 2);
-        universitySelector.setVisibleItems(5);
-
-        RelativeLayout middleView = (RelativeLayout) findViewById(R.id.fragment_container);
-        middleView.addView(universitySelector);
 
     }
 
