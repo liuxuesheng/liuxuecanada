@@ -90,6 +90,7 @@ public class JSONService {
         universitySelector.setCurrentItem(universities.length / 2);
         universitySelector.setVisibleItems(5);
         universitySelector.setLayoutParams(p);
+        universitySelector.setId(id);
         return universitySelector;
     }
 }
