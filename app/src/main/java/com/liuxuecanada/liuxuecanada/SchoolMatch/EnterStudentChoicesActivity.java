@@ -99,7 +99,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         getActionBar().hide();
 
         allFlowItemNames = new LinkedList<>();
-        pagell = new LinkedList<>();
+        pagell = new LinkedList<JSONArray>();
 
         setContentView(R.layout.fragment_studentchoices_main);
 
@@ -263,6 +263,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             }
         }
 
+        pagell.addLast(jsonArray);
     }
 
     public void onGlobalLayout() {
@@ -295,6 +296,8 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             Log.d("asdasdasize ", "" + pagell.size());
             pagell.removeLast();
             clearAllContainers();
+            resetTextColorCount();
+            addObjectsToView(pagell.getLast());
             //addObjectsToView(jsonArray0);
 
 /*            String fragment = getPreviousFragment(getCurrentFragment());
