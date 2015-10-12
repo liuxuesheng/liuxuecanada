@@ -1,19 +1,11 @@
 package com.liuxuecanada.liuxuecanada.SchoolMatch;
 
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.ClipDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -254,10 +246,19 @@ public class EnterStudentChoicesActivity extends FragmentActivity
                     Log.d("asdasdasad ", " Y " + ws.getVisibleItems());
                     ll.addLast(ws);
                     someView.addView(ws);
-                } else if (item.getString("type").equals("seekbar")){
-                    sb = JSONService.createSeekBarView(item, this);
-                    ll.addLast(sb);
-                    someView.addView(sb);
+                } else if (item.getString("type").equals("seekbar")) {
+                    int seekresultid;
+
+                    try {
+                        seekresultid = item.getInt("seekresultid");
+                        TextView seekresult = (TextView) findViewById(seekresultid);
+                        sb = JSONService.createSeekBarView(item, seekresult, this);
+                        ll.addLast(sb);
+                        someView.addView(sb);
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
+
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();

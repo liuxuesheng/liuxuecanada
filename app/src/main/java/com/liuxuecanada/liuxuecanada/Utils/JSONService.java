@@ -10,8 +10,6 @@ import android.graphics.drawable.ShapeDrawable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -26,7 +24,7 @@ import org.json.JSONObject;
 
 public class JSONService {
 
-    public static TextView createTextView(JSONObject jsonObject,Context context) {
+    public static TextView createTextView(JSONObject jsonObject, Context context) {
         int id;
         String name;
         int relation;
@@ -48,7 +46,7 @@ public class JSONService {
         p.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
         if ((relation != 0) && (relationid != 0)) {
-            Log.d("asdasdasad ", " k " + relation+ " "+relationid);
+            Log.d("asdasdasad ", " k " + relation + " " + relationid);
             p.addRule(relation, relationid);
         }
         TextView tv = new TextView(context);
@@ -61,7 +59,7 @@ public class JSONService {
         return tv;
     }
 
-    public static WheelSelector createWheelSelectorView(JSONObject jsonObject,Context context) {
+    public static WheelSelector createWheelSelectorView(JSONObject jsonObject, Context context) {
         int id;
         String name;
         String values;
@@ -86,7 +84,7 @@ public class JSONService {
 
         Log.d("asdasdasad ", " X ");
         if ((relation != 0) && (relationid != 0)) {
-            Log.d("asdasdasad ", " " + relation+ " "+relationid);
+            Log.d("asdasdasad ", " " + relation + " " + relationid);
             p.addRule(relation, relationid);
         }
 
@@ -152,7 +150,7 @@ public class JSONService {
         return layerDrawable;
     }
 
-    public static SeekBar createSeekBarView(JSONObject jsonObject, Context context) {
+    public static SeekBar createSeekBarView(JSONObject jsonObject, TextView seekresult, Context context) {
         int id;
         int relation;
         int relationid;
@@ -173,17 +171,19 @@ public class JSONService {
             p.addRule(relation, relationid);
 
         SeekBar seekBar = new SeekBar(context);
-        //TextView ieltsScore = (TextView) findViewById(seekresultid);
-        //ieltsScore.setText("Score: " + seekBar.getProgress());
         seekBar.setId(id);
         seekBar.setLayoutParams(p);
-/*        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+        final TextView seekBarResult = seekresult;
+        seekBarResult.setText("Score: " + seekBar.getProgress());
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int score = 0;
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 score = progress;
-                ieltsScore.setText("Score: " + progress);
+                seekBarResult.setText("Score: " + progress);
             }
 
             @Override
@@ -193,10 +193,10 @@ public class JSONService {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                ieltsScore.setText("Score: " + score);
-                mCallback.updateProceedButton();
+                seekBarResult.setText("Score: " + score);
+                //mCallback.updateProceedButton();
             }
-        });*/
+        });
 
         return seekBar;
     }
