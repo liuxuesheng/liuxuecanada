@@ -105,9 +105,9 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         //connect();
 
-        //addObjectsToView(coreEvaluation.createPage1());
+        addObjectsToView(coreEvaluation.createPage1());
 
-        addObjectsToView(coreEvaluation.createPage2());
+        //addObjectsToView(coreEvaluation.createPage2());
 
 /*        if ((findViewById(R.id.fragment_container) != null) && (findViewById(R.id.fragment_top_container) != null) && (findViewById(R.id.fragment_bottom_container) != null)) {
             frag = new FragmentAcdemicType();
@@ -191,9 +191,10 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         return wv;
     }
 
-
-    private void clearMiddleContainer() {
+    private void clearAllContainers() {
+        ((RelativeLayout) findViewById(R.id.fragment_top_container)).removeAllViews();
         ((RelativeLayout) findViewById(R.id.fragment_container)).removeAllViews();
+        ((RelativeLayout) findViewById(R.id.fragment_bottom_container)).removeAllViews();
     }
 
     private void addObjectsToView(JSONArray jsonArray) {
@@ -202,9 +203,8 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         RelativeLayout bottomView = (RelativeLayout) findViewById(R.id.fragment_bottom_container);
         RelativeLayout someView;
 
-        LinkedList<View> ll = new LinkedList<>();
+        final LinkedList<View> ll = new LinkedList<>();
 
-        TextView tv = null;
         ProgressBar pb = null;
         WheelSelector ws = null;
         SeekBar sb = null;
@@ -222,19 +222,17 @@ public class EnterStudentChoicesActivity extends FragmentActivity
                     break;
 
                 if (item.getString("type").equals("textview")) {
-                    tv = JSONService.createTextView(item, this);
-                    /*
-                            tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clearMiddleContainer();
-                addObjectsToView(jsonArray3, R.id.fragment_container);
-                Log.d("asdasdasize ", " now2 " + pagell.size() + " tv name " + tv.getText());
-                pagell.addLast(jsonArray3);
-                Log.d("asdasdasize ", " now3 " + pagell.size());
-            }
-        });
-                    * */
+                    final TextView tv = JSONService.createTextView(item, this);
+                    if (tv.getText() == "下一步"){
+                        tv.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                clearAllContainers();
+                                resetTextColorCount();
+                                addObjectsToView(coreEvaluation.createPage2());
+                            }
+                        });
+                    }
                     ll.addLast(tv);
                     someView.addView(tv);
                 } else if (item.getString("type").equals("progressbar")) {
@@ -296,7 +294,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         } else {
             Log.d("asdasdasize ", "" + pagell.size());
             pagell.removeLast();
-            clearMiddleContainer();
+            clearAllContainers();
             //addObjectsToView(jsonArray0);
 
 /*            String fragment = getPreviousFragment(getCurrentFragment());
