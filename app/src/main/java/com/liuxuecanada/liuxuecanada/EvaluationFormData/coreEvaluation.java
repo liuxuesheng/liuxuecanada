@@ -183,7 +183,7 @@ public class coreEvaluation {
         try {
             item4.put("id", 204);
             item4.put("type", "textview");
-            item4.put("name", "GPA: ");
+            item4.put("name", "GPA");
             item4.put("relation", 0);
             item4.put("relationid", 0);
             item4.put("size", 18);
@@ -195,11 +195,11 @@ public class coreEvaluation {
         JSONObject item5 = new JSONObject();
         try {
             item5.put("id", 205);
-            item5.put("type", "textview");
-            item5.put("name", "0.0");
-            item5.put("relation", RelativeLayout.RIGHT_OF);
+            item5.put("type", "seekbar");
+            item5.put("name", "GPA");
+            item5.put("relation", RelativeLayout.BELOW);
             item5.put("relationid", 204);
-            item5.put("size", 18);
+            item5.put("seekresultid", 204);
             item5.put("inlayout", "middle");
         } catch (JSONException ex) {
             ex.printStackTrace();
@@ -208,10 +208,11 @@ public class coreEvaluation {
         JSONObject item6 = new JSONObject();
         try {
             item6.put("id", 206);
-            item6.put("type", "seekbar");
+            item6.put("type", "textview");
+            item6.put("name", "IELTS");
             item6.put("relation", RelativeLayout.BELOW);
             item6.put("relationid", 205);
-            item6.put("seekresultid", 205);
+            item6.put("size", 18);
             item6.put("inlayout", "middle");
         } catch (JSONException ex) {
             ex.printStackTrace();
@@ -220,11 +221,11 @@ public class coreEvaluation {
         JSONObject item7 = new JSONObject();
         try {
             item7.put("id", 207);
-            item7.put("type", "textview");
-            item7.put("name", "IELTS: ");
+            item7.put("type", "seekbar");
+            item7.put("name", "IELTS");
             item7.put("relation", RelativeLayout.BELOW);
             item7.put("relationid", 206);
-            item7.put("size", 18);
+            item7.put("seekresultid", 206);
             item7.put("inlayout", "middle");
         } catch (JSONException ex) {
             ex.printStackTrace();
@@ -234,8 +235,8 @@ public class coreEvaluation {
         try {
             item8.put("id", 208);
             item8.put("type", "textview");
-            item8.put("name", "0.0");
-            item8.put("relation", RelativeLayout.RIGHT_OF);
+            item8.put("name", "TOEFL");
+            item8.put("relation", RelativeLayout.BELOW);
             item8.put("relationid", 207);
             item8.put("size", 18);
             item8.put("inlayout", "middle");
@@ -247,6 +248,7 @@ public class coreEvaluation {
         try {
             item9.put("id", 209);
             item9.put("type", "seekbar");
+            item9.put("name", "TOEFL");
             item9.put("relation", RelativeLayout.BELOW);
             item9.put("relationid", 208);
             item9.put("seekresultid", 208);

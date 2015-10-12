@@ -154,14 +154,14 @@ public class JSONService {
         int id;
         int relation;
         int relationid;
-        int seekresultid;
+        final String name;
 
         try {
             jsonObject.getString("type").equals("progressbar");
             id = jsonObject.getInt("id");
             relation = jsonObject.getInt("relation");
             relationid = jsonObject.getInt("relationid");
-            seekresultid = jsonObject.getInt("seekresultid");
+            name = jsonObject.getString("name");
         } catch (JSONException ex) {
             return null;
         }
@@ -175,7 +175,7 @@ public class JSONService {
         seekBar.setLayoutParams(p);
 
         final TextView seekBarResult = seekresult;
-        seekBarResult.setText("" + seekBar.getProgress());
+        seekBarResult.setText("" + name + ": " + seekBar.getProgress());
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int score = 0;
@@ -183,7 +183,7 @@ public class JSONService {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 score = progress;
-                seekBarResult.setText("" + progress);
+                seekBarResult.setText("" + name + ": " + progress);
             }
 
             @Override
@@ -193,7 +193,7 @@ public class JSONService {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                seekBarResult.setText("" + score);
+                seekBarResult.setText("" + name + ": " + score);
                 //mCallback.updateProceedButton();
             }
         });
