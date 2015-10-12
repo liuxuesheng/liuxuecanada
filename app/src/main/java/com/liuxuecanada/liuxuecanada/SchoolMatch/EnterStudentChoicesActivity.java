@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.WheelSelector;
@@ -108,20 +109,13 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         allFlowItemNames = new LinkedList<>();
         pagell = new LinkedList<>();
 
-        Log.d("asdasdasize ", " now " + pagell.size());
-
         setContentView(R.layout.fragment_studentchoices_main);
-
-        createWheelSelector();
 
         //connect();
 
-        createPage2Objects();
+        //addObjectsToView(coreEvaluation.createPage1());
 
-        Log.d("asd3cs23 ", " HERE A");
-        //addObjectsToView(arr, R.id.fragment_top_container);
-        addObjectsToView(coreEvaluation.createPage1());
-
+        addObjectsToView(coreEvaluation.createPage2());
 
 /*        if ((findViewById(R.id.fragment_container) != null) && (findViewById(R.id.fragment_top_container) != null) && (findViewById(R.id.fragment_bottom_container) != null)) {
             frag = new FragmentAcdemicType();
@@ -210,43 +204,6 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         ((RelativeLayout) findViewById(R.id.fragment_container)).removeAllViews();
     }
 
-    private ProgressBar createProgressBar(int id, int relation, int relationid) {
-
-        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        if ((relation != 0) && (relationid != 0))
-            p.addRule(relation, relationid);
-        ProgressBar pb = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
-        pb.setId(id);
-        pb.setLayoutParams(p);
-        pb.setBackgroundColor(Color.TRANSPARENT);
-        pb.setProgressDrawable(createDrawable(this));
-        return pb;
-    }
-
-    private Drawable createDrawable(Context context) {
-
-        ShapeDrawable shape = new ShapeDrawable();
-        shape.getPaint().setStyle(Paint.Style.FILL);
-        shape.getPaint().setColor(
-                context.getResources().getColor(R.color.Blue700));
-
-        shape.getPaint().setStyle(Paint.Style.STROKE);
-        shape.getPaint().setStrokeWidth(4);
-        shape.getPaint().setColor(
-                context.getResources().getColor(R.color.Red500));
-
-        ShapeDrawable shapeD = new ShapeDrawable();
-        shapeD.getPaint().setStyle(Paint.Style.FILL);
-        shapeD.getPaint().setColor(
-                context.getResources().getColor(R.color.Grey500));
-        ClipDrawable clipDrawable = new ClipDrawable(shapeD, Gravity.LEFT,
-                ClipDrawable.HORIZONTAL);
-
-        LayerDrawable layerDrawable = new LayerDrawable(new Drawable[]{
-                clipDrawable, shape});
-        return layerDrawable;
-    }
-
     private void addObjectsToView(JSONArray jsonArray) {
         RelativeLayout topView = (RelativeLayout) findViewById(R.id.fragment_top_container);
         RelativeLayout middleView = (RelativeLayout) findViewById(R.id.fragment_container);
@@ -258,6 +215,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         TextView tv = null;
         ProgressBar pb = null;
         WheelSelector ws = null;
+        SeekBar sb = null;
 
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
@@ -288,41 +246,23 @@ public class EnterStudentChoicesActivity extends FragmentActivity
                     ll.addLast(tv);
                     someView.addView(tv);
                 } else if (item.getString("type").equals("progressbar")) {
-                    pb = createProgressBar(item.getInt("id"), item.getInt("relation"), item.getInt("relationid"));
+                    pb = JSONService.createProgressBarView(item, this);
+                    ll.addLast(pb);
+                    someView.addView(pb);
                 } else if (item.getString("type").equals("wheelselectorview")) {
                     ws = JSONService.createWheelSelectorView(item, this);
                     Log.d("asdasdasad ", " Y " + ws.getVisibleItems());
                     ll.addLast(ws);
                     someView.addView(ws);
+                } else if (item.getString("type").equals("seekbar")){
+                    sb = JSONService.createSeekBarView(item, this);
+                    ll.addLast(sb);
+                    someView.addView(sb);
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
-
-    }
-
-
-    private void createPage2Objects() {
-        jsonArray3 = new JSONArray();
-
-        JSONObject item1 = new JSONObject();
-        try {
-            item1.put("id", 1);
-            item1.put("type", "textview");
-            item1.put("name", "page 2");
-            item1.put("relation", 0);
-            item1.put("relationid", 0);
-        } catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-
-        jsonArray3.put(item1);
-
-    }
-
-    private void createWheelSelector() {
-
 
     }
 

@@ -124,4 +124,107 @@ public class coreEvaluation {
 
         return jsonArray0;
     }
+
+
+    public static JSONArray createPage2() {
+        JSONArray jsonArray0 = new JSONArray();
+
+        JSONObject item0 = new JSONObject();
+        try {
+            item0.put("id", 200);
+            item0.put("type", "textview");
+            item0.put("name", "学术成绩");
+            item0.put("relation", 0);
+            item0.put("relationid", 0);
+            item0.put("size", 24);
+            item0.put("inlayout", "top");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        JSONObject item1 = new JSONObject();
+        try {
+            item1.put("id", 201);
+            item1.put("type", "textview");
+            item1.put("name", "进度");
+            item1.put("relation", RelativeLayout.RIGHT_OF);
+            item1.put("relationid", 200);
+            item1.put("size", 18);
+            item1.put("inlayout", "top");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        JSONObject item2 = new JSONObject();
+        try {
+            item2.put("id", 202);
+            item2.put("type", "progressbar");
+            item2.put("relation", RelativeLayout.RIGHT_OF);
+            item2.put("relationid", 200);
+            item2.put("inlayout", "top");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        JSONObject item3 = new JSONObject();
+        try {
+            item3.put("id", 203);
+            item3.put("type", "textview");
+            item3.put("name", "下一步");
+            item3.put("relation", 0);
+            item3.put("relationid", 0);
+            item3.put("size", 18);
+            item3.put("inlayout", "bottom");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        JSONObject item4 = new JSONObject();
+        try {
+            item4.put("id", 204);
+            item4.put("type", "textview");
+            item4.put("name", "GPA: ");
+            item4.put("relation", 0);
+            item4.put("relationid", 0);
+            item4.put("size", 18);
+            item4.put("inlayout", "middle");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        JSONObject item5 = new JSONObject();
+        try {
+            item5.put("id", 205);
+            item5.put("type", "textview");
+            item5.put("name", "0.0");
+            item5.put("relation", RelativeLayout.RIGHT_OF);
+            item5.put("relationid", 204);
+            item5.put("size", 18);
+            item5.put("inlayout", "middle");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        JSONObject item6 = new JSONObject();
+        try {
+            item6.put("id", 206);
+            item6.put("type", "seekbar");
+            item6.put("relation", RelativeLayout.BELOW);
+            item6.put("relationid", 205);
+            item6.put("seekresultid", 205);
+            item6.put("inlayout", "middle");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        jsonArray0.put(item0);
+        jsonArray0.put(item1);
+        jsonArray0.put(item2);
+        jsonArray0.put(item3);
+        jsonArray0.put(item4);
+        jsonArray0.put(item5);
+        jsonArray0.put(item6);
+
+        return jsonArray0;
+    }
 }
