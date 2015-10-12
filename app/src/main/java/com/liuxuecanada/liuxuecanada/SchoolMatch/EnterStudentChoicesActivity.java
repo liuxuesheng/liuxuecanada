@@ -99,15 +99,13 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         getActionBar().hide();
 
         allFlowItemNames = new LinkedList<>();
-        pagell = new LinkedList<JSONArray>();
+
 
         setContentView(R.layout.fragment_studentchoices_main);
 
         //connect();
 
-        addObjectsToView(coreEvaluation.createPage1());
-
-        //addObjectsToView(coreEvaluation.createPage2());
+        addObjectsToView(coreEvaluation.createPage1(),true);
 
 /*        if ((findViewById(R.id.fragment_container) != null) && (findViewById(R.id.fragment_top_container) != null) && (findViewById(R.id.fragment_bottom_container) != null)) {
             frag = new FragmentAcdemicType();
@@ -197,7 +195,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         ((RelativeLayout) findViewById(R.id.fragment_bottom_container)).removeAllViews();
     }
 
-    private void addObjectsToView(JSONArray jsonArray) {
+    private void addObjectsToView(JSONArray jsonArray, boolean addToBuffer) {
         RelativeLayout topView = (RelativeLayout) findViewById(R.id.fragment_top_container);
         RelativeLayout middleView = (RelativeLayout) findViewById(R.id.fragment_container);
         RelativeLayout bottomView = (RelativeLayout) findViewById(R.id.fragment_bottom_container);
@@ -223,13 +221,13 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
                 if (item.getString("type").equals("textview")) {
                     final TextView tv = JSONService.createTextView(item, this);
-                    if (tv.getText() == "下一步"){
+                    if (tv.getText() == "下一步") {
                         tv.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 clearAllContainers();
                                 resetTextColorCount();
-                                addObjectsToView(coreEvaluation.createPage2());
+                                addObjectsToView(coreEvaluation.createPage2(), true);
                             }
                         });
                     }
@@ -263,7 +261,13 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             }
         }
 
-        pagell.addLast(jsonArray);
+        if (addToBuffer) {
+            if (pagell == null)
+                pagell = new LinkedList<JSONArray>();
+            Log.d("asdasdasize ", " size before " + pagell.size());
+            pagell.addLast(jsonArray);
+            Log.d("asdasdasize ", " size after " + pagell.size());
+        }
     }
 
     public void onGlobalLayout() {
@@ -297,8 +301,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             pagell.removeLast();
             clearAllContainers();
             resetTextColorCount();
-            addObjectsToView(pagell.getLast());
-            //addObjectsToView(jsonArray0);
+            addObjectsToView(pagell.getLast(), false);
 
 /*            String fragment = getPreviousFragment(getCurrentFragment());
             setFragmentView(fragment, false);
