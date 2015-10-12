@@ -166,7 +166,7 @@ public class JSONService {
             return null;
         }
 
-        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         if ((relation != 0) && (relationid != 0))
             p.addRule(relation, relationid);
 
@@ -175,7 +175,7 @@ public class JSONService {
         seekBar.setLayoutParams(p);
 
         final TextView seekBarResult = seekresult;
-        seekBarResult.setText("Score: " + seekBar.getProgress());
+        seekBarResult.setText("" + seekBar.getProgress());
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int score = 0;
@@ -183,7 +183,7 @@ public class JSONService {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 score = progress;
-                seekBarResult.setText("Score: " + progress);
+                seekBarResult.setText("" + progress);
             }
 
             @Override
@@ -193,7 +193,7 @@ public class JSONService {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                seekBarResult.setText("Score: " + score);
+                seekBarResult.setText("" + score);
                 //mCallback.updateProceedButton();
             }
         });

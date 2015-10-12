@@ -217,6 +217,44 @@ public class coreEvaluation {
             ex.printStackTrace();
         }
 
+        JSONObject item7 = new JSONObject();
+        try {
+            item7.put("id", 207);
+            item7.put("type", "textview");
+            item7.put("name", "IELTS: ");
+            item7.put("relation", RelativeLayout.BELOW);
+            item7.put("relationid", 206);
+            item7.put("size", 18);
+            item7.put("inlayout", "middle");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        JSONObject item8 = new JSONObject();
+        try {
+            item8.put("id", 208);
+            item8.put("type", "textview");
+            item8.put("name", "0.0");
+            item8.put("relation", RelativeLayout.RIGHT_OF);
+            item8.put("relationid", 207);
+            item8.put("size", 18);
+            item8.put("inlayout", "middle");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        JSONObject item9 = new JSONObject();
+        try {
+            item9.put("id", 209);
+            item9.put("type", "seekbar");
+            item9.put("relation", RelativeLayout.BELOW);
+            item9.put("relationid", 208);
+            item9.put("seekresultid", 208);
+            item9.put("inlayout", "middle");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
         jsonArray0.put(item0);
         jsonArray0.put(item1);
         jsonArray0.put(item2);
@@ -224,6 +262,9 @@ public class coreEvaluation {
         jsonArray0.put(item4);
         jsonArray0.put(item5);
         jsonArray0.put(item6);
+        jsonArray0.put(item7);
+        jsonArray0.put(item8);
+        jsonArray0.put(item9);
 
         return jsonArray0;
     }
