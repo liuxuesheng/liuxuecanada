@@ -19,7 +19,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.WheelSelector;
-import com.liuxuecanada.liuxuecanada.EvaluationFormData.coreEvaluation;
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
 import com.liuxuecanada.liuxuecanada.Utils.JSONService;
@@ -48,7 +47,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         ViewTreeObserver.OnGlobalLayoutListener {
 
     private static final String[] PLANETS = new String[]{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Uranus", "Neptune", "Pluto"};
-
+    private final String mainURL = "http://10.135.50.41/liuxuecanadaserver/tests/test1/index.php?page=";
     LinearLayout layout = null;
     LinkedList<JSONArray> pagell = null;
     JSONArray jsonArray3 = null;
@@ -101,11 +100,18 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         allFlowItemNames = new LinkedList<>();
 
 
+        Log.d("sa8ah3n8sdh3 ", " " + RelativeLayout.ABOVE);
+        Log.d("sa8ah3n8sdh3 ", " " + RelativeLayout.BELOW);
+        Log.d("sa8ah3n8sdh3 ", " " + RelativeLayout.RIGHT_OF);
+        Log.d("sa8ah3n8sdh3 ", " " + RelativeLayout.LEFT_OF);
+
+
         setContentView(R.layout.fragment_studentchoices_main);
 
-        //connect();
+        connect(mainURL + 1);
 
-        addObjectsToView(coreEvaluation.createPage1(),true);
+        //addObjectsToView(coreEvaluation.createPage1(),true);
+        addObjectsToView(arr, true);
 
 /*        if ((findViewById(R.id.fragment_container) != null) && (findViewById(R.id.fragment_top_container) != null) && (findViewById(R.id.fragment_bottom_container) != null)) {
             frag = new FragmentAcdemicType();
@@ -127,19 +133,19 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
     }
 
-    public void connect() {
+    public void connect(String urlString) {
         StrictMode.ThreadPolicy policy = new
                 StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         String out = "";
 
-        Log.d("sa8ah3n", " " + 19);
+        Log.d("sa8ah3n", " " + 19 + " " + urlString);
 
         URL url;
         HttpURLConnection urlConnection = null;
         try {
-            url = new URL("http://10.135.50.41/liuxuecanadaserver/index.php");
+            url = new URL(urlString);
             Log.d("sa8ah3n", " " + 20);
             urlConnection = (HttpURLConnection) url.openConnection();
             Log.d("sa8ah3n", " " + 21);
@@ -147,9 +153,9 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             Log.d("sa8ah3n", " " + 22);
             out = readStream(in);
             Log.d("sa8ah3n", " " + out);
-            arr = new JSONArray();
-            jObj = new JSONObject(out);
-            arr.put(jObj);
+            arr = new JSONArray(out);
+            //jObj = new JSONObject(out);
+            //arr.put(jObj);
 
             Log.d("sa8ah3n", " " + 23);
         } catch (Exception e) {
@@ -221,13 +227,18 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
                 if (item.getString("type").equals("textview")) {
                     final TextView tv = JSONService.createTextView(item, this);
-                    if (tv.getText() == "下一步") {
+                    Log.d("asdasdas2da2ad ", " ABC1 " + tv.getText());
+                    if (tv.getText().equals("下一步")) {
+                        Log.d("asdasdas2da2ad ", " ABC2");
+                        final int nextPageNumber = item.getInt("nextPage");
+                        Log.d("asdasdas2da2ad ", " ABC3" + nextPageNumber);
                         tv.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 clearAllContainers();
                                 resetTextColorCount();
-                                addObjectsToView(coreEvaluation.createPage2(), true);
+                                connect(mainURL + nextPageNumber);
+                                addObjectsToView(arr, true);
                             }
                         });
                     }
