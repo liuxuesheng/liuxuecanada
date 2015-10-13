@@ -19,6 +19,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.WheelSelector;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.adapters.ArrayWheelAdapter;
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
 import com.liuxuecanada.liuxuecanada.Utils.JSONService;
@@ -215,7 +216,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
-                JSONObject item = jsonArray.getJSONObject(i);
+                final JSONObject item = jsonArray.getJSONObject(i);
                 if (item.getString("inlayout").equals("middle"))
                     someView = middleView;
                 else if (item.getString("inlayout").equals("top"))
@@ -231,14 +232,27 @@ public class EnterStudentChoicesActivity extends FragmentActivity
                     if (tv.getText().equals("下一步")) {
                         Log.d("asdasdas2da2ad ", " ABC2");
                         final int nextPageNumber = item.getInt("nextPage");
+                        final String savedatatype = item.getString("savedatatype");
                         Log.d("asdasdas2da2ad ", " ABC3" + nextPageNumber);
                         tv.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                Log.d("asdasdas2da2ad ", " ABC4");
+                                if (savedatatype.equals("wheelselectorview")) {
+                                    try {
+                                        int savedataid = item.getInt("savedataid");
+                                        WheelSelector ws = (WheelSelector) findViewById(savedataid);
+                                        int index = ws.getCurrentViewIndex();
+                                        Log.d("asdasdas2da2ad ", " ABC6 "+((ArrayWheelAdapter<String>) ws.getViewAdapter()).getItemText(index));
+                                    }catch (JSONException ex){
+                                        ex.printStackTrace();
+                                    }
+                                }
                                 clearAllContainers();
                                 resetTextColorCount();
                                 connect(mainURL + nextPageNumber);
                                 addObjectsToView(arr, true);
+                                Log.d("asdasdas2da2ad ", " ABC5");
                             }
                         });
                     }
