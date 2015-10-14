@@ -2,8 +2,10 @@ package com.liuxuecanada.liuxuecanada.RegistrationOffice;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
@@ -12,13 +14,10 @@ import com.liuxuecanada.liuxuecanada.Utils.PaintService;
 import com.liuxuecanada.liuxuecanada.Utils.ServerResponse;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.LinkedList;
 
 public class LoginActivity extends Activity
         implements AsyncResponse,
-        ViewTreeObserver.OnGlobalLayoutListener{
+        ViewTreeObserver.OnGlobalLayoutListener {
 
     private final String mainURL = "http://10.135.50.41/liuxuecanadaserver/register/index.php?page=";
     private LinearLayout layout = null;
@@ -37,6 +36,12 @@ public class LoginActivity extends Activity
 
         layout = (LinearLayout) findViewById(R.id.fragment_main_container);
         layout.getViewTreeObserver().addOnGlobalLayoutListener(this);
+
+        Log.d("7s73hs82h ", "KKK " + RelativeLayout.CENTER_HORIZONTAL); //14
+        Log.d("7s73hs82h ", "KKK " + RelativeLayout.ALIGN_LEFT); //5
+        Log.d("7s73hs82h ", "KKK " + RelativeLayout.ALIGN_RIGHT); //7
+
+
 
     }
 

@@ -31,6 +31,7 @@ public class JSONToComponentService {
         int relation;
         int relationid;
         int textsize;
+        String alignment;
 
         try {
             jsonObject.getString("type").equals("textview");
@@ -39,12 +40,22 @@ public class JSONToComponentService {
             relation = jsonObject.getInt("relation");
             relationid = jsonObject.getInt("relationid");
             textsize = jsonObject.getInt("size");
+            alignment = jsonObject.getString("alignment");
         } catch (JSONException ex) {
             return null;
         }
 
+        String[] alignmentArray = alignment.split(",");
+        int count = 0;
+
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        p.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        //p.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        while(count < alignmentArray.length) {
+            Log.d("7s73hs82h ", "B");
+            int alignmentInt = Integer.parseInt(alignmentArray[count]);
+            p.addRule(alignmentInt);
+            count++;
+        }
 
         if ((relation != 0) && (relationid != 0)) {
             Log.d("asdasdasad ", " k " + relation + " " + relationid);
@@ -63,29 +74,42 @@ public class JSONToComponentService {
     public static EditText createEditText(JSONObject jsonObject, Context context) {
         int id;
         //String name;
-        int relation;
-        int relationid;
+        String relation;
+        String relationid;
         String hint;
         //int textsize;
 
+        Log.d("7s73hs82h ", "AAA");
+
         try {
-            jsonObject.getString("type").equals("textview");
+            jsonObject.getString("type").equals("edittext");
             id = jsonObject.getInt("id");
             //name = jsonObject.getString("name");
-            relation = jsonObject.getInt("relation");
-            relationid = jsonObject.getInt("relationid");
+            relation = jsonObject.getString("relation");
+            relationid = jsonObject.getString("relationid");
             hint = jsonObject.getString("hint");
         } catch (JSONException ex) {
             return null;
         }
 
+        Log.d("7s73hs82h ", "A");
+        String[] relationArray = relation.split(",");
+        String[] relationidArray = relationid.split(",");
+        int count = 0;
+
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         p.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
-        if ((relation != 0) && (relationid != 0)) {
-            Log.d("asdasdasad ", " k " + relation + " " + relationid);
-            p.addRule(relation, relationid);
+        while(count < relationArray.length) {
+            Log.d("7s73hs82h ", "B");
+            int relatonInt = Integer.parseInt(relationArray[count]);
+            int relatonidInt = Integer.parseInt(relationidArray[count]);
+            if ((relatonInt != 0) && (relatonidInt != 0)) {
+                p.addRule(relatonInt, relatonidInt);
+            }
+            count++;
         }
+        Log.d("7s73hs82h ", "C");
         EditText et = new EditText(context);
         et.setId(id);
         et.setHint(hint);

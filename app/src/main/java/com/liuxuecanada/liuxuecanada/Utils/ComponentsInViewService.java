@@ -103,7 +103,9 @@ public class ComponentsInViewService {
                     }
 
                 } else if (item.getString("type").equals("edittext")){
+                    Log.d("7s73hs82h ", "QQ");
                     et = JSONToComponentService.createEditText(item, currentActivity);
+                    Log.d("7s73hs82h ", "QT");
                     ll.addLast(et);
                     someView.addView(et);
                 }
