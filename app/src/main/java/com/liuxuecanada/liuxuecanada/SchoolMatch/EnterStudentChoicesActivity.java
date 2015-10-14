@@ -1,11 +1,9 @@
 package com.liuxuecanada.liuxuecanada.SchoolMatch;
 
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -14,16 +12,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.WheelSelector;
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.adapters.ArrayWheelAdapter;
 import com.liuxuecanada.liuxuecanada.R;
+import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
 import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
-import com.liuxuecanada.liuxuecanada.Utils.JSONService;
+import com.liuxuecanada.liuxuecanada.Utils.ComponentsInViewService;
 import com.liuxuecanada.liuxuecanada.Utils.PaintService;
+import com.liuxuecanada.liuxuecanada.Utils.ServerResponse;
 import com.liuxuecanada.liuxuecanada.Utils.WheelView;
 
 import org.json.JSONArray;
@@ -34,8 +30,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -45,7 +39,8 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         FragmentAcdemicType.OnFragmentCreatedListener,
         FragmentProgram.OnFragmentCreatedListener,
         FragmentLanguageTest.OnFragmentCreatedListener,
-        ViewTreeObserver.OnGlobalLayoutListener {
+        ViewTreeObserver.OnGlobalLayoutListener,
+        AsyncResponse {
 
     private static final String[] PLANETS = new String[]{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Uranus", "Neptune", "Pluto"};
     private final String mainURL = "http://10.135.50.41/liuxuecanadaserver/tests/test1/index.php?page=";
@@ -90,6 +85,29 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     }
 
     @Override
+    public void onTaskComplete(Object out) {
+        try {
+            arr = new JSONArray((String) out);
+            ComponentsInViewService.addObjectsToView(arr, this, mainURL);
+
+            if (pagell == null)
+                pagell = new LinkedList<JSONArray>();
+
+            pagell.addLast(arr);
+
+            PaintService.setTextPainted(false);
+
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onTaskStart() {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PaintService.setBackgroundPainted(false);
@@ -100,19 +118,10 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         allFlowItemNames = new LinkedList<>();
 
-
-        Log.d("sa8ah3n8sdh3 ", " " + RelativeLayout.ABOVE);
-        Log.d("sa8ah3n8sdh3 ", " " + RelativeLayout.BELOW);
-        Log.d("sa8ah3n8sdh3 ", " " + RelativeLayout.RIGHT_OF);
-        Log.d("sa8ah3n8sdh3 ", " " + RelativeLayout.LEFT_OF);
-
-
         setContentView(R.layout.fragment_studentchoices_main);
 
-        connect(mainURL + 1);
-
-        //addObjectsToView(coreEvaluation.createPage1(),true);
-        addObjectsToView(arr, true);
+        ServerResponse pud = new ServerResponse(this);
+        pud.execute(mainURL + 1);
 
 /*        if ((findViewById(R.id.fragment_container) != null) && (findViewById(R.id.fragment_top_container) != null) && (findViewById(R.id.fragment_bottom_container) != null)) {
             frag = new FragmentAcdemicType();
@@ -134,57 +143,6 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
     }
 
-    public void connect(String urlString) {
-        StrictMode.ThreadPolicy policy = new
-                StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        String out = "";
-
-        Log.d("sa8ah3n", " " + 19 + " " + urlString);
-
-        URL url;
-        HttpURLConnection urlConnection = null;
-        try {
-            url = new URL(urlString);
-            Log.d("sa8ah3n", " " + 20);
-            urlConnection = (HttpURLConnection) url.openConnection();
-            Log.d("sa8ah3n", " " + 21);
-            InputStream in = urlConnection.getInputStream();
-            Log.d("sa8ah3n", " " + 22);
-            out = readStream(in);
-            Log.d("sa8ah3n", " " + out);
-            arr = new JSONArray(out);
-            //jObj = new JSONObject(out);
-            //arr.put(jObj);
-
-            Log.d("sa8ah3n", " " + 23);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                urlConnection.disconnect();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-
-    }
-
-    private String readStream(InputStream in) {
-        StringBuilder sb = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in));) {
-            String nextLine = "";
-            while ((nextLine = reader.readLine()) != null) {
-                sb.append(nextLine);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return sb.toString();
-    }
-
     private WheelView createWheelView() {
         WheelView wv = new WheelView(this);
         wv.setItems(Arrays.asList(PLANETS));
@@ -196,109 +154,9 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         return wv;
     }
 
-    private void clearAllContainers() {
-        ((RelativeLayout) findViewById(R.id.fragment_top_container)).removeAllViews();
-        ((RelativeLayout) findViewById(R.id.fragment_container)).removeAllViews();
-        ((RelativeLayout) findViewById(R.id.fragment_bottom_container)).removeAllViews();
-    }
-
-    private void addObjectsToView(JSONArray jsonArray, boolean addToBuffer) {
-        RelativeLayout topView = (RelativeLayout) findViewById(R.id.fragment_top_container);
-        RelativeLayout middleView = (RelativeLayout) findViewById(R.id.fragment_container);
-        RelativeLayout bottomView = (RelativeLayout) findViewById(R.id.fragment_bottom_container);
-        RelativeLayout someView;
-
-        final LinkedList<View> ll = new LinkedList<>();
-
-        ProgressBar pb = null;
-        WheelSelector ws = null;
-        SeekBar sb = null;
-
-        for (int i = 0; i < jsonArray.length(); i++) {
-            try {
-                final JSONObject item = jsonArray.getJSONObject(i);
-                if (item.getString("inlayout").equals("middle"))
-                    someView = middleView;
-                else if (item.getString("inlayout").equals("top"))
-                    someView = topView;
-                else if (item.getString("inlayout").equals("bottom"))
-                    someView = bottomView;
-                else
-                    break;
-
-                if (item.getString("type").equals("textview")) {
-                    final TextView tv = JSONService.createTextView(item, this);
-                    Log.d("asdasdas2da2ad ", " ABC1 " + tv.getText());
-                    if (tv.getText().equals("下一步")) {
-                        Log.d("asdasdas2da2ad ", " ABC2");
-                        final int nextPageNumber = item.getInt("nextPage");
-                        final String savedatatype = item.getString("savedatatype");
-                        Log.d("asdasdas2da2ad ", " ABC3" + nextPageNumber);
-                        tv.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Log.d("asdasdas2da2ad ", " ABC4");
-                                if (savedatatype.equals("wheelselectorview")) {
-                                    try {
-                                        int savedataid = item.getInt("savedataid");
-                                        WheelSelector ws = (WheelSelector) findViewById(savedataid);
-                                        int index = ws.getCurrentViewIndex();
-                                        Log.d("asdasdas2da2ad ", " ABC6 "+((ArrayWheelAdapter<String>) ws.getViewAdapter()).getItemText(index));
-                                    }catch (JSONException ex){
-                                        ex.printStackTrace();
-                                    }
-                                }
-                                clearAllContainers();
-                                resetTextColorCount();
-                                connect(mainURL + nextPageNumber);
-                                addObjectsToView(arr, true);
-                                Log.d("asdasdas2da2ad ", " ABC5");
-                            }
-                        });
-                    }
-                    ll.addLast(tv);
-                    someView.addView(tv);
-                } else if (item.getString("type").equals("progressbar")) {
-                    pb = JSONService.createProgressBarView(item, this);
-                    ll.addLast(pb);
-                    someView.addView(pb);
-                } else if (item.getString("type").equals("wheelselectorview")) {
-                    ws = JSONService.createWheelSelectorView(item, this);
-                    Log.d("asdasdasad ", " Y " + ws.getVisibleItems());
-                    ll.addLast(ws);
-                    someView.addView(ws);
-                } else if (item.getString("type").equals("seekbar")) {
-                    int seekresultid;
-
-                    try {
-                        seekresultid = item.getInt("seekresultid");
-                        TextView seekresult = (TextView) findViewById(seekresultid);
-                        sb = JSONService.createSeekBarView(item, seekresult, this);
-                        ll.addLast(sb);
-                        someView.addView(sb);
-                    } catch (JSONException ex) {
-                        ex.printStackTrace();
-                    }
-
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-
-        if (addToBuffer) {
-            if (pagell == null)
-                pagell = new LinkedList<JSONArray>();
-            Log.d("asdasdasize ", " size before " + pagell.size());
-            pagell.addLast(jsonArray);
-            Log.d("asdasdasize ", " size after " + pagell.size());
-        }
-    }
 
     public void onGlobalLayout() {
         //layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
-        Log.d("asdasdas1", " 2" + getCurrentFragment());
 
         if (PaintService.getBackgroundPainted() == false) {
             PaintService.paintBackground(this, layout);
@@ -306,7 +164,6 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         }
 
         if (PaintService.getTextPainted() == false) {
-            Log.d("asdasdas1", " @ ");
             PaintService.paintText(this, layout);
             PaintService.setTextPainted(true);
         }
@@ -322,16 +179,11 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         if (pagell.size() <= 1) {
             finish();
         } else {
-            Log.d("asdasdasize ", "" + pagell.size());
             pagell.removeLast();
-            clearAllContainers();
-            resetTextColorCount();
-            addObjectsToView(pagell.getLast(), false);
+            ComponentsInViewService.clearAllContainers(this);
+            PaintService.setTextPainted(false);
+            ComponentsInViewService.addObjectsToView(pagell.getLast(), this, mainURL);
 
-/*            String fragment = getPreviousFragment(getCurrentFragment());
-            setFragmentView(fragment, false);
-            setCurrentFragment(fragment);
-            updateTitleText(fragment);*/
         }
     }
 

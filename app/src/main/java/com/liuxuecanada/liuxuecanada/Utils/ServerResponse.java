@@ -1,6 +1,7 @@
 package com.liuxuecanada.liuxuecanada.Utils;
 
 import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.util.Log;
 
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
@@ -36,15 +37,14 @@ public class ServerResponse extends AsyncTask<String, Object, Object> {
 
     @Override
     protected String doInBackground(String... urls) {
-        try {
-            Thread.sleep(1000);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        /*StrictMode.ThreadPolicy policy = new
+                StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);*/
+
         URL url;
         HttpURLConnection urlConnection = null;
         try {
-            url = new URL("http://10.135.50.41/liuxuecanadaserver/index.php");
+            url = new URL(urls[0]);
             urlConnection = (HttpURLConnection) url.openConnection();
             InputStream in = urlConnection.getInputStream();
             out = readStream(in);

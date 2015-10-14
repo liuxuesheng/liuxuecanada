@@ -22,7 +22,7 @@ import com.liuxuecanada.liuxuecanada.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class JSONService {
+public class JSONToComponentService {
 
     public static TextView createTextView(JSONObject jsonObject, Context context) {
         int id;
