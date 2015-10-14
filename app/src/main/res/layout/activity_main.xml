@@ -1,25 +1,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/studentchoices_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Student Choices"
         android:layout_centerHorizontal="true"
-        android:onClick="goStudentChoices"/>
+        android:onClick="goStudentChoices"
+        android:text="Student Choices" />
 
     <Button
         android:id="@+id/choicesfeedback_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choices Feedback"
+        android:layout_below="@id/studentchoices_button"
         android:layout_centerHorizontal="true"
-        android:layout_toEndOf="@id/studentchoices_button"
-        android:onClick="goChoicesFeedback"/>
+        android:onClick="goChoicesFeedback"
+        android:text="Choices Feedback" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/choicesfeedback_button"
+        android:layout_centerHorizontal="true"
+        android:onClick="goLogin"
+        android:text="Login" />
+
 </RelativeLayout>

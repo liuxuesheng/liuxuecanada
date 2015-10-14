@@ -118,7 +118,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         allFlowItemNames = new LinkedList<>();
 
-        setContentView(R.layout.fragment_studentchoices_main);
+        setContentView(R.layout.flow_main);
 
         ServerResponse pud = new ServerResponse(this);
         pud.execute(mainURL + 1);

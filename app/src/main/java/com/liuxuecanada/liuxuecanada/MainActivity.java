@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.liuxuecanada.liuxuecanada.RegistrationOffice.LoginActivity;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackActivity;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.EnterStudentChoicesActivity;
 
@@ -33,6 +34,12 @@ public class MainActivity extends Activity {
         Intent myIntent = new Intent(MainActivity.this, ChoicesFeedbackActivity.class);
         MainActivity.this.startActivity(myIntent);
     }
+
+    public void goLogin(View view) {
+        Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
+        MainActivity.this.startActivity(myIntent);
+    }
+
 
 /*    <?xml version="1.0" encoding="utf-8"?>
     <shape xmlns:android="http://schemas.android.com/apk/res/android"
