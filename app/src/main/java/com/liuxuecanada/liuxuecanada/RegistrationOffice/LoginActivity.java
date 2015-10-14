@@ -20,8 +20,9 @@ public class LoginActivity extends Activity
         implements AsyncResponse,
         ViewTreeObserver.OnGlobalLayoutListener{
 
-    private final String mainURL = "http://10.135.50.41/liuxuecanadaserver/tests/test1/index.php?page=";
+    private final String mainURL = "http://10.135.50.41/liuxuecanadaserver/register/index.php?page=";
     private LinearLayout layout = null;
+    private JSONArray feedbackJSONArray = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,15 @@ public class LoginActivity extends Activity
     @Override
     public void onTaskComplete(Object out) {
         try {
+            feedbackJSONArray = new JSONArray((String) out);
+            ComponentsInViewService.addObjectsToView(feedbackJSONArray, this, mainURL);
 
+            /*if (pagell == null)
+                pagell = new LinkedList<JSONArray>();
+
+            pagell.addLast(arr);*/
+
+            PaintService.setTextPainted(false);
 
         } catch (Exception ex) {
             ex.printStackTrace();
