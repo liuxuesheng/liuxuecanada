@@ -10,6 +10,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -57,6 +58,42 @@ public class JSONToComponentService {
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, textsize);
 
         return tv;
+    }
+
+    public static EditText createEditText(JSONObject jsonObject, Context context) {
+        int id;
+        //String name;
+        int relation;
+        int relationid;
+        String hint;
+        //int textsize;
+
+        try {
+            jsonObject.getString("type").equals("textview");
+            id = jsonObject.getInt("id");
+            //name = jsonObject.getString("name");
+            relation = jsonObject.getInt("relation");
+            relationid = jsonObject.getInt("relationid");
+            hint = jsonObject.getString("hint");
+        } catch (JSONException ex) {
+            return null;
+        }
+
+        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        p.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+        if ((relation != 0) && (relationid != 0)) {
+            Log.d("asdasdasad ", " k " + relation + " " + relationid);
+            p.addRule(relation, relationid);
+        }
+        EditText et = new EditText(context);
+        et.setId(id);
+        et.setHint(hint);
+        et.setLayoutParams(p);
+        et.setBackgroundColor(Color.TRANSPARENT);
+        //et.setTextSize(TypedValue.COMPLEX_UNIT_SP, textsize);
+
+        return et;
     }
 
     public static WheelSelector createWheelSelectorView(JSONObject jsonObject, Context context) {

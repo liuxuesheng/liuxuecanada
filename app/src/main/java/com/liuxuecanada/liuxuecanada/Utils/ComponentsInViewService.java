@@ -4,6 +4,7 @@ package com.liuxuecanada.liuxuecanada.Utils;
 import android.app.Activity;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -35,6 +36,7 @@ public class ComponentsInViewService {
         ProgressBar pb = null;
         WheelSelector ws = null;
         SeekBar sb = null;
+        EditText et = null;
 
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
@@ -100,6 +102,10 @@ public class ComponentsInViewService {
                         ex.printStackTrace();
                     }
 
+                } else if (item.getString("type").equals("edittext")){
+                    et = JSONToComponentService.createEditText(item, currentActivity);
+                    ll.addLast(et);
+                    someView.addView(et);
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
