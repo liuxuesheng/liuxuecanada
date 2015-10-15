@@ -53,9 +53,11 @@ public class ComponentsInViewService {
                 if (item.getString("type").equals("textview")) {
                     final TextView tv = JSONToComponentService.createTextView(item, currentActivity);
 
-                    if (tv.getText().equals("下一步")) {
-                        final int nextPageNumber = item.getInt("nextPage");
+                    Log.d("asdasdas2da2ad ", " ABC1 ");
+                    try{
+                        final String nextPage = item.getString("nextPage");
                         final String savedatatype = item.getString("savedatatype");
+                        Log.d("asdasdas2da2ad ", " ABC2 ");
 
                         tv.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -71,13 +73,16 @@ public class ComponentsInViewService {
                                     }
                                 }
                                 clearAllContainers(currentActivity);
-
+                                Log.d("asdasdas2da2ad ", " ABC3 ");
                                 ServerResponse pud = new ServerResponse((AsyncResponse) currentActivity);
-                                pud.execute(mainURL + nextPageNumber);
+                                pud.execute(mainURL + nextPage);
 
                             }
                         });
+                    }catch (JSONException ex){
+
                     }
+
                     ll.addLast(tv);
                     someView.addView(tv);
                 } else if (item.getString("type").equals("progressbar")) {
@@ -120,5 +125,6 @@ public class ComponentsInViewService {
         ((RelativeLayout) activity.findViewById(R.id.fragment_container)).removeAllViews();
         ((RelativeLayout) activity.findViewById(R.id.fragment_bottom_container)).removeAllViews();
     }
+
 
 }

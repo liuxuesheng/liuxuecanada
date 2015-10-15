@@ -19,7 +19,7 @@ public class LoginActivity extends Activity
         implements AsyncResponse,
         ViewTreeObserver.OnGlobalLayoutListener {
 
-    private final String mainURL = "http://10.135.50.41/liuxuecanadaserver/register/index.php?page=";
+    private final String mainURL = "http://10.135.50.41/liuxuecanadaserver/";
     private LinearLayout layout = null;
     private JSONArray feedbackJSONArray = null;
 
@@ -32,7 +32,7 @@ public class LoginActivity extends Activity
         setContentView(R.layout.flow_main);
 
         ServerResponse pud = new ServerResponse(this);
-        pud.execute(mainURL + 1);
+        pud.execute(mainURL + "login/index.php?page=1");
 
         layout = (LinearLayout) findViewById(R.id.fragment_main_container);
         layout.getViewTreeObserver().addOnGlobalLayoutListener(this);
