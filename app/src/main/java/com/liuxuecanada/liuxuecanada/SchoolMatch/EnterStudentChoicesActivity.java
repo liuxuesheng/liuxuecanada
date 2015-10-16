@@ -1,9 +1,12 @@
 package com.liuxuecanada.liuxuecanada.SchoolMatch;
 
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -11,9 +14,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ListAdapter;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ContentItem;
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
 import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
@@ -30,6 +37,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -140,6 +148,37 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         layout = (LinearLayout) findViewById(R.id.fragment_main_container);
         layout.getViewTreeObserver().addOnGlobalLayoutListener(this);
 
+
+        RelativeLayout middleLayout = (RelativeLayout) findViewById(R.id.fragment_container);
+        ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
+
+        Drawable d = ContextCompat.getDrawable(this, R.drawable.circular);
+        objects.add(new ContentItem("school 1", d));
+        objects.add(new ContentItem("school 2", d));
+        objects.add(new ContentItem("school 3", d));
+        objects.add(new ContentItem("school 4", d));
+        objects.add(new ContentItem("school 5", d));
+        objects.add(new ContentItem("school 6", d));
+        objects.add(new ContentItem("school 7", d));
+        objects.add(new ContentItem("school 8", d));
+        objects.add(new ContentItem("school 9", d));
+        objects.add(new ContentItem("school 10", d));
+        objects.add(new ContentItem("school 11", d));
+        objects.add(new ContentItem("school 12", d));
+        objects.add(new ContentItem("school 13", d));
+        objects.add(new ContentItem("school 14", d));
+        objects.add(new ContentItem("school 15", d));
+        objects.add(new ContentItem("school 16", d));
+        objects.add(new ContentItem("school 17", d));
+        objects.add(new ContentItem("school 18", d));
+
+
+
+        ListAdapter adapter = new ListAdapter(this, objects);
+        ListView lv = new ListView(this);
+
+        lv.setAdapter(adapter);
+        middleLayout.addView(lv);
 
     }
 
