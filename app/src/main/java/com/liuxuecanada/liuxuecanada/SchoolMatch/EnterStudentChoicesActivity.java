@@ -163,10 +163,10 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             PaintService.setBackgroundPainted(true);
         }
 
-        if (PaintService.getTextPainted() == false) {
+/*        if (PaintService.getTextPainted() == false) {
             PaintService.paintText(this, layout);
             PaintService.setTextPainted(true);
-        }
+        }*/
 
     }
 

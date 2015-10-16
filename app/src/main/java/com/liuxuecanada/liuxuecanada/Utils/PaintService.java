@@ -34,10 +34,11 @@ public class PaintService {
         bm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bm);
         //LinearGradient linearGradient = new LinearGradient(0, 0, width, height, new int[]{0xFFce8905, 0xFF0f6748, 0xFF01095a}, new float[]{0.33f, 0.66f, 1}, Shader.TileMode.REPEAT);
-        RadialGradient radicalGradient = new RadialGradient(width, (int) (height * 1.3), (int) (Math.sqrt(height * height + width * width) * 1.5), new int[]{0xFFce8905, 0xFF0f6748, 0xFF01095a}, new float[]{0.3f, 0.6f, 0.9f}, Shader.TileMode.REPEAT);
+        //RadialGradient radicalGradient = new RadialGradient(width, (int) (height * 1.3), (int) (Math.sqrt(height * height + width * width) * 1.5), new int[]{0xFFce8905, 0xFF0f6748, 0xFF01095a}, new float[]{0.3f, 0.6f, 0.9f}, Shader.TileMode.REPEAT);
         Paint paint = new Paint();
-        paint.setShader(radicalGradient);
+        //paint.setShader(radicalGradient);
         paint.setDither(true);
+        paint.setColor(0xFFEEEEEE);
         canvas.drawRect(0, 0, width, height, paint);
 
         view.setBackground(new BitmapDrawable(context.getResources(), bm));
@@ -52,7 +53,7 @@ public class PaintService {
         backgroundPainted = painted;
     }
 
-    public static void paintText(Activity activity, ViewGroup viewGroup) {
+/*    public static void paintText(Activity activity, ViewGroup viewGroup) {
         LinkedList<TextView> tvlist = findAllTextView(viewGroup);
 
         Log.d("asdasdas1", " @ " + "G" + tvlist.size());
@@ -66,7 +67,7 @@ public class PaintService {
             ((TextView) tv).setTextColor(convertedColor);
         }
 
-    }
+    }*/
 
     public static boolean getTextPainted() {
         return textPainted;

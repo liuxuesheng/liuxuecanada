@@ -7,27 +7,40 @@
         android:id="@+id/fragment_main_container"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical">
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp">
 
         <RelativeLayout
             android:id="@+id/fragment_top_container"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
-            android:orientation="vertical"></RelativeLayout>
+            android:background="#FFFFFF"
+            android:elevation="12dp"
+            android:orientation="vertical"
+            android:layout_marginBottom="10dp"></RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/fragment_container"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1.618"
-            android:orientation="vertical"></RelativeLayout>
+            android:background="#FFFFFF"
+            android:elevation="12dp"
+            android:orientation="vertical"
+            android:layout_marginBottom="10dp"></RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/fragment_bottom_container"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
+            android:background="#FFFFFF"
+            android:elevation="12dp"
             android:orientation="vertical"></RelativeLayout>
     </LinearLayout>
 
