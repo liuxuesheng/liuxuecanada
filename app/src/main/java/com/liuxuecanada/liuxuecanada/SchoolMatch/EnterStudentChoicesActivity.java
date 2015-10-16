@@ -1,7 +1,14 @@
 package com.liuxuecanada.liuxuecanada.SchoolMatch;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -19,8 +26,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ListAdapter;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.CharacterDrawableComponent.CharacterDrawable;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ContentItem;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ListAdapter;
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
 import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
@@ -153,25 +161,19 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
 
         Drawable d = ContextCompat.getDrawable(this, R.drawable.circular);
-        objects.add(new ContentItem("school 1", d));
-        objects.add(new ContentItem("school 2", d));
+
+
+
+
+
+        Drawable drawable = new CharacterDrawable('A', 0xFF805781, this);
+
+        //button.setBackgroundDrawable(drawable);
+
+        objects.add(new ContentItem("school 1", createMarkerIcon()));
+        objects.add(new ContentItem("school 2", drawable));
         objects.add(new ContentItem("school 3", d));
         objects.add(new ContentItem("school 4", d));
-        objects.add(new ContentItem("school 5", d));
-        objects.add(new ContentItem("school 6", d));
-        objects.add(new ContentItem("school 7", d));
-        objects.add(new ContentItem("school 8", d));
-        objects.add(new ContentItem("school 9", d));
-        objects.add(new ContentItem("school 10", d));
-        objects.add(new ContentItem("school 11", d));
-        objects.add(new ContentItem("school 12", d));
-        objects.add(new ContentItem("school 13", d));
-        objects.add(new ContentItem("school 14", d));
-        objects.add(new ContentItem("school 15", d));
-        objects.add(new ContentItem("school 16", d));
-        objects.add(new ContentItem("school 17", d));
-        objects.add(new ContentItem("school 18", d));
-
 
 
         ListAdapter adapter = new ListAdapter(this, objects);
@@ -180,6 +182,36 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         lv.setAdapter(adapter);
         middleLayout.addView(lv);
 
+    }
+
+    private Drawable createMarkerIcon() {
+
+        ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+        drawable.getPaint().setColor(Color.GRAY);
+        drawable.getPaint().setStyle(Paint.Style.FILL);
+        drawable.getPaint().setAntiAlias(true);
+
+        Bitmap canvasBitmap = Bitmap.createBitmap(100, 100,
+                Bitmap.Config.ARGB_8888);
+        // Create a canvas, that will draw on to canvasBitmap.
+        Canvas imageCanvas = new Canvas(canvasBitmap);
+
+        // Set up the paint for use with our Canvas
+        Paint imagePaint = new Paint();
+        imagePaint.setTextAlign(Paint.Align.CENTER);
+        imagePaint.setTextSize(32);
+        imagePaint.setColor(Color.CYAN);
+
+        // Draw the image to our canvas
+        drawable.draw(imageCanvas);
+
+        // Draw the text on top of our image
+        imageCanvas.drawText("英", 100 / 2, 100 / 2, imagePaint);
+
+        // Combine background and text to a LayerDrawable
+        LayerDrawable layerDrawable = new LayerDrawable(
+                new Drawable[]{drawable, new BitmapDrawable(this.getResources() ,canvasBitmap)});
+        return layerDrawable;
     }
 
     private WheelView createWheelView() {
