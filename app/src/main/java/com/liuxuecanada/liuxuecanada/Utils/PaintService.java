@@ -7,10 +7,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RadialGradient;
+import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -43,6 +49,46 @@ public class PaintService {
 
         view.setBackground(new BitmapDrawable(context.getResources(), bm));
 
+    }
+
+    public static Drawable paintTextIconDrawable(Context context, String text) {
+
+        ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+        drawable.getPaint().setColor(Color.GRAY);
+        drawable.getPaint().setStyle(Paint.Style.FILL);
+        drawable.getPaint().setAntiAlias(true);
+
+        int iconPx = (int) dipToPixels(context, 40);
+        Bitmap canvasBitmap = Bitmap.createBitmap(iconPx, iconPx,
+                Bitmap.Config.ARGB_8888);
+        // Create a canvas, that will draw on to canvasBitmap.
+        Canvas imageCanvas = new Canvas(canvasBitmap);
+
+        int textpx = (int) dipToPixels(context, 28);
+        // Set up the paint for use with our Canvas
+        Paint imagePaint = new Paint();
+        imagePaint.setTextAlign(Paint.Align.CENTER);
+        imagePaint.setTextSize(textpx);
+        imagePaint.setColor(Color.CYAN);
+
+        Rect bounds = new Rect();
+        imagePaint.getTextBounds(text, 0, 1,bounds);
+
+        // Draw the image to our canvas
+        drawable.draw(imageCanvas);
+
+        // Draw the text on top of our image
+        imageCanvas.drawText(text, iconPx / 2, iconPx / 2 + bounds.height() / 2, imagePaint);
+
+        // Combine background and text to a LayerDrawable
+        LayerDrawable layerDrawable = new LayerDrawable(
+                new Drawable[]{drawable, new BitmapDrawable(context.getResources(), canvasBitmap)});
+        return layerDrawable;
+    }
+
+    public static float dipToPixels(Context context, float dipValue) {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
     }
 
     public static boolean getBackgroundPainted() {
