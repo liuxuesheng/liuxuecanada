@@ -180,6 +180,21 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         objects.add(new ContentItem("school 5", PaintService.paintTextIconDrawable(this, "D")));
         objects.add(new ContentItem("school 6", PaintService.paintTextIconDrawable(this, "E")));
         objects.add(new ContentItem("school 7", d));
+        objects.add(new ContentItem("school 2", PaintService.paintTextIconDrawable(this, "A")));
+        objects.add(new ContentItem("school 3", PaintService.paintTextIconDrawable(this, "B")));
+        objects.add(new ContentItem("school 4", PaintService.paintTextIconDrawable(this, "C")));
+        objects.add(new ContentItem("school 5", PaintService.paintTextIconDrawable(this, "D")));
+        objects.add(new ContentItem("school 6", PaintService.paintTextIconDrawable(this, "E")));
+        objects.add(new ContentItem("school 2", PaintService.paintTextIconDrawable(this, "A")));
+        objects.add(new ContentItem("school 3", PaintService.paintTextIconDrawable(this, "B")));
+        objects.add(new ContentItem("school 4", PaintService.paintTextIconDrawable(this, "C")));
+        objects.add(new ContentItem("school 5", PaintService.paintTextIconDrawable(this, "D")));
+        objects.add(new ContentItem("school 6", PaintService.paintTextIconDrawable(this, "E")));
+        objects.add(new ContentItem("school 2", PaintService.paintTextIconDrawable(this, "A")));
+        objects.add(new ContentItem("school 3", PaintService.paintTextIconDrawable(this, "B")));
+        objects.add(new ContentItem("school 4", PaintService.paintTextIconDrawable(this, "C")));
+        objects.add(new ContentItem("school 5", PaintService.paintTextIconDrawable(this, "D")));
+        objects.add(new ContentItem("school 6", PaintService.paintTextIconDrawable(this, "E")));
 
 
         ListAdapter adapter = new ListAdapter(this, objects);
