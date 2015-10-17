@@ -6,9 +6,9 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RadialGradient;
+import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -51,6 +51,69 @@ public class PaintService {
 
     }
 
+    public static Drawable paintLevelIconDrawable(Context context, String text) {
+
+        ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+        drawable.getPaint().setColor(Color.GRAY);
+        drawable.getPaint().setStyle(Paint.Style.FILL);
+        drawable.getPaint().setAntiAlias(true);
+
+        int iconPx = (int) dipToPixels(context, 40);
+        Bitmap canvasBitmap = Bitmap.createBitmap(iconPx, iconPx,
+                Bitmap.Config.ARGB_8888);
+        // Create a canvas, that will draw on to canvasBitmap.
+        Canvas imageCanvas = new Canvas(canvasBitmap);
+
+        // Set up the paint for use with our Canvas
+        Paint imagePaint = new Paint();
+        imagePaint.setColor(Color.CYAN);
+        imagePaint.setStyle(Paint.Style.STROKE);
+        imagePaint.setStrokeWidth(5);
+
+        // Draw the image to our canvas
+        drawable.draw(imageCanvas);
+
+        // Draw the level image on top of our image
+        Point point = new Point();
+        point.x = iconPx / 2;
+        point.y = iconPx / 2;
+        imageCanvas.drawPath(getEquilateralTriangle(point, iconPx / 2, 0), imagePaint);
+        imageCanvas.drawPath(getEquilateralTriangle(point, iconPx / 2, 1), imagePaint);
+
+        // Combine background and text to a LayerDrawable
+        LayerDrawable layerDrawable = new LayerDrawable(
+                new Drawable[]{drawable, new BitmapDrawable(context.getResources(), canvasBitmap)});
+        return layerDrawable;
+    }
+
+
+    private static Path getEquilateralTriangle(Point p0, int width, int direction) {
+        Log.i("Sample", "inside getEqui");
+        Point p1 = null, p2 = null, p3 = null;
+        int halfWidth = width / 2;
+        int base = (int) (halfWidth * Math.sqrt(3) / 3);
+
+        if (direction == 0) {
+            p1 = new Point(p0.x - halfWidth, p0.y + base);
+            p2 = new Point(p0.x + halfWidth, p0.y + base);
+            p3 = new Point(p0.x, p0.y - base * 2);
+        } else {
+            p1 = new Point(p0.x - halfWidth, p0.y - base);
+            p2 = new Point(p0.x + halfWidth, p0.y - base);
+            p3 = new Point(p0.x, p0.y + base * 2);
+        }
+
+        Path path = new Path();
+        path.moveTo(p1.x, p1.y);
+        path.lineTo(p2.x, p2.y);
+        path.lineTo(p3.x, p3.y);
+        path.lineTo(p1.x, p1.y);
+        path.lineTo(p2.x, p2.y);
+
+        return path;
+    }
+
+
     public static Drawable paintTextIconDrawable(Context context, String text) {
 
         ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
@@ -72,7 +135,7 @@ public class PaintService {
         imagePaint.setColor(Color.CYAN);
 
         Rect bounds = new Rect();
-        imagePaint.getTextBounds(text, 0, 1,bounds);
+        imagePaint.getTextBounds(text, 0, 1, bounds);
 
         // Draw the image to our canvas
         drawable.draw(imageCanvas);

@@ -173,7 +173,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         //button.setBackgroundDrawable(drawable);
 
-        objects.add(new ContentItem("school 1", PaintService.paintTextIconDrawable(this, "S")));
+        objects.add(new ContentItem("school 1", PaintService.paintLevelIconDrawable(this, "S")));
         objects.add(new ContentItem("school 2", PaintService.paintTextIconDrawable(this, "A")));
         objects.add(new ContentItem("school 3", PaintService.paintTextIconDrawable(this, "B")));
         objects.add(new ContentItem("school 4", PaintService.paintTextIconDrawable(this, "C")));
