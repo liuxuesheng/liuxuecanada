@@ -1,55 +1,45 @@
 package com.liuxuecanada.liuxuecanada;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 
-import com.liuxuecanada.liuxuecanada.RegistrationOffice.LoginActivity;
-import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackActivity;
-import com.liuxuecanada.liuxuecanada.SchoolMatch.EnterStudentChoicesActivity;
-
-public class MainActivity extends Activity {
-
-    private Button studentchoices_button;
-    private Button student_Previouspage_button;
-    private Button student_nextpage_button;
+public class MainActivity extends FragmentActivity {
+    MyAdapter mAdapter;
+    ViewPager mPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        studentchoices_button = (Button) findViewById(R.id.studentchoices_button);
+        setContentView(R.layout.fragment_pager);
+
+        mAdapter = new MyAdapter(getSupportFragmentManager());
+
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setAdapter(mAdapter);
+
+        // Watch for button clicks.
+        Button button = (Button) findViewById(R.id.goto_first);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mPager.setCurrentItem(0);
+            }
+        });
+        button = (Button) findViewById(R.id.goto_middle);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mPager.setCurrentItem(1);
+            }
+        });
+        button = (Button) findViewById(R.id.goto_last);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mPager.setCurrentItem(2);
+            }
+        });
 
     }
-
-    public void goStudentChoices(View view) {
-        Intent myIntent = new Intent(MainActivity.this, EnterStudentChoicesActivity.class);
-        MainActivity.this.startActivity(myIntent);
-    }
-
-    public void goChoicesFeedback(View view) {
-        Intent myIntent = new Intent(MainActivity.this, ChoicesFeedbackActivity.class);
-        MainActivity.this.startActivity(myIntent);
-    }
-
-    public void goLogin(View view) {
-        Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
-        MainActivity.this.startActivity(myIntent);
-    }
-
-
-/*    <?xml version="1.0" encoding="utf-8"?>
-    <shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="ring"
-    android:innerRadius="25dp"
-    android:thickness="3dp"
-    android:useLevel="false">
-
-    <solid android:color="@color/Orange500" />
-
-    </shape>*/
-
 }
