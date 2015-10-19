@@ -19,7 +19,7 @@ public class LoginActivity extends Activity
         implements AsyncResponse,
         ViewTreeObserver.OnGlobalLayoutListener {
 
-    private final String mainURL = "http://10.135.50.41/liuxuecanadaserver/";
+    private final String mainURL = "http://10.135.51.51/liuxuecanadaserver/";
     private LinearLayout layout = null;
     private JSONArray feedbackJSONArray = null;
 
