@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -63,7 +64,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         AsyncResponse {
 
     private static final String[] PLANETS = new String[]{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Uranus", "Neptune", "Pluto"};
-    private final String mainURL = "http://10.135.50.41/liuxuecanadaserver/tests/test1/index.php?page=";
+    private final String mainURL = "http://10.135.51.51/liuxuecanadaserver/tests/test1/index.php?page=";
     LinearLayout layout = null;
     LinkedList<JSONArray> pagell = null;
     JSONArray jsonArray3 = null;
@@ -112,6 +113,8 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             arr = new JSONArray((String) out);
             ComponentsInViewService.addObjectsToView(arr, this, mainURL);
 
+            Log.d("asd8d ", "4 "+ arr);
+
             if (pagell == null)
                 pagell = new LinkedList<JSONArray>();
 
@@ -142,8 +145,11 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         setContentView(R.layout.flow_main);
 
+        Log.d("asd8d ","1");
         ServerResponse pud = new ServerResponse(this);
+        Log.d("asd8d ","2");
         pud.execute(mainURL + 1);
+        Log.d("asd8d ", "3");
 
 /*        if ((findViewById(R.id.fragment_container) != null) && (findViewById(R.id.fragment_top_container) != null) && (findViewById(R.id.fragment_bottom_container) != null)) {
             frag = new FragmentAcdemicType();
@@ -159,7 +165,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             allFlowItemNames.addLast("acdemicstudy");
         }*/
 
-        layout = (LinearLayout) findViewById(R.id.fragment_main_container);
+        /*layout = (LinearLayout) findViewById(R.id.fragment_main_container);
         layout.getViewTreeObserver().addOnGlobalLayoutListener(this);
 
 
@@ -167,11 +173,6 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
 
         Drawable d = ContextCompat.getDrawable(this, R.drawable.circular);
-
-
-        //Drawable drawable = new CharacterDrawable('A', 0xFF805781, this);
-
-        //button.setBackgroundDrawable(drawable);
 
         objects.add(new ContentItem("school 1", PaintService.paintLevelIconDrawable(this, "S")));
         objects.add(new ContentItem("school 2", PaintService.paintTextIconDrawable(this, "A")));
@@ -201,7 +202,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         ListView lv = new ListView(this);
 
         lv.setAdapter(adapter);
-        middleLayout.addView(lv);
+        middleLayout.addView(lv);*/
 
     }
 
