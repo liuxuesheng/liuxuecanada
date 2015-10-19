@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -37,6 +38,7 @@ public class ComponentsInViewService {
         WheelSelector ws = null;
         SeekBar sb = null;
         EditText et = null;
+        ListView lv = null;
 
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
@@ -108,11 +110,16 @@ public class ComponentsInViewService {
                     }
 
                 } else if (item.getString("type").equals("edittext")){
-                    Log.d("7s73hs82h ", "QQ");
                     et = JSONToComponentService.createEditText(item, currentActivity);
-                    Log.d("7s73hs82h ", "QT");
                     ll.addLast(et);
                     someView.addView(et);
+                } else if (item.getString("type").equals("listview")){
+                    Log.d("asd8d ", " 1 ");
+                    lv = JSONToComponentService.createListView(item, currentActivity);
+                    Log.d("asd8d ", " 2 ");
+                    ll.addLast(lv);
+                    Log.d("asd8d ", " 3 ");
+                    someView.addView(lv);
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
