@@ -37,15 +37,16 @@ public class ServerResponse extends AsyncTask<String, Object, Object> {
 
     @Override
     protected String doInBackground(String... urls) {
-        StrictMode.ThreadPolicy policy = new
+        /*StrictMode.ThreadPolicy policy = new
                 StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        StrictMode.setThreadPolicy(policy);*/
 
         URL url;
         HttpURLConnection urlConnection = null;
         try {
             url = new URL(urls[0]);
             urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setConnectTimeout(2000);
             InputStream in = urlConnection.getInputStream();
             out = readStream(in);
             Log.d(DEBUGSTRING, " " + out);
