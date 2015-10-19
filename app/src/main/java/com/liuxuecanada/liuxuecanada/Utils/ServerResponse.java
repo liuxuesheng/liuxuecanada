@@ -37,9 +37,9 @@ public class ServerResponse extends AsyncTask<String, Object, Object> {
 
     @Override
     protected String doInBackground(String... urls) {
-        /*StrictMode.ThreadPolicy policy = new
+        StrictMode.ThreadPolicy policy = new
                 StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);*/
+        StrictMode.setThreadPolicy(policy);
 
         URL url;
         HttpURLConnection urlConnection = null;
