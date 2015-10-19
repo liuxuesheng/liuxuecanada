@@ -2,12 +2,13 @@ package com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
 import com.liuxuecanada.liuxuecanada.R;
 
@@ -40,9 +41,22 @@ public class ListAdapter extends ArrayAdapter<ContentItem> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.listButton.setText(c.name);
+ /*       RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.TOP;*/
+
+
         holder.listButton.setCompoundDrawablesWithIntrinsicBounds(c.drawable, null, null, null);
+        holder.listButton.setCompoundDrawablePadding(16);
+
+
+
+
+        holder.listButton.setText(c.name);
+        holder.listButton.setTextSize(16);
+        holder.listButton.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         holder.listButton.setBackgroundColor(Color.WHITE);
+        holder.listButton.setBackgroundColor(Color.YELLOW);
+
 
         return convertView;
     }

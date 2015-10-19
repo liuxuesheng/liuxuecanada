@@ -1,12 +1,23 @@
 package com.liuxuecanada.liuxuecanada.SchoolMatch;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -19,8 +30,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ListAdapter;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.CharacterDrawableComponent.CharacterDrawable;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ContentItem;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ListAdapter;
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
 import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
@@ -92,6 +104,8 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         return sb.toString();
     }
 
+
+
     @Override
     public void onTaskComplete(Object out) {
         try {
@@ -153,25 +167,34 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
 
         Drawable d = ContextCompat.getDrawable(this, R.drawable.circular);
-        objects.add(new ContentItem("school 1", d));
-        objects.add(new ContentItem("school 2", d));
-        objects.add(new ContentItem("school 3", d));
-        objects.add(new ContentItem("school 4", d));
-        objects.add(new ContentItem("school 5", d));
-        objects.add(new ContentItem("school 6", d));
-        objects.add(new ContentItem("school 7", d));
-        objects.add(new ContentItem("school 8", d));
-        objects.add(new ContentItem("school 9", d));
-        objects.add(new ContentItem("school 10", d));
-        objects.add(new ContentItem("school 11", d));
-        objects.add(new ContentItem("school 12", d));
-        objects.add(new ContentItem("school 13", d));
-        objects.add(new ContentItem("school 14", d));
-        objects.add(new ContentItem("school 15", d));
-        objects.add(new ContentItem("school 16", d));
-        objects.add(new ContentItem("school 17", d));
-        objects.add(new ContentItem("school 18", d));
 
+
+        //Drawable drawable = new CharacterDrawable('A', 0xFF805781, this);
+
+        //button.setBackgroundDrawable(drawable);
+
+        objects.add(new ContentItem("school 1", PaintService.paintLevelIconDrawable(this, "S")));
+        objects.add(new ContentItem("school 2", PaintService.paintTextIconDrawable(this, "A")));
+        objects.add(new ContentItem("school 3", PaintService.paintTextIconDrawable(this, "B")));
+        objects.add(new ContentItem("school 4", PaintService.paintTextIconDrawable(this, "C")));
+        objects.add(new ContentItem("school 5", PaintService.paintTextIconDrawable(this, "D")));
+        objects.add(new ContentItem("school 6", PaintService.paintTextIconDrawable(this, "E")));
+        objects.add(new ContentItem("school 7", d));
+        objects.add(new ContentItem("school 2", PaintService.paintTextIconDrawable(this, "A")));
+        objects.add(new ContentItem("school 3", PaintService.paintTextIconDrawable(this, "B")));
+        objects.add(new ContentItem("school 4", PaintService.paintTextIconDrawable(this, "C")));
+        objects.add(new ContentItem("school 5", PaintService.paintTextIconDrawable(this, "D")));
+        objects.add(new ContentItem("school 6", PaintService.paintTextIconDrawable(this, "E")));
+        objects.add(new ContentItem("school 2", PaintService.paintTextIconDrawable(this, "A")));
+        objects.add(new ContentItem("school 3", PaintService.paintTextIconDrawable(this, "B")));
+        objects.add(new ContentItem("school 4", PaintService.paintTextIconDrawable(this, "C")));
+        objects.add(new ContentItem("school 5", PaintService.paintTextIconDrawable(this, "D")));
+        objects.add(new ContentItem("school 6", PaintService.paintTextIconDrawable(this, "E")));
+        objects.add(new ContentItem("school 2", PaintService.paintTextIconDrawable(this, "A")));
+        objects.add(new ContentItem("school 3", PaintService.paintTextIconDrawable(this, "B")));
+        objects.add(new ContentItem("school 4", PaintService.paintTextIconDrawable(this, "C")));
+        objects.add(new ContentItem("school 5", PaintService.paintTextIconDrawable(this, "D")));
+        objects.add(new ContentItem("school 6", PaintService.paintTextIconDrawable(this, "E")));
 
 
         ListAdapter adapter = new ListAdapter(this, objects);
@@ -215,7 +238,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
     @Override
     public void onBackPressed() {
-        if (pagell.size() <= 1) {
+        if (pagell == null || pagell.size() <= 1) {
             finish();
         } else {
             pagell.removeLast();
