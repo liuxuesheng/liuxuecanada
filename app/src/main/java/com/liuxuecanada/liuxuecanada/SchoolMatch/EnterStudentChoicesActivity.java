@@ -145,11 +145,10 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         setContentView(R.layout.flow_main);
 
-        Log.d("asd8d ","1");
         ServerResponse pud = new ServerResponse(this);
-        Log.d("asd8d ","2");
+
         pud.execute(mainURL + 1);
-        Log.d("asd8d ", "3");
+
 
 /*        if ((findViewById(R.id.fragment_container) != null) && (findViewById(R.id.fragment_top_container) != null) && (findViewById(R.id.fragment_bottom_container) != null)) {
             frag = new FragmentAcdemicType();

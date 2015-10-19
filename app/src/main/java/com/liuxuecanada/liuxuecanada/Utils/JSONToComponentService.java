@@ -11,17 +11,23 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ContentItem;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ListAdapter;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.WheelSelector;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.adapters.ArrayWheelAdapter;
 import com.liuxuecanada.liuxuecanada.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class JSONToComponentService {
 
@@ -50,7 +56,7 @@ public class JSONToComponentService {
 
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         //p.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        while(count < alignmentArray.length) {
+        while (count < alignmentArray.length) {
             Log.d("7s73hs82h ", "B");
             int alignmentInt = Integer.parseInt(alignmentArray[count]);
             p.addRule(alignmentInt);
@@ -100,7 +106,7 @@ public class JSONToComponentService {
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         p.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
-        while(count < relationArray.length) {
+        while (count < relationArray.length) {
             Log.d("7s73hs82h ", "B");
             int relatonInt = Integer.parseInt(relationArray[count]);
             int relatonidInt = Integer.parseInt(relationidArray[count]);
@@ -118,6 +124,76 @@ public class JSONToComponentService {
         //et.setTextSize(TypedValue.COMPLEX_UNIT_SP, textsize);
 
         return et;
+    }
+
+    public static ListView createListView(JSONObject jsonObject, Context context) {
+
+        int id;
+        //String name;
+        String relation;
+        String relationid;
+        String alignment;
+        String values;
+
+        Log.d("7s73hs82h ", "AAA");
+
+        try {
+            jsonObject.getString("type").equals("listview");
+            id = jsonObject.getInt("id");
+            //name = jsonObject.getString("name");
+            relation = jsonObject.getString("relation");
+            relationid = jsonObject.getString("relationid");
+            alignment = jsonObject.getString("alignment");
+            values = jsonObject.getString("values");
+
+        } catch (JSONException ex) {
+            return null;
+        }
+        String[] alignmentArray = alignment.split(",");
+        int count = 0;
+
+        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        while (count < alignmentArray.length) {
+            int alignmentInt = Integer.parseInt(alignmentArray[count]);
+            p.addRule(alignmentInt);
+            count++;
+        }
+
+        String[] relationArray = relation.split(",");
+        String[] relationidArray = relationid.split(",");
+        Log.d("asd8d ", " x "+ Arrays.toString(relationArray));
+        Log.d("asd8d ", " x "+Arrays.toString(relationidArray));
+        int count2 = 0;
+
+        while (count2 < relationArray.length) {
+            int relatonInt = Integer.parseInt(relationArray[count2]);
+            int relatonidInt = Integer.parseInt(relationidArray[count2]);
+            Log.d("asd8d ", " x1 "+relatonInt+" "+relatonidInt);
+            if ((relatonInt != 0) && (relatonidInt != 0)) {
+                Log.d("asd8d ", " x "+relatonInt+" "+relatonidInt);
+                p.addRule(relatonInt, relatonidInt);
+            }
+            count2++;
+        }
+
+        String[] valueArray = values.split(",");
+        int count3 = 0;
+        ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
+        while (count3 < valueArray.length) {
+            Log.d("asd8d ", " 3 "+valueArray[count3]);
+            objects.add(new ContentItem(valueArray[count3], PaintService.paintLevelIconDrawable(context, "S")));
+            count3++;
+        }
+
+        ListAdapter adapter = new ListAdapter(context, objects);
+        ListView lv = new ListView(context);
+
+        lv.setAdapter(adapter);
+        lv.setId(id);
+        lv.setLayoutParams(p);
+        //lv.setBackgroundColor(Color.TRANSPARENT);
+
+        return lv;
     }
 
     public static WheelSelector createWheelSelectorView(JSONObject jsonObject, Context context) {
