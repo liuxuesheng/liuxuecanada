@@ -32,7 +32,9 @@
         <activity
             android:name=".RegistrationOffice.LoginActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".SchoolMatch.PieChartActivity"/>
+        <activity
+            android:name=".SchoolMatch.PieChartActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
