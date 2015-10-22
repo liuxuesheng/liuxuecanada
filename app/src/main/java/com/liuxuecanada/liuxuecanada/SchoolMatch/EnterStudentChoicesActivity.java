@@ -164,45 +164,6 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             allFlowItemNames.addLast("acdemicstudy");
         }*/
 
-        /*layout = (LinearLayout) findViewById(R.id.fragment_main_container);
-        layout.getViewTreeObserver().addOnGlobalLayoutListener(this);
-
-
-        RelativeLayout middleLayout = (RelativeLayout) findViewById(R.id.fragment_container);
-        ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
-
-        Drawable d = ContextCompat.getDrawable(this, R.drawable.circular);
-
-        objects.add(new ContentItem("school 1", PaintService.paintLevelIconDrawable(this, "S")));
-        objects.add(new ContentItem("school 2", PaintService.paintTextIconDrawable(this, "A")));
-        objects.add(new ContentItem("school 3", PaintService.paintTextIconDrawable(this, "B")));
-        objects.add(new ContentItem("school 4", PaintService.paintTextIconDrawable(this, "C")));
-        objects.add(new ContentItem("school 5", PaintService.paintTextIconDrawable(this, "D")));
-        objects.add(new ContentItem("school 6", PaintService.paintTextIconDrawable(this, "E")));
-        objects.add(new ContentItem("school 7", d));
-        objects.add(new ContentItem("school 2", PaintService.paintTextIconDrawable(this, "A")));
-        objects.add(new ContentItem("school 3", PaintService.paintTextIconDrawable(this, "B")));
-        objects.add(new ContentItem("school 4", PaintService.paintTextIconDrawable(this, "C")));
-        objects.add(new ContentItem("school 5", PaintService.paintTextIconDrawable(this, "D")));
-        objects.add(new ContentItem("school 6", PaintService.paintTextIconDrawable(this, "E")));
-        objects.add(new ContentItem("school 2", PaintService.paintTextIconDrawable(this, "A")));
-        objects.add(new ContentItem("school 3", PaintService.paintTextIconDrawable(this, "B")));
-        objects.add(new ContentItem("school 4", PaintService.paintTextIconDrawable(this, "C")));
-        objects.add(new ContentItem("school 5", PaintService.paintTextIconDrawable(this, "D")));
-        objects.add(new ContentItem("school 6", PaintService.paintTextIconDrawable(this, "E")));
-        objects.add(new ContentItem("school 2", PaintService.paintTextIconDrawable(this, "A")));
-        objects.add(new ContentItem("school 3", PaintService.paintTextIconDrawable(this, "B")));
-        objects.add(new ContentItem("school 4", PaintService.paintTextIconDrawable(this, "C")));
-        objects.add(new ContentItem("school 5", PaintService.paintTextIconDrawable(this, "D")));
-        objects.add(new ContentItem("school 6", PaintService.paintTextIconDrawable(this, "E")));
-
-
-        ListAdapter adapter = new ListAdapter(this, objects);
-        ListView lv = new ListView(this);
-
-        lv.setAdapter(adapter);
-        middleLayout.addView(lv);*/
-
     }
 
     private WheelView createWheelView() {

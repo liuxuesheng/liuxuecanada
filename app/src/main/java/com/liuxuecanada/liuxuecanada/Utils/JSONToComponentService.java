@@ -10,6 +10,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -31,46 +32,30 @@ import java.util.Arrays;
 
 public class JSONToComponentService {
 
+    private static int id;
+    private static String alignment;
+    private static String relation;
+    private static String relationId;
+
     public static TextView createTextView(JSONObject jsonObject, Context context) {
-        int id;
         String name;
-        int relation;
-        int relationid;
         int textsize;
-        String alignment;
 
         try {
             jsonObject.getString("type").equals("textview");
-            id = jsonObject.getInt("id");
             name = jsonObject.getString("name");
-            relation = jsonObject.getInt("relation");
-            relationid = jsonObject.getInt("relationid");
             textsize = jsonObject.getInt("size");
-            alignment = jsonObject.getString("alignment");
         } catch (JSONException ex) {
             return null;
         }
 
-        String[] alignmentArray = alignment.split(",");
-        int count = 0;
-
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        //p.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        while (count < alignmentArray.length) {
-            Log.d("7s73hs82h ", "B");
-            int alignmentInt = Integer.parseInt(alignmentArray[count]);
-            p.addRule(alignmentInt);
-            count++;
-        }
 
-        if ((relation != 0) && (relationid != 0)) {
-            Log.d("asdasdasad ", " k " + relation + " " + relationid);
-            p.addRule(relation, relationid);
-        }
         TextView tv = new TextView(context);
-        tv.setId(id);
+        setId(tv, getId(jsonObject));
+        setAlignment(tv, getAlignment(jsonObject), p);
+        setRelations(tv, getRelation(jsonObject), getRelationId(jsonObject), p);
         tv.setText(name);
-        tv.setLayoutParams(p);
         tv.setBackgroundColor(Color.TRANSPARENT);
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, textsize);
 
@@ -78,48 +63,24 @@ public class JSONToComponentService {
     }
 
     public static EditText createEditText(JSONObject jsonObject, Context context) {
-        int id;
-        //String name;
-        String relation;
-        String relationid;
         String hint;
-        //int textsize;
 
         Log.d("7s73hs82h ", "AAA");
 
         try {
             jsonObject.getString("type").equals("edittext");
-            id = jsonObject.getInt("id");
-            //name = jsonObject.getString("name");
-            relation = jsonObject.getString("relation");
-            relationid = jsonObject.getString("relationid");
             hint = jsonObject.getString("hint");
         } catch (JSONException ex) {
             return null;
         }
 
-        Log.d("7s73hs82h ", "A");
-        String[] relationArray = relation.split(",");
-        String[] relationidArray = relationid.split(",");
-        int count = 0;
-
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        p.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
-        while (count < relationArray.length) {
-            Log.d("7s73hs82h ", "B");
-            int relatonInt = Integer.parseInt(relationArray[count]);
-            int relatonidInt = Integer.parseInt(relationidArray[count]);
-            if ((relatonInt != 0) && (relatonidInt != 0)) {
-                p.addRule(relatonInt, relatonidInt);
-            }
-            count++;
-        }
-        Log.d("7s73hs82h ", "C");
         EditText et = new EditText(context);
-        et.setId(id);
+        setId(et, getId(jsonObject));
+        setAlignment(et, getAlignment(jsonObject), p);
+        setRelations(et, getRelation(jsonObject),getRelationId(jsonObject),p);
         et.setHint(hint);
-        et.setLayoutParams(p);
         et.setBackgroundColor(Color.TRANSPARENT);
         //et.setTextSize(TypedValue.COMPLEX_UNIT_SP, textsize);
 
@@ -127,11 +88,6 @@ public class JSONToComponentService {
     }
 
     public static ListView createListView(JSONObject jsonObject, Context context) {
-
-        int id;
-        //String name;
-        String relation;
-        String relationid;
         String alignment;
         String values;
 
@@ -139,42 +95,13 @@ public class JSONToComponentService {
 
         try {
             jsonObject.getString("type").equals("listview");
-            id = jsonObject.getInt("id");
-            //name = jsonObject.getString("name");
-            relation = jsonObject.getString("relation");
-            relationid = jsonObject.getString("relationid");
-            alignment = jsonObject.getString("alignment");
             values = jsonObject.getString("values");
 
         } catch (JSONException ex) {
             return null;
         }
-        String[] alignmentArray = alignment.split(",");
-        int count = 0;
 
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        while (count < alignmentArray.length) {
-            int alignmentInt = Integer.parseInt(alignmentArray[count]);
-            p.addRule(alignmentInt);
-            count++;
-        }
-
-        String[] relationArray = relation.split(",");
-        String[] relationidArray = relationid.split(",");
-        Log.d("asd8d ", " x "+ Arrays.toString(relationArray));
-        Log.d("asd8d ", " x "+Arrays.toString(relationidArray));
-        int count2 = 0;
-
-        while (count2 < relationArray.length) {
-            int relatonInt = Integer.parseInt(relationArray[count2]);
-            int relatonidInt = Integer.parseInt(relationidArray[count2]);
-            Log.d("asd8d ", " x1 "+relatonInt+" "+relatonidInt);
-            if ((relatonInt != 0) && (relatonidInt != 0)) {
-                Log.d("asd8d ", " x "+relatonInt+" "+relatonidInt);
-                p.addRule(relatonInt, relatonidInt);
-            }
-            count2++;
-        }
 
         String[] valueArray = values.split(",");
         int count3 = 0;
@@ -189,27 +116,24 @@ public class JSONToComponentService {
         ListView lv = new ListView(context);
 
         lv.setAdapter(adapter);
-        lv.setId(id);
-        lv.setLayoutParams(p);
-        //lv.setBackgroundColor(Color.TRANSPARENT);
+        setId(lv, getId(jsonObject));
+        setAlignment(lv, getAlignment(jsonObject), p);
+        setRelations(lv, getRelation(jsonObject), getRelationId(jsonObject), p);
+        lv.setVerticalScrollBarEnabled(true);
+        lv.setScrollbarFadingEnabled(false);
+        lv.setBackgroundColor(Color.TRANSPARENT);
 
         return lv;
     }
 
     public static WheelSelector createWheelSelectorView(JSONObject jsonObject, Context context) {
-        int id;
         String name;
         String values;
-        int relation;
-        int relationid;
 
         try {
             jsonObject.getString("type").equals("wheelselectorview");
-            id = jsonObject.getInt("id");
             name = jsonObject.getString("name");
             values = jsonObject.getString("values");
-            relation = jsonObject.getInt("relation");
-            relationid = jsonObject.getInt("relationid");
         } catch (JSONException ex) {
             return null;
         }
@@ -217,13 +141,6 @@ public class JSONToComponentService {
         String[] universities = values.split(",");
 
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        p.addRule(RelativeLayout.CENTER_HORIZONTAL);
-
-        Log.d("asdasdasad ", " X ");
-        if ((relation != 0) && (relationid != 0)) {
-            Log.d("asdasdasad ", " " + relation + " " + relationid);
-            p.addRule(relation, relationid);
-        }
 
         WheelSelector universitySelector = new WheelSelector(context);
 
@@ -233,30 +150,25 @@ public class JSONToComponentService {
         universitySelector.setViewAdapter(adapter);
         universitySelector.setCurrentItem(universities.length / 2);
         universitySelector.setVisibleItems(5);
-        universitySelector.setLayoutParams(p);
-        universitySelector.setId(id);
+
+        setId(universitySelector, getId(jsonObject));
+        setAlignment(universitySelector, getAlignment(jsonObject), p);
+        setRelations(universitySelector, getRelation(jsonObject),getRelationId(jsonObject),p);
         return universitySelector;
     }
 
     public static ProgressBar createProgressBarView(JSONObject jsonObject, Context context) {
-        int id;
-        int relation;
-        int relationid;
-
         try {
             jsonObject.getString("type").equals("progressbar");
-            id = jsonObject.getInt("id");
-            relation = jsonObject.getInt("relation");
-            relationid = jsonObject.getInt("relationid");
         } catch (JSONException ex) {
             return null;
         }
 
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        if ((relation != 0) && (relationid != 0))
-            p.addRule(relation, relationid);
+
         ProgressBar pb = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
-        pb.setId(id);
+        setId(pb, getId(jsonObject));
+        setRelations(pb, getRelation(jsonObject), getRelationId(jsonObject), p);
         pb.setLayoutParams(p);
         pb.setBackgroundColor(Color.TRANSPARENT);
         pb.setProgressDrawable(createDrawable(context));
@@ -288,28 +200,21 @@ public class JSONToComponentService {
     }
 
     public static SeekBar createSeekBarView(JSONObject jsonObject, TextView seekresult, Context context) {
-        int id;
-        int relation;
-        int relationid;
         final String name;
 
         try {
             jsonObject.getString("type").equals("progressbar");
-            id = jsonObject.getInt("id");
-            relation = jsonObject.getInt("relation");
-            relationid = jsonObject.getInt("relationid");
             name = jsonObject.getString("name");
         } catch (JSONException ex) {
             return null;
         }
 
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        if ((relation != 0) && (relationid != 0))
-            p.addRule(relation, relationid);
 
         SeekBar seekBar = new SeekBar(context);
-        seekBar.setId(id);
-        seekBar.setLayoutParams(p);
+        setId(seekBar, getId(jsonObject));
+        setAlignment(seekBar, getAlignment(jsonObject), p);
+        setRelations(seekBar, getRelation(jsonObject),getRelationId(jsonObject),p);
 
         final TextView seekBarResult = seekresult;
         seekBarResult.setText("" + name + ": " + seekBar.getProgress());
@@ -336,5 +241,68 @@ public class JSONToComponentService {
         });
 
         return seekBar;
+    }
+
+    private static int getId(JSONObject jsonObject){
+        try {
+            id = jsonObject.getInt("id");
+        }catch (JSONException ex){
+            ex.printStackTrace();
+        }
+        return id;
+    }
+
+    private static void setId(View view, int id){
+        view.setId(id);
+    }
+
+    private static String[] getAlignment(JSONObject jsonObject){
+        try {
+            alignment = jsonObject.getString("alignment");
+        }catch (JSONException ex){
+            ex.printStackTrace();
+        }
+        return alignment.split(",");
+    }
+
+    private static void setAlignment(View view, String[] alignmentArray, RelativeLayout.LayoutParams p){
+        int count = 0;
+        while (count < alignmentArray.length) {
+            int alignmentInt = Integer.parseInt(alignmentArray[count]);
+            p.addRule(alignmentInt);
+            count++;
+        }
+        view.setLayoutParams(p);
+    }
+
+    private static String[] getRelation(JSONObject jsonObject){
+        try {
+            relation = jsonObject.getString("relation");
+        }catch (JSONException ex){
+            ex.printStackTrace();
+        }
+        return relation.split(",");
+    }
+
+    private static String[] getRelationId(JSONObject jsonObject) {
+        try {
+            relationId = jsonObject.getString("relationid");
+        }catch (JSONException ex){
+            ex.printStackTrace();
+        }
+        return relationId.split(",");
+    }
+
+    private static void setRelations(View view, String[] relationArray, String[] relationIdArray, RelativeLayout.LayoutParams p){
+        int count = 0;
+        while (count < relationArray.length) {
+            Log.d("7s73hs82h ", "B");
+            int myRelation = Integer.parseInt(relationArray[count]);
+            int myRelatonId = Integer.parseInt(relationIdArray[count]);
+            if ((myRelation != 0) && (myRelatonId != 0)) {
+                p.addRule(myRelation, myRelatonId);
+            }
+            count++;
+        }
     }
 }

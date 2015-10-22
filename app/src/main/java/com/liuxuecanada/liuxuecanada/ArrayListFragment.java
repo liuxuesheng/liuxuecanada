@@ -17,52 +17,21 @@ import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackActivity;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.EnterStudentChoicesActivity;
 
 public class ArrayListFragment extends ListFragment {
-    int mNum;
     Activity activity;
 
-    /**
-     * Create a new instance of CountingFragment, providing "num"
-     * as an argument.
-     */
-    static ArrayListFragment newInstance(int num) {
+    public static ArrayListFragment newInstance(String text) {
         ArrayListFragment f = new ArrayListFragment();
-
-        // Supply num input as an argument.
-        Bundle args = new Bundle();
-        args.putInt("num", num);
-        f.setArguments(args);
-
+        Bundle b = new Bundle();
+        b.putString("msg", text);
+        f.setArguments(b);
         return f;
     }
 
-    /**
-     * When creating, retrieve this instance's number from its arguments.
-     */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mNum = getArguments() != null ? getArguments().getInt("num") : 1;
-    }
-
-    /**
-     * The Fragment's UI is just a simple text view showing its
-     * instance number.
-     */
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_pager_list, container, false);
         View tv = v.findViewById(R.id.text);
-
-        String title = "";
-        if (mNum == 0)
-            title = "最新消息";
-        else if (mNum == 1)
-            title = "留学测评";
-        else if (mNum == 2)
-            title = "互动社区";
-
-        ((TextView) tv).setText(title);
+        ((TextView) tv).setText(getArguments().getString("msg"));
         return v;
     }
 

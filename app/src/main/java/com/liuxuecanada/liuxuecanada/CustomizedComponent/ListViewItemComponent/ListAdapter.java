@@ -54,8 +54,7 @@ public class ListAdapter extends ArrayAdapter<ContentItem> {
         holder.listButton.setText(c.name);
         holder.listButton.setTextSize(16);
         holder.listButton.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
-        holder.listButton.setBackgroundColor(Color.WHITE);
-        holder.listButton.setBackgroundColor(Color.YELLOW);
+        holder.listButton.setBackgroundColor(Color.TRANSPARENT);
 
 
         return convertView;
