@@ -70,9 +70,11 @@ public class FeedbackViewAdapter extends RecyclerView.Adapter<FeedbackViewAdapte
         personViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(context,ChoicesFeedbackDetailActivity.class);
-                intent.putExtra("ChoicesFeedbackItem",choicesFeedbackItems.get(j));
+                Intent intent= new Intent(context,PieChartActivity.class);
+                //intent.putExtra("ChoicesFeedbackItem",choicesFeedbackItems.get(j));
+                intent.putExtra("ChoicesFeedbackItem",PieChartActivity.class);
                 context.startActivity(intent);
+
 
             }
         });
