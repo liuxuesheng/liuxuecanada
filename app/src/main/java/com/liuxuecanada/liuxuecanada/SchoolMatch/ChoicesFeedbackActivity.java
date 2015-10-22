@@ -78,7 +78,7 @@ public class ChoicesFeedbackActivity extends Activity implements AsyncResponse {
     private void initPersonData() {
         choicesFeedbackItems =new ArrayList<>();
 
-        choicesFeedbackItems.add(new ChoicesFeedbackItem("This is 1 feedback", "Click me please!",R.drawable.feedback1));
+        choicesFeedbackItems.add(new ChoicesFeedbackItem("饼图展览", "Click me please!",R.drawable.feedback1));
         choicesFeedbackItems.add(new ChoicesFeedbackItem("This is 2 feedback", "Click me please!",R.drawable.feedback2));
         choicesFeedbackItems.add(new ChoicesFeedbackItem("This is 3 feedback", "Click me please!",R.drawable.feedback3));
         choicesFeedbackItems.add(new ChoicesFeedbackItem("This is 4 feedback", "Click me please!",R.drawable.feedback4));
