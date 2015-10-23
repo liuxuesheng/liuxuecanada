@@ -5,18 +5,19 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.Entry;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.PieData;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.PieDataSet;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.formatter.PercentFormatter;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.highlight.Highlight;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.listener.OnChartValueSelectedListener;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.utils.ColorTemplate;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.PieChartComponent.PieChart;
 import com.liuxuecanada.liuxuecanada.R;
-import com.liuxuecanada.liuxuecanada.Utils.charts.PieChart;
-import com.liuxuecanada.liuxuecanada.Utils.data.Entry;
-import com.liuxuecanada.liuxuecanada.Utils.data.PieData;
-import com.liuxuecanada.liuxuecanada.Utils.data.PieDataSet;
-import com.liuxuecanada.liuxuecanada.Utils.formatter.PercentFormatter;
-import com.liuxuecanada.liuxuecanada.Utils.highlight.Highlight;
-import com.liuxuecanada.liuxuecanada.Utils.utils.ColorTemplate;
-import com.liuxuecanada.liuxuecanada.Utils.listener.OnChartValueSelectedListener;
+
 import java.util.ArrayList;
 
-public class PieChartActivity extends Activity implements OnChartValueSelectedListener{
+public class PieChartActivity extends Activity implements OnChartValueSelectedListener {
 
     private  PieChart mChart;
     protected String[] mParties = new String[] {
