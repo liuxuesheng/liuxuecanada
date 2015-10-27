@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.PieChartComponent.RadarChart;
 import com.liuxuecanada.liuxuecanada.R;
 
 import java.util.List;
@@ -66,19 +67,76 @@ public class FeedbackViewAdapter extends RecyclerView.Adapter<FeedbackViewAdapte
         personViewHolder.feedbackItem_title.setText(choicesFeedbackItems.get(i).getTitle());
         personViewHolder.feedbackItem_desc.setText(choicesFeedbackItems.get(i).getDesc());
 
+        switch (i){
+            case 0:
+                personViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent= new Intent(context,PieChartActivity.class);
+                        intent.putExtra("ChoicesFeedbackItem",PieChartActivity.class);
+                        context.startActivity(intent);
+
+                    }
+                });
+                break;
+            case 1:
+                personViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent= new Intent(context,RadarChartActivity.class);
+                        intent.putExtra("ChoicesFeedbackItem",RadarChartActivity.class);
+                        context.startActivity(intent);
+
+                    }
+                });
+                break;
+            case 2:
+                personViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent= new Intent(context,BarChartActivity.class);
+                        intent.putExtra("ChoicesFeedbackItem",BarChartActivity.class);
+                        context.startActivity(intent);
+
+                    }
+                });
+                break;
+            case 3:
+                personViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent= new Intent(context,HorizontalBarChartActivity.class);
+                        intent.putExtra("ChoicesFeedbackItem",HorizontalBarChartActivity.class);
+                        context.startActivity(intent);
+
+                    }
+                });
+                break;
+                default:
+                    personViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent= new Intent(context,ChoicesFeedbackDetailActivity.class);
+                            intent.putExtra("ChoicesFeedbackItem",choicesFeedbackItems.get(j));
+                            // intent.putExtra("ChoicesFeedbackItem",ChoicesFeedbackDetailActivity.class);
+                            context.startActivity(intent);
+
+                        }
+                    });
+        }
+
+
         //为btn_share btn_readMore cardView设置点击事件
-        personViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(context,PieChartActivity.class);
-                //intent.putExtra("ChoicesFeedbackItem",choicesFeedbackItems.get(j));
-                intent.putExtra("ChoicesFeedbackItem",PieChartActivity.class);
-                context.startActivity(intent);
-
-
-            }
-        });
-
+//        personViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= new Intent(context,PieChartActivity.class);
+//                //intent.putExtra("ChoicesFeedbackItem",choicesFeedbackItems.get(j));
+//                intent.putExtra("ChoicesFeedbackItem",PieChartActivity.class);
+//                context.startActivity(intent);
+//
+//            }
+//        });
         personViewHolder.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
