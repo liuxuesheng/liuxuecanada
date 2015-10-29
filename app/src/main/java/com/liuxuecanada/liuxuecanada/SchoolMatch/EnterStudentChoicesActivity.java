@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.R;
@@ -129,7 +130,6 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         findViewById(R.id.fragment_top_container).setBackgroundColor(Color.rgb(30, 136, 229));
         findViewById(R.id.fragment_container).setBackgroundColor(Color.rgb(238, 238, 238));
         findViewById(R.id.fragment_bottom_container).setBackgroundColor(Color.rgb(238, 238, 238));
-
 
         ServerResponse pud = new ServerResponse(this);
 

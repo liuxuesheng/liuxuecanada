@@ -271,6 +271,11 @@ public class JSONToComponentService {
         while (count < alignmentArray.length) {
             int alignmentInt = Integer.parseInt(alignmentArray[count]);
             p.addRule(alignmentInt);
+            Log.d("djskc8csdn9 ", "" + RelativeLayout.CENTER_HORIZONTAL);
+            Log.d("djskc8csdn9 ",""+RelativeLayout.CENTER_VERTICAL);
+            Log.d("djskc8csdn9 ",""+RelativeLayout.CENTER_IN_PARENT);
+            Log.d("djskc8csdn9 ",""+RelativeLayout.BELOW);
+            Log.d("djskc8csdn9 ",""+RelativeLayout.ABOVE);
             count++;
         }
         view.setLayoutParams(p);
