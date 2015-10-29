@@ -8,17 +8,13 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:clipToPadding="false"
-        android:orientation="vertical"
-        android:paddingBottom="10dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="10dp">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/fragment_top_container"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="300"
             android:background="#FFFFFF"
             android:elevation="12dp"
             android:orientation="vertical"
@@ -28,7 +24,7 @@
             android:id="@+id/fragment_container"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="6"
+            android:layout_weight="618"
             android:background="#FFFFFF"
             android:elevation="12dp"
             android:orientation="vertical"
@@ -38,7 +34,7 @@
             android:id="@+id/fragment_bottom_container"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="82"
             android:background="#FFFFFF"
             android:elevation="12dp"
             android:orientation="vertical"></RelativeLayout>

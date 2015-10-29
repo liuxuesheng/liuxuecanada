@@ -41,21 +41,18 @@ public class ListAdapter extends ArrayAdapter<ContentItem> {
             holder = (ViewHolder) convertView.getTag();
         }
 
- /*       RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.TOP;*/
-
-
         holder.listButton.setCompoundDrawablesWithIntrinsicBounds(c.drawable, null, null, null);
         holder.listButton.setCompoundDrawablePadding(16);
-
-
-
 
         holder.listButton.setText(c.name);
         holder.listButton.setTextSize(16);
         holder.listButton.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         holder.listButton.setBackgroundColor(Color.TRANSPARENT);
+        holder.listButton.setFocusable(false);
+        holder.listButton.setClickable(false);
+        holder.listButton.setFocusableInTouchMode(false);
 
+        convertView.setBackgroundResource(R.drawable.listview_selector);
 
         return convertView;
     }

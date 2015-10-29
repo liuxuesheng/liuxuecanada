@@ -11,6 +11,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -122,7 +123,7 @@ public class JSONToComponentService {
         lv.setVerticalScrollBarEnabled(true);
         lv.setScrollbarFadingEnabled(false);
         lv.setBackgroundColor(Color.TRANSPARENT);
-
+        lv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         return lv;
     }
 
