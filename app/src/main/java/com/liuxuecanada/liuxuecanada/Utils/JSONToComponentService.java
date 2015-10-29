@@ -29,7 +29,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class JSONToComponentService {
 
@@ -80,7 +79,7 @@ public class JSONToComponentService {
         EditText et = new EditText(context);
         setId(et, getId(jsonObject));
         setAlignment(et, getAlignment(jsonObject), p);
-        setRelations(et, getRelation(jsonObject),getRelationId(jsonObject),p);
+        setRelations(et, getRelation(jsonObject), getRelationId(jsonObject), p);
         et.setHint(hint);
         et.setBackgroundColor(Color.TRANSPARENT);
         //et.setTextSize(TypedValue.COMPLEX_UNIT_SP, textsize);
@@ -108,7 +107,7 @@ public class JSONToComponentService {
         int count3 = 0;
         ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
         while (count3 < valueArray.length) {
-            Log.d("asd8d ", " 3 "+valueArray[count3]);
+            Log.d("asd8d ", " 3 " + valueArray[count3]);
             objects.add(new ContentItem(valueArray[count3], PaintService.paintLevelIconDrawable(context, "S")));
             count3++;
         }
@@ -154,7 +153,7 @@ public class JSONToComponentService {
 
         setId(universitySelector, getId(jsonObject));
         setAlignment(universitySelector, getAlignment(jsonObject), p);
-        setRelations(universitySelector, getRelation(jsonObject),getRelationId(jsonObject),p);
+        setRelations(universitySelector, getRelation(jsonObject), getRelationId(jsonObject), p);
         return universitySelector;
     }
 
@@ -215,7 +214,7 @@ public class JSONToComponentService {
         SeekBar seekBar = new SeekBar(context);
         setId(seekBar, getId(jsonObject));
         setAlignment(seekBar, getAlignment(jsonObject), p);
-        setRelations(seekBar, getRelation(jsonObject),getRelationId(jsonObject),p);
+        setRelations(seekBar, getRelation(jsonObject), getRelationId(jsonObject), p);
 
         final TextView seekBarResult = seekresult;
         seekBarResult.setText("" + name + ": " + seekBar.getProgress());
@@ -244,29 +243,29 @@ public class JSONToComponentService {
         return seekBar;
     }
 
-    private static int getId(JSONObject jsonObject){
+    private static int getId(JSONObject jsonObject) {
         try {
             id = jsonObject.getInt("id");
-        }catch (JSONException ex){
+        } catch (JSONException ex) {
             ex.printStackTrace();
         }
         return id;
     }
 
-    private static void setId(View view, int id){
+    private static void setId(View view, int id) {
         view.setId(id);
     }
 
-    private static String[] getAlignment(JSONObject jsonObject){
+    private static String[] getAlignment(JSONObject jsonObject) {
         try {
             alignment = jsonObject.getString("alignment");
-        }catch (JSONException ex){
+        } catch (JSONException ex) {
             ex.printStackTrace();
         }
         return alignment.split(",");
     }
 
-    private static void setAlignment(View view, String[] alignmentArray, RelativeLayout.LayoutParams p){
+    private static void setAlignment(View view, String[] alignmentArray, RelativeLayout.LayoutParams p) {
         int count = 0;
         while (count < alignmentArray.length) {
             int alignmentInt = Integer.parseInt(alignmentArray[count]);
@@ -276,10 +275,10 @@ public class JSONToComponentService {
         view.setLayoutParams(p);
     }
 
-    private static String[] getRelation(JSONObject jsonObject){
+    private static String[] getRelation(JSONObject jsonObject) {
         try {
             relation = jsonObject.getString("relation");
-        }catch (JSONException ex){
+        } catch (JSONException ex) {
             ex.printStackTrace();
         }
         return relation.split(",");
@@ -288,13 +287,13 @@ public class JSONToComponentService {
     private static String[] getRelationId(JSONObject jsonObject) {
         try {
             relationId = jsonObject.getString("relationid");
-        }catch (JSONException ex){
+        } catch (JSONException ex) {
             ex.printStackTrace();
         }
         return relationId.split(",");
     }
 
-    private static void setRelations(View view, String[] relationArray, String[] relationIdArray, RelativeLayout.LayoutParams p){
+    private static void setRelations(View view, String[] relationArray, String[] relationIdArray, RelativeLayout.LayoutParams p) {
         int count = 0;
         while (count < relationArray.length) {
             Log.d("7s73hs82h ", "B");

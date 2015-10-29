@@ -44,7 +44,8 @@ public class PaintService {
         Paint paint = new Paint();
         //paint.setShader(radicalGradient);
         paint.setDither(true);
-        paint.setColor(0xFFEEEEEE);
+        //paint.setAlpha(50);
+        paint.setColor(0xFFFF6F00);
         canvas.drawRect(0, 0, width, height, paint);
 
         view.setBackground(new BitmapDrawable(context.getResources(), bm));

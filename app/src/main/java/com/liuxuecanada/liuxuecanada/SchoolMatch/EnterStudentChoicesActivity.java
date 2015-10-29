@@ -1,24 +1,11 @@
 package com.liuxuecanada.liuxuecanada.SchoolMatch;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -26,14 +13,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.CharacterDrawableComponent.CharacterDrawable;
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ContentItem;
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ListAdapter;
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
 import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
@@ -50,7 +32,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -106,14 +87,13 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     }
 
 
-
     @Override
     public void onTaskComplete(Object out) {
         try {
             arr = new JSONArray((String) out);
             ComponentsInViewService.addObjectsToView(arr, this, mainURL);
 
-            Log.d("asd8d ", "4 "+ arr);
+            Log.d("asd8d ", "4 " + arr);
 
             if (pagell == null)
                 pagell = new LinkedList<JSONArray>();
@@ -144,6 +124,12 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         allFlowItemNames = new LinkedList<>();
 
         setContentView(R.layout.flow_main);
+
+
+        findViewById(R.id.fragment_top_container).setBackgroundColor(Color.rgb(30, 136, 229));
+        findViewById(R.id.fragment_container).setBackgroundColor(Color.rgb(238, 238, 238));
+        findViewById(R.id.fragment_bottom_container).setBackgroundColor(Color.rgb(238, 238, 238));
+
 
         ServerResponse pud = new ServerResponse(this);
 
@@ -181,10 +167,10 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     public void onGlobalLayout() {
         //layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-        if (PaintService.getBackgroundPainted() == false) {
+        /*if (PaintService.getBackgroundPainted() == false) {
             PaintService.paintBackground(this, layout);
             PaintService.setBackgroundPainted(true);
-        }
+        }*/
 
 /*        if (PaintService.getTextPainted() == false) {
             PaintService.paintText(this, layout);
