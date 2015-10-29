@@ -58,6 +58,7 @@ public class JSONToComponentService {
         tv.setText(name);
         tv.setBackgroundColor(Color.TRANSPARENT);
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, textsize);
+        tv.setTextColor(Color.parseColor(getTextColor(jsonObject)));
 
         return tv;
     }
@@ -304,5 +305,18 @@ public class JSONToComponentService {
             }
             count++;
         }
+        view.setLayoutParams(p);
     }
+
+    private static String getTextColor(JSONObject jsonObject) {
+        String textColor="";
+        try {
+            textColor = jsonObject.getString("textcolor");
+        } catch (JSONException ex) {
+            return "#000000";
+        }
+        return textColor;
+    }
+
+
 }
