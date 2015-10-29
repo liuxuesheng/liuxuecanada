@@ -12,7 +12,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="4dp"
         android:text=""
-        android:textSize="16dp"/>
-
+        android:textSize="16dp"
+        android:focusable="false"
+        android:clickable="false"/>
 
 </RelativeLayout>
