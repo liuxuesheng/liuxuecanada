@@ -217,6 +217,13 @@ public class JSONToComponentService {
         setAlignment(seekBar, getAlignment(jsonObject), p);
         setRelations(seekBar, getRelation(jsonObject), getRelationId(jsonObject), p);
 
+        int max = getSeekBarMaxValue(jsonObject);
+        final int min = getSeekBarMinValue(jsonObject);
+        final double factor = getSeekBarFactor(jsonObject);
+        Log.d("asdjh8dhas ", "" + factor);
+
+        seekBar.setMax((int) ((max - min) / factor));
+
         final TextView seekBarResult = seekresult;
         seekBarResult.setText("" + name + ": " + seekBar.getProgress());
 
@@ -226,7 +233,7 @@ public class JSONToComponentService {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 score = progress;
-                seekBarResult.setText("" + name + ": " + progress);
+                seekBarResult.setText("" + name + ": " + (getFormatedString(factor,(double)min+((double)progress * factor))));
             }
 
             @Override
@@ -236,8 +243,7 @@ public class JSONToComponentService {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                seekBarResult.setText("" + name + ": " + score);
-                //mCallback.updateProceedButton();
+                //seekBarResult.setText("" + name + ": " + score);
             }
         });
 
@@ -323,5 +329,40 @@ public class JSONToComponentService {
         return textColor;
     }
 
+    private static int getSeekBarMaxValue(JSONObject jsonObject) {
+        int max = 0;
+        try {
+            max = jsonObject.getInt("maxvalue");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return max;
+    }
 
+    private static int getSeekBarMinValue(JSONObject jsonObject) {
+        int min = 0;
+        try {
+            min = jsonObject.getInt("minvalue");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return min;
+    }
+
+    private static double getSeekBarFactor(JSONObject jsonObject) {
+        double factor = 0;
+        try {
+            factor = jsonObject.getDouble("factor");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return factor;
+    }
+
+    private static String getFormatedString(double factor, double number){
+        if (factor == 0.1)
+            return String.format( "%.1f", number);
+        else
+            return String.format( "%f", number);
+    }
 }
