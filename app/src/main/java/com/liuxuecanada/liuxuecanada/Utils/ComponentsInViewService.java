@@ -56,7 +56,7 @@ public class ComponentsInViewService {
                     final TextView tv = JSONToComponentService.createTextView(item, currentActivity);
 
                     Log.d("asdasdas2da2ad ", " ABC1 ");
-                    try{
+                    try {
                         final String nextPage = item.getString("nextPage");
                         final String savedatatype = item.getString("savedatatype");
                         Log.d("asdasdas2da2ad ", " ABC2 ");
@@ -81,7 +81,7 @@ public class ComponentsInViewService {
 
                             }
                         });
-                    }catch (JSONException ex){
+                    } catch (JSONException ex) {
 
                     }
 
@@ -108,12 +108,25 @@ public class ComponentsInViewService {
                     } catch (JSONException ex) {
                         ex.printStackTrace();
                     }
+                } else if (item.getString("type").equals("2seekbar")) {
+                    try {
+                        View[] vlist = JSONToComponentService.createDoubleSeekBarView(item, currentActivity);
 
-                } else if (item.getString("type").equals("edittext")){
+                        for(int k = 0; k < vlist.length; k++){
+
+                            ll.addLast(vlist[k]);
+                            someView.addView(vlist[k]);
+                        }
+                        /*ll.addLast(sb);
+                        someView.addView(sb);*/
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                } else if (item.getString("type").equals("edittext")) {
                     et = JSONToComponentService.createEditText(item, currentActivity);
                     ll.addLast(et);
                     someView.addView(et);
-                } else if (item.getString("type").equals("listview")){
+                } else if (item.getString("type").equals("listview")) {
                     Log.d("asd8d ", " 1 ");
                     lv = JSONToComponentService.createListView(item, currentActivity);
                     Log.d("asd8d ", " 2 ");

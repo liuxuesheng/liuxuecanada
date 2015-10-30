@@ -1,5 +1,6 @@
 package com.liuxuecanada.liuxuecanada.Utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -29,7 +30,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class JSONToComponentService {
 
@@ -59,6 +59,7 @@ public class JSONToComponentService {
         tv.setText(name);
         tv.setBackgroundColor(Color.TRANSPARENT);
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, textsize);
+        tv.setTextColor(Color.parseColor(getTextColor(jsonObject)));
 
         return tv;
     }
@@ -80,7 +81,7 @@ public class JSONToComponentService {
         EditText et = new EditText(context);
         setId(et, getId(jsonObject));
         setAlignment(et, getAlignment(jsonObject), p);
-        setRelations(et, getRelation(jsonObject),getRelationId(jsonObject),p);
+        setRelations(et, getRelation(jsonObject), getRelationId(jsonObject), p);
         et.setHint(hint);
         et.setBackgroundColor(Color.TRANSPARENT);
         //et.setTextSize(TypedValue.COMPLEX_UNIT_SP, textsize);
@@ -108,7 +109,7 @@ public class JSONToComponentService {
         int count3 = 0;
         ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
         while (count3 < valueArray.length) {
-            Log.d("asd8d ", " 3 "+valueArray[count3]);
+            Log.d("asd8d ", " 3 " + valueArray[count3]);
             objects.add(new ContentItem(valueArray[count3], PaintService.paintLevelIconDrawable(context, "S")));
             count3++;
         }
@@ -154,7 +155,7 @@ public class JSONToComponentService {
 
         setId(universitySelector, getId(jsonObject));
         setAlignment(universitySelector, getAlignment(jsonObject), p);
-        setRelations(universitySelector, getRelation(jsonObject),getRelationId(jsonObject),p);
+        setRelations(universitySelector, getRelation(jsonObject), getRelationId(jsonObject), p);
         return universitySelector;
     }
 
@@ -215,10 +216,17 @@ public class JSONToComponentService {
         SeekBar seekBar = new SeekBar(context);
         setId(seekBar, getId(jsonObject));
         setAlignment(seekBar, getAlignment(jsonObject), p);
-        setRelations(seekBar, getRelation(jsonObject),getRelationId(jsonObject),p);
+        setRelations(seekBar, getRelation(jsonObject), getRelationId(jsonObject), p);
+
+        int max = getSeekBarMaxValue(jsonObject);
+        final int min = getSeekBarMinValue(jsonObject);
+        final double factor = getSeekBarFactor(jsonObject);
+        Log.d("asdjh8dhas ", "" + factor);
+
+        seekBar.setMax((int) ((max - min) / factor));
 
         final TextView seekBarResult = seekresult;
-        seekBarResult.setText("" + name + ": " + seekBar.getProgress());
+        seekBarResult.setText("" + name + ": " + getFormatedString(factor, seekBar.getProgress()));
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int score = 0;
@@ -226,7 +234,7 @@ public class JSONToComponentService {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 score = progress;
-                seekBarResult.setText("" + name + ": " + progress);
+                seekBarResult.setText("" + name + ": " + (getFormatedString(factor, (double) min + ((double) progress * factor))));
             }
 
             @Override
@@ -236,50 +244,182 @@ public class JSONToComponentService {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                seekBarResult.setText("" + name + ": " + score);
-                //mCallback.updateProceedButton();
+                //seekBarResult.setText("" + name + ": " + score);
             }
         });
 
         return seekBar;
     }
 
-    private static int getId(JSONObject jsonObject){
+    public static View[] createDoubleSeekBarView(JSONObject jsonObject, Context context) {
+        View[] va;
+        final String name1;
+        final String name2;
+
+        int textid1, textid2, seekbarid1, seekbarid2;
+
+        try {
+            jsonObject.getString("type").equals("2seekbar");
+            name1 = jsonObject.getString("textname1");
+            name2 = jsonObject.getString("textname2");
+            textid1 = jsonObject.getInt("textid1");
+            textid2 = jsonObject.getInt("textid2");
+            seekbarid1 = jsonObject.getInt("seekbarid1");
+            seekbarid2 = jsonObject.getInt("seekbarid2");
+        } catch (JSONException ex) {
+            return null;
+        }
+
+        RelativeLayout.LayoutParams p1 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams p2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams p3 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams p4 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+        final TextView tv1 = new TextView(context);
+        final TextView tv2 = new TextView(context);
+        final SeekBar seekBar1 = new SeekBar(context);
+        final SeekBar seekBar2 = new SeekBar(context);
+
+        seekBar1.setId(seekbarid1);
+        seekBar2.setId(seekbarid2);
+        tv1.setId(textid1);
+        tv2.setId(textid2);
+
+        setAlignment(tv1, getAlignment(jsonObject), p1);
+        setRelations(tv1, getRelation(jsonObject), getRelationId(jsonObject), p1);
+
+        p2.addRule(RelativeLayout.BELOW, textid1);
+        seekBar1.setLayoutParams(p2);
+
+        p3.addRule(RelativeLayout.BELOW,seekbarid1);
+        tv2.setLayoutParams(p3);
+
+        p4.addRule(RelativeLayout.BELOW,textid2);
+        seekBar2.setLayoutParams(p4);
+
+
+        int max1 = 0;
+        int max2 = 0;
+        int min1 = 0;
+        int min2 = 0;
+        double factor1 = 0;
+        double factor2 = 0;
+        try {
+            max1 = jsonObject.getInt("maxvalue1");
+            max2 = jsonObject.getInt("maxvalue2");
+            min1 = jsonObject.getInt("minvalue1");
+            min2 = jsonObject.getInt("minvalue2");
+            factor1 = jsonObject.getDouble("factor1");
+            factor2 = jsonObject.getDouble("factor2");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        seekBar1.setMax((int) ((max1 - min1) / factor1));
+        seekBar2.setMax((int) ((max2 - min2) / factor2));
+
+        /*try {
+            tv1 = (TextView) ((Activity)context).findViewById(textid1);
+            tv2 = (TextView) ((Activity)context).findViewById(textid2);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }*/
+
+
+        tv1.setText("" + name1 + ": " + getFormatedString(factor1, seekBar1.getProgress()));
+        tv2.setText("" + name2 + ": " + getFormatedString(factor2, seekBar2.getProgress()));
+
+        final int minmin1 = min1;
+        final double factorfactor1 = factor1;
+        final int minmin2 = min2;
+        final double factorfactor2 = factor2;
+
+        seekBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int score = 0;
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                score = progress;
+                tv1.setText("" + name1 + ": " + (getFormatedString(factorfactor1, (double) minmin1 + ((double) progress * factorfactor1))));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                tv2.setText("" + name2 + ": ");
+                seekBar2.setProgress(0);
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                //seekBarResult.setText("" + name + ": " + score);
+            }
+        });
+
+        seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int score = 0;
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                score = progress;
+                tv2.setText("" + name2 + ": " + (getFormatedString(factorfactor2, (double) minmin2 + ((double) progress * factorfactor2))));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                tv1.setText("" + name1 + ": ");
+                seekBar1.setProgress(0);
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                //seekBarResult.setText("" + name + ": " + score);
+            }
+        });
+
+        return new View[]{tv1,seekBar1,tv2,seekBar2};
+    }
+
+    private static int getId(JSONObject jsonObject) {
         try {
             id = jsonObject.getInt("id");
-        }catch (JSONException ex){
+        } catch (JSONException ex) {
             ex.printStackTrace();
         }
         return id;
     }
 
-    private static void setId(View view, int id){
+    private static void setId(View view, int id) {
         view.setId(id);
     }
 
-    private static String[] getAlignment(JSONObject jsonObject){
+    private static String[] getAlignment(JSONObject jsonObject) {
         try {
             alignment = jsonObject.getString("alignment");
-        }catch (JSONException ex){
+        } catch (JSONException ex) {
             ex.printStackTrace();
         }
         return alignment.split(",");
     }
 
-    private static void setAlignment(View view, String[] alignmentArray, RelativeLayout.LayoutParams p){
+    private static void setAlignment(View view, String[] alignmentArray, RelativeLayout.LayoutParams p) {
         int count = 0;
         while (count < alignmentArray.length) {
             int alignmentInt = Integer.parseInt(alignmentArray[count]);
             p.addRule(alignmentInt);
+            Log.d("djskc8csdn9 ", "" + RelativeLayout.CENTER_HORIZONTAL);
+            Log.d("djskc8csdn9 ", "" + RelativeLayout.CENTER_VERTICAL);
+            Log.d("djskc8csdn9 ", "" + RelativeLayout.CENTER_IN_PARENT);
+            Log.d("djskc8csdn9 ", "" + RelativeLayout.BELOW);
+            Log.d("djskc8csdn9 ", "" + RelativeLayout.ABOVE);
             count++;
         }
         view.setLayoutParams(p);
     }
 
-    private static String[] getRelation(JSONObject jsonObject){
+    private static String[] getRelation(JSONObject jsonObject) {
         try {
             relation = jsonObject.getString("relation");
-        }catch (JSONException ex){
+        } catch (JSONException ex) {
             ex.printStackTrace();
         }
         return relation.split(",");
@@ -288,13 +428,13 @@ public class JSONToComponentService {
     private static String[] getRelationId(JSONObject jsonObject) {
         try {
             relationId = jsonObject.getString("relationid");
-        }catch (JSONException ex){
+        } catch (JSONException ex) {
             ex.printStackTrace();
         }
         return relationId.split(",");
     }
 
-    private static void setRelations(View view, String[] relationArray, String[] relationIdArray, RelativeLayout.LayoutParams p){
+    private static void setRelations(View view, String[] relationArray, String[] relationIdArray, RelativeLayout.LayoutParams p) {
         int count = 0;
         while (count < relationArray.length) {
             Log.d("7s73hs82h ", "B");
@@ -305,5 +445,55 @@ public class JSONToComponentService {
             }
             count++;
         }
+        view.setLayoutParams(p);
+    }
+
+    private static String getTextColor(JSONObject jsonObject) {
+        String textColor = "";
+        try {
+            textColor = jsonObject.getString("textcolor");
+        } catch (JSONException ex) {
+            return "#000000";
+        }
+        return textColor;
+    }
+
+    private static int getSeekBarMaxValue(JSONObject jsonObject) {
+        int max = 0;
+        try {
+            max = jsonObject.getInt("maxvalue");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return max;
+    }
+
+    private static int getSeekBarMinValue(JSONObject jsonObject) {
+        int min = 0;
+        try {
+            min = jsonObject.getInt("minvalue");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return min;
+    }
+
+    private static double getSeekBarFactor(JSONObject jsonObject) {
+        double factor = 0;
+        try {
+            factor = jsonObject.getDouble("factor");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return factor;
+    }
+
+    private static String getFormatedString(double factor, double number) {
+        if ((factor >= 0.1) && (factor < 1))
+            return String.format("%.1f", number);
+        else if ((factor % 1) == 0)
+            return String.format("%s", (int) number);
+        else
+            return String.format("%s", number);
     }
 }

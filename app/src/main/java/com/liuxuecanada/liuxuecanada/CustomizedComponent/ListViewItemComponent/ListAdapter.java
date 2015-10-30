@@ -45,7 +45,7 @@ public class ListAdapter extends ArrayAdapter<ContentItem> {
         holder.listButton.setCompoundDrawablePadding(16);
 
         holder.listButton.setText(c.name);
-        holder.listButton.setTextSize(16);
+        holder.listButton.setTextSize(15);
         holder.listButton.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         holder.listButton.setBackgroundColor(Color.TRANSPARENT);
         holder.listButton.setFocusable(false);
