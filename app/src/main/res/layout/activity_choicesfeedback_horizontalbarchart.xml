@@ -15,7 +15,7 @@
         app:cardElevation="8dp">
 
         <com.liuxuecanada.liuxuecanada.CustomizedComponent.PieChartComponent.HorizontalBarChart
-            android:id="@+id/chart1"
+            android:id="@+id/horizontalBarChartID"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

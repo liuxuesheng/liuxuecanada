@@ -17,7 +17,7 @@
         app:cardElevation="8dp">
 
         <com.liuxuecanada.liuxuecanada.CustomizedComponent.PieChartComponent.RadarChart
-            android:id="@+id/chart1"
+            android:id="@+id/radarchartID"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

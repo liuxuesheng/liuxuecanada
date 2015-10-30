@@ -11,11 +11,15 @@ import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.compo
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.components.YAxis;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.Entry;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.RadarData;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.RadarDataSet;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.highlight.Highlight;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.renderer.RadarChartRenderer;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.renderer.XAxisRendererRadarChart;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.renderer.YAxisRendererRadarChart;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.utils.ColorTemplate;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.utils.Utils;
+
+import java.util.ArrayList;
 
 
 public class RadarChart extends PieRadarChartBase<RadarData> {
@@ -400,5 +404,57 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
      */
     public float getYRange() {
         return mYAxis.mAxisRange;
+    }
+
+    /**
+     * set origin data for Radar chart
+     * @param party
+     * @param value1
+     * @param value2
+     */
+    public void setData(String[] party, float[] value1,float[] value2) {
+
+        int count = party.length;
+
+        ArrayList<Entry> yVals1 = new ArrayList<Entry>();
+        ArrayList<Entry> yVals2 = new ArrayList<Entry>();
+
+        // IMPORTANT: In a PieChart, no values (Entry) should have the same
+        // xIndex (even if from different DataSets), since no values can be
+        // drawn above each other.
+        for (int i = 0; i < value1.length; i++) {
+            yVals1.add(new Entry(value1[i], i));
+        }
+
+        for (int i = 0; i < value2.length; i++) {
+            yVals2.add(new Entry(value2[i], i));
+        }
+
+        ArrayList<String> xVals = new ArrayList<String>();
+
+        for (int i = 0; i < count; i++)
+            xVals.add(party[i % party.length]);
+
+        RadarDataSet set1 = new RadarDataSet(yVals1, "同学苹果");
+        set1.setColor(ColorTemplate.VORDIPLOM_COLORS[0]);
+        set1.setDrawFilled(true);
+        set1.setLineWidth(2f);
+
+        RadarDataSet set2 = new RadarDataSet(yVals2, "同学小米");
+        set2.setColor(ColorTemplate.VORDIPLOM_COLORS[4]);
+        set2.setDrawFilled(true);
+        set2.setLineWidth(2f);
+
+        ArrayList<RadarDataSet> sets = new ArrayList<RadarDataSet>();
+        sets.add(set1);
+        sets.add(set2);
+
+        RadarData data = new RadarData(xVals, sets);
+        data.setValueTextSize(8f);
+        data.setDrawValues(false);
+
+        this.setData(data);
+
+        this.invalidate();
     }
 }

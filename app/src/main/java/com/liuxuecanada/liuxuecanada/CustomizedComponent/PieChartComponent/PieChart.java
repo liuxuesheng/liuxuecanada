@@ -2,6 +2,7 @@ package com.liuxuecanada.liuxuecanada.CustomizedComponent.PieChartComponent;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
@@ -15,10 +16,13 @@ import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.Entry;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.PieData;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.PieDataSet;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.formatter.PercentFormatter;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.highlight.Highlight;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.renderer.PieChartRenderer;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.utils.ColorTemplate;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PieChart extends PieRadarChartBase<PieData> {
@@ -638,4 +642,63 @@ public class PieChart extends PieRadarChartBase<PieData> {
         super.onDetachedFromWindow();
     }
 
+    public void setData(String[] mParties, float[] value) {
+
+
+        ArrayList<Entry> yVals1 = new ArrayList<Entry>();
+
+        // IMPORTANT: In a PieChart, no values (Entry) should have the same
+        // xIndex (even if from different DataSets), since no values can be
+        // drawn above each other.
+        for (int i = 0; i < value.length; i++) {
+            yVals1.add(new Entry(value[i], i));
+        }
+
+
+        ArrayList<String> xVals = new ArrayList<String>();
+
+        for (int i = 0; i < mParties.length; i++) {
+            xVals.add(mParties[i % mParties.length]);
+        }
+
+
+        PieDataSet dataSet = new PieDataSet(yVals1, "");
+        dataSet.setSliceSpace(3f);
+        dataSet.setSelectionShift(5f);
+
+        // add a lot of colors
+
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+
+        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.JOYFUL_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.LIBERTY_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.PASTEL_COLORS)
+            colors.add(c);
+
+        colors.add(ColorTemplate.getHoloBlue());
+
+        dataSet.setColors(colors);
+
+        PieData data = new PieData(xVals, dataSet);
+        data.setValueFormatter(new PercentFormatter());
+        data.setValueTextSize(11f);
+        data.setValueTextColor(Color.WHITE);
+        this.setData(data);
+
+
+        // undo all highlights
+        this.highlightValues(null);
+
+        this.invalidate();
+    }
 }

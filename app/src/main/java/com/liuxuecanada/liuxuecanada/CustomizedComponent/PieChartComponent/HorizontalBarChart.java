@@ -10,6 +10,7 @@ import android.util.Log;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.components.Legend;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.components.XAxis;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.components.YAxis;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.BarData;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.BarDataSet;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.BarEntry;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.Entry;
@@ -20,6 +21,8 @@ import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.rende
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.renderer.YAxisRendererHorizontalBarChart;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.utils.TransformerHorizontalBarChart;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.utils.Utils;
+
+import java.util.ArrayList;
 
 public class HorizontalBarChart extends BarChart {
 
@@ -252,6 +255,31 @@ public class HorizontalBarChart extends BarChart {
 
         getTransformer(YAxis.AxisDependency.LEFT).pixelsToValue(pts);
         return (int) ((pts[1] >= getXChartMax()) ? getXChartMax() / div : (pts[1] / div));
+    }
+
+    /**
+     *
+     * @param year
+     * @param value
+     */
+    public void setData(String[] year, float value[]) {
+
+        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
+        ArrayList<String> xVals = new ArrayList<String>();
+
+        for (int i = 0; i < year.length; i++) {
+            xVals.add(year[i % year.length]);
+            yVals1.add(new BarEntry(value[i], i));
+        }
+
+        BarDataSet set1 = new BarDataSet(yVals1, "年度统计");
+
+        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        dataSets.add(set1);
+
+        BarData data = new BarData(xVals, dataSets);
+        data.setValueTextSize(10f);
+        this.setData(data);
     }
 }
 

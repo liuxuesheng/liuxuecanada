@@ -32,18 +32,6 @@
         <activity
             android:name=".RegistrationOffice.LoginActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".SchoolMatch.PieChartActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".SchoolMatch.RadarChartActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".SchoolMatch.BarChartActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".SchoolMatch.HorizontalBarChartActivity"
-            android:screenOrientation="portrait" />
 
     </application>
 
