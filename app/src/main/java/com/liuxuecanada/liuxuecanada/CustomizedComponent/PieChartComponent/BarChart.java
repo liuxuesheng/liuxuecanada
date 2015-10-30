@@ -15,6 +15,8 @@ import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.inter
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.renderer.BarChartRenderer;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.renderer.XAxisRendererBarChart;
 
+import java.util.ArrayList;
+
 
 public class BarChart extends BarLineChartBase<BarData> implements BarDataProvider {
 
@@ -237,5 +239,36 @@ public class BarChart extends BarLineChartBase<BarData> implements BarDataProvid
 
 		getTransformer(YAxis.AxisDependency.LEFT).pixelsToValue(pts);
 		return (int) ((pts[0] >= getXChartMax()) ? getXChartMax() / div : (pts[0] / div));
+	}
+
+	/**
+	 *
+	 * @param year
+	 * @param value
+	 */
+	public void setData(String[] year, float value[]) {
+
+		ArrayList<String> xVals = new ArrayList<String>();
+		for (int i = 0; i < year.length; i++) {
+			xVals.add(year[i % year.length]);
+		}
+
+		ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
+
+		for (int i = 0; i < value.length; i++) {
+			yVals1.add(new BarEntry(value[i], i));
+		}
+
+
+		BarDataSet set1 = new BarDataSet(yVals1, "年度统计");
+		set1.setBarSpacePercent(35f);
+
+		ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+		dataSets.add(set1);
+
+		BarData data = new BarData(xVals, dataSets);
+		data.setValueTextSize(10f);
+
+		this.setData(data);
 	}
 }

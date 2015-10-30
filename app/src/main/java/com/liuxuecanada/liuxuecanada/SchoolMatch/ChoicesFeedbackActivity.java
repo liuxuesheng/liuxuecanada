@@ -78,10 +78,10 @@ public class ChoicesFeedbackActivity extends Activity implements AsyncResponse {
     private void initPersonData() {
         choicesFeedbackItems =new ArrayList<>();
 
-        choicesFeedbackItems.add(new ChoicesFeedbackItem("饼图展览", "Click me please!",R.drawable.feedback1));
-        choicesFeedbackItems.add(new ChoicesFeedbackItem("This is 2 feedback", "Click me please!",R.drawable.feedback2));
-        choicesFeedbackItems.add(new ChoicesFeedbackItem("This is 3 feedback", "Click me please!",R.drawable.feedback3));
-        choicesFeedbackItems.add(new ChoicesFeedbackItem("This is 4 feedback", "Click me please!",R.drawable.feedback4));
+        choicesFeedbackItems.add(new ChoicesFeedbackItem("饼图展览", "分析选校情况和申报每所学校的概率!",R.drawable.feedback1));
+        choicesFeedbackItems.add(new ChoicesFeedbackItem("雷达图展览", "通过和其他学生对比，分析考生的优点缺点",R.drawable.feedback2));
+        choicesFeedbackItems.add(new ChoicesFeedbackItem("柱状图展览", "数据年份分析!",R.drawable.feedback3));
+        choicesFeedbackItems.add(new ChoicesFeedbackItem("横向柱状图展览", "数据年份分析!",R.drawable.feedback4));
 
     }
 

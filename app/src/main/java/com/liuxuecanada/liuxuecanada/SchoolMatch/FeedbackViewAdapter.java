@@ -12,131 +12,73 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.PieChartComponent.RadarChart;
 import com.liuxuecanada.liuxuecanada.R;
 
 import java.util.List;
 
 
-public class FeedbackViewAdapter extends RecyclerView.Adapter<FeedbackViewAdapter.FeedbackViewHolder>{
+public class FeedbackViewAdapter extends RecyclerView.Adapter<FeedbackViewAdapter.FeedbackViewHolder> {
 
     private List<ChoicesFeedbackItem> choicesFeedbackItems;
     private Context context;
 
-    public FeedbackViewAdapter(List<ChoicesFeedbackItem> choiceFeedbacks,Context context) {
+    public FeedbackViewAdapter(List<ChoicesFeedbackItem> choiceFeedbacks, Context context) {
         this.choicesFeedbackItems = choiceFeedbacks;
-        this.context=context;
+        this.context = context;
     }
 
-    //自定义ViewHolder类
-    static class FeedbackViewHolder extends RecyclerView.ViewHolder{
-
-        CardView cardView;
-        ImageView feedbackItem_photo;
-        TextView feedbackItem_title;
-        TextView feedbackItem_desc;
-        Button share;
-        Button readMore;
-
-        public FeedbackViewHolder(final View itemView) {
-            super(itemView);
-            cardView= (CardView) itemView.findViewById(R.id.feedbackItem_cardview);
-            feedbackItem_photo= (ImageView) itemView.findViewById(R.id.feedbackItem_photo);
-            feedbackItem_title= (TextView) itemView.findViewById(R.id.feedbackItem_title);
-            feedbackItem_desc= (TextView) itemView.findViewById(R.id.feedbackItem_desc);
-            share= (Button) itemView.findViewById(R.id.btn_share);
-            readMore= (Button) itemView.findViewById(R.id.btn_more);
-            //设置TextView背景为半透明
-            feedbackItem_title.setBackgroundColor(Color.argb(20, 0, 0, 0));
-
-        }
-
-    }
     @Override
     public FeedbackViewAdapter.FeedbackViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v= LayoutInflater.from(context).inflate(R.layout.cardview_choicesfeedback_item,viewGroup,false);
-        FeedbackViewHolder nvh=new FeedbackViewHolder(v);
+        View v = LayoutInflater.from(context).inflate(R.layout.cardview_choicesfeedback_item, viewGroup, false);
+        FeedbackViewHolder nvh = new FeedbackViewHolder(v);
         return nvh;
     }
 
     @Override
-    public void onBindViewHolder(FeedbackViewAdapter.FeedbackViewHolder personViewHolder, int i){
-        final int j=i;
+    public void onBindViewHolder(FeedbackViewAdapter.FeedbackViewHolder personViewHolder, int i) {
 
+        final int j = i;
+        String chartName;
         personViewHolder.feedbackItem_photo.setImageResource(choicesFeedbackItems.get(i).getPhotoId());
         personViewHolder.feedbackItem_title.setText(choicesFeedbackItems.get(i).getTitle());
         personViewHolder.feedbackItem_desc.setText(choicesFeedbackItems.get(i).getDesc());
 
-        switch (i){
+        //为btn_share btn_readMore cardView设置点击事件
+        switch (i) {
             case 0:
-                personViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent= new Intent(context,PieChartActivity.class);
-                        intent.putExtra("ChoicesFeedbackItem",PieChartActivity.class);
-                        context.startActivity(intent);
-
-                    }
-                });
+                chartName = "PieChart";
                 break;
             case 1:
-                personViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent= new Intent(context,RadarChartActivity.class);
-                        intent.putExtra("ChoicesFeedbackItem",RadarChartActivity.class);
-                        context.startActivity(intent);
-
-                    }
-                });
+                chartName = "RadarChart";
                 break;
             case 2:
-                personViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent= new Intent(context,BarChartActivity.class);
-                        intent.putExtra("ChoicesFeedbackItem",BarChartActivity.class);
-                        context.startActivity(intent);
-
-                    }
-                });
+                chartName = "BarChart";
                 break;
             case 3:
-                personViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent= new Intent(context,HorizontalBarChartActivity.class);
-                        intent.putExtra("ChoicesFeedbackItem",HorizontalBarChartActivity.class);
-                        context.startActivity(intent);
-
-                    }
-                });
+                chartName = "HorizontalBarChart";
                 break;
-                default:
-                    personViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent= new Intent(context,ChoicesFeedbackDetailActivity.class);
-                            intent.putExtra("ChoicesFeedbackItem",choicesFeedbackItems.get(j));
-                            // intent.putExtra("ChoicesFeedbackItem",ChoicesFeedbackDetailActivity.class);
-                            context.startActivity(intent);
-
-                        }
-                    });
+            default:
+                chartName = "HorizontalBarChart";
         }
+        final String postion = chartName;
+        personViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ChoicesFeedbackDetailActivity.class);
+                intent.putExtra(postion, ChoicesFeedbackDetailActivity.class);
+                context.startActivity(intent);
 
+            }
+        });
+        personViewHolder.readMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ChoicesFeedbackDetailActivity.class);
+                intent.putExtra(postion, ChoicesFeedbackDetailActivity.class);
+                context.startActivity(intent);
+            }
+        });
 
-        //为btn_share btn_readMore cardView设置点击事件
-//        personViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent= new Intent(context,PieChartActivity.class);
-//                //intent.putExtra("ChoicesFeedbackItem",choicesFeedbackItems.get(j));
-//                intent.putExtra("ChoicesFeedbackItem",PieChartActivity.class);
-//                context.startActivity(intent);
-//
-//            }
-//        });
         personViewHolder.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,17 +91,35 @@ public class FeedbackViewAdapter extends RecyclerView.Adapter<FeedbackViewAdapte
             }
         });
 
-        personViewHolder.readMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(context,ChoicesFeedbackDetailActivity.class);
-                intent.putExtra("ChoicesFeedbackItem", choicesFeedbackItems.get(j));
-                context.startActivity(intent);
-            }
-        });
     }
+
     @Override
     public int getItemCount() {
         return choicesFeedbackItems.size();
+    }
+
+    //自定义ViewHolder类
+    static class FeedbackViewHolder extends RecyclerView.ViewHolder {
+
+        CardView cardView;
+        ImageView feedbackItem_photo;
+        TextView feedbackItem_title;
+        TextView feedbackItem_desc;
+        Button share;
+        Button readMore;
+
+        public FeedbackViewHolder(final View itemView) {
+            super(itemView);
+            cardView = (CardView) itemView.findViewById(R.id.feedbackItem_cardview);
+            feedbackItem_photo = (ImageView) itemView.findViewById(R.id.feedbackItem_photo);
+            feedbackItem_title = (TextView) itemView.findViewById(R.id.feedbackItem_title);
+            feedbackItem_desc = (TextView) itemView.findViewById(R.id.feedbackItem_desc);
+            share = (Button) itemView.findViewById(R.id.btn_share);
+            readMore = (Button) itemView.findViewById(R.id.btn_more);
+            //设置TextView背景为半透明
+            feedbackItem_title.setBackgroundColor(Color.argb(20, 0, 0, 0));
+
+        }
+
     }
 }
