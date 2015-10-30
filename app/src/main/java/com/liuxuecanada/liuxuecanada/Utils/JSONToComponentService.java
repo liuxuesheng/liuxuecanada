@@ -225,7 +225,7 @@ public class JSONToComponentService {
         seekBar.setMax((int) ((max - min) / factor));
 
         final TextView seekBarResult = seekresult;
-        seekBarResult.setText("" + name + ": " + seekBar.getProgress());
+        seekBarResult.setText("" + name + ": " + getFormatedString(factor,seekBar.getProgress()));
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int score = 0;
@@ -360,7 +360,7 @@ public class JSONToComponentService {
     }
 
     private static String getFormatedString(double factor, double number){
-        if (factor == 0.1)
+        if ((factor >= 0.1) && (factor < 1))
             return String.format( "%.1f", number);
         else
             return String.format( "%f", number);
