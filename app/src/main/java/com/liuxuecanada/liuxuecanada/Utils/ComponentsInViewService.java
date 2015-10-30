@@ -108,7 +108,20 @@ public class ComponentsInViewService {
                     } catch (JSONException ex) {
                         ex.printStackTrace();
                     }
+                } else if (item.getString("type").equals("2seekbar")) {
+                    try {
+                        View[] vlist = JSONToComponentService.createDoubleSeekBarView(item, currentActivity);
 
+                        for(int k = 0; k < vlist.length; k++){
+
+                            ll.addLast(vlist[k]);
+                            someView.addView(vlist[k]);
+                        }
+                        /*ll.addLast(sb);
+                        someView.addView(sb);*/
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 } else if (item.getString("type").equals("edittext")) {
                     et = JSONToComponentService.createEditText(item, currentActivity);
                     ll.addLast(et);

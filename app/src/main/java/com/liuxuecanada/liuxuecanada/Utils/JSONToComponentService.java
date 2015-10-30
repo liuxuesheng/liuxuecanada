@@ -1,5 +1,6 @@
 package com.liuxuecanada.liuxuecanada.Utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -248,6 +249,134 @@ public class JSONToComponentService {
         });
 
         return seekBar;
+    }
+
+    public static View[] createDoubleSeekBarView(JSONObject jsonObject, Context context) {
+        View[] va;
+        final String name1;
+        final String name2;
+
+        int textid1, textid2, seekbarid1, seekbarid2;
+
+        try {
+            jsonObject.getString("type").equals("2seekbar");
+            name1 = jsonObject.getString("textname1");
+            name2 = jsonObject.getString("textname2");
+            textid1 = jsonObject.getInt("textid1");
+            textid2 = jsonObject.getInt("textid2");
+            seekbarid1 = jsonObject.getInt("seekbarid1");
+            seekbarid2 = jsonObject.getInt("seekbarid2");
+        } catch (JSONException ex) {
+            return null;
+        }
+
+        RelativeLayout.LayoutParams p1 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams p2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams p3 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams p4 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+        final TextView tv1 = new TextView(context);
+        final TextView tv2 = new TextView(context);
+        final SeekBar seekBar1 = new SeekBar(context);
+        final SeekBar seekBar2 = new SeekBar(context);
+
+        seekBar1.setId(seekbarid1);
+        seekBar2.setId(seekbarid2);
+        tv1.setId(textid1);
+        tv2.setId(textid2);
+
+        setAlignment(tv1, getAlignment(jsonObject), p1);
+        setRelations(tv1, getRelation(jsonObject), getRelationId(jsonObject), p1);
+
+        p2.addRule(RelativeLayout.BELOW, textid1);
+        seekBar1.setLayoutParams(p2);
+
+        p3.addRule(RelativeLayout.BELOW,seekbarid1);
+        tv2.setLayoutParams(p3);
+
+        p4.addRule(RelativeLayout.BELOW,textid2);
+        seekBar2.setLayoutParams(p4);
+
+
+        int max1 = 0;
+        int max2 = 0;
+        int min1 = 0;
+        int min2 = 0;
+        double factor1 = 0;
+        double factor2 = 0;
+        try {
+            max1 = jsonObject.getInt("maxvalue1");
+            max2 = jsonObject.getInt("maxvalue2");
+            min1 = jsonObject.getInt("minvalue1");
+            min2 = jsonObject.getInt("minvalue2");
+            factor1 = jsonObject.getDouble("factor1");
+            factor2 = jsonObject.getDouble("factor2");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        seekBar1.setMax((int) ((max1 - min1) / factor1));
+        seekBar2.setMax((int) ((max2 - min2) / factor2));
+
+        /*try {
+            tv1 = (TextView) ((Activity)context).findViewById(textid1);
+            tv2 = (TextView) ((Activity)context).findViewById(textid2);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }*/
+
+
+        tv1.setText("" + name1 + ": " + getFormatedString(factor1, seekBar1.getProgress()));
+        tv2.setText("" + name2 + ": " + getFormatedString(factor2, seekBar2.getProgress()));
+
+        final int minmin1 = min1;
+        final double factorfactor1 = factor1;
+        final int minmin2 = min2;
+        final double factorfactor2 = factor2;
+
+        seekBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int score = 0;
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                score = progress;
+                tv1.setText("" + name1 + ": " + (getFormatedString(factorfactor1, (double) minmin1 + ((double) progress * factorfactor1))));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                tv2.setText("" + name2 + ": ");
+                seekBar2.setProgress(0);
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                //seekBarResult.setText("" + name + ": " + score);
+            }
+        });
+
+        seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int score = 0;
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                score = progress;
+                tv2.setText("" + name2 + ": " + (getFormatedString(factorfactor2, (double) minmin2 + ((double) progress * factorfactor2))));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                tv1.setText("" + name1 + ": ");
+                seekBar1.setProgress(0);
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                //seekBarResult.setText("" + name + ": " + score);
+            }
+        });
+
+        return new View[]{tv1,seekBar1,tv2,seekBar2};
     }
 
     private static int getId(JSONObject jsonObject) {
