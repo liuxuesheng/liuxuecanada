@@ -225,7 +225,7 @@ public class JSONToComponentService {
         seekBar.setMax((int) ((max - min) / factor));
 
         final TextView seekBarResult = seekresult;
-        seekBarResult.setText("" + name + ": " + getFormatedString(factor,seekBar.getProgress()));
+        seekBarResult.setText("" + name + ": " + getFormatedString(factor, seekBar.getProgress()));
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int score = 0;
@@ -233,7 +233,7 @@ public class JSONToComponentService {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 score = progress;
-                seekBarResult.setText("" + name + ": " + (getFormatedString(factor,(double)min+((double)progress * factor))));
+                seekBarResult.setText("" + name + ": " + (getFormatedString(factor, (double) min + ((double) progress * factor))));
             }
 
             @Override
@@ -278,10 +278,10 @@ public class JSONToComponentService {
             int alignmentInt = Integer.parseInt(alignmentArray[count]);
             p.addRule(alignmentInt);
             Log.d("djskc8csdn9 ", "" + RelativeLayout.CENTER_HORIZONTAL);
-            Log.d("djskc8csdn9 ",""+RelativeLayout.CENTER_VERTICAL);
-            Log.d("djskc8csdn9 ",""+RelativeLayout.CENTER_IN_PARENT);
-            Log.d("djskc8csdn9 ",""+RelativeLayout.BELOW);
-            Log.d("djskc8csdn9 ",""+RelativeLayout.ABOVE);
+            Log.d("djskc8csdn9 ", "" + RelativeLayout.CENTER_VERTICAL);
+            Log.d("djskc8csdn9 ", "" + RelativeLayout.CENTER_IN_PARENT);
+            Log.d("djskc8csdn9 ", "" + RelativeLayout.BELOW);
+            Log.d("djskc8csdn9 ", "" + RelativeLayout.ABOVE);
             count++;
         }
         view.setLayoutParams(p);
@@ -320,7 +320,7 @@ public class JSONToComponentService {
     }
 
     private static String getTextColor(JSONObject jsonObject) {
-        String textColor="";
+        String textColor = "";
         try {
             textColor = jsonObject.getString("textcolor");
         } catch (JSONException ex) {
@@ -359,10 +359,12 @@ public class JSONToComponentService {
         return factor;
     }
 
-    private static String getFormatedString(double factor, double number){
+    private static String getFormatedString(double factor, double number) {
         if ((factor >= 0.1) && (factor < 1))
-            return String.format( "%.1f", number);
+            return String.format("%.1f", number);
+        else if ((factor % 1) == 0)
+            return String.format("%s", (int) number);
         else
-            return String.format( "%f", number);
+            return String.format("%s", number);
     }
 }
