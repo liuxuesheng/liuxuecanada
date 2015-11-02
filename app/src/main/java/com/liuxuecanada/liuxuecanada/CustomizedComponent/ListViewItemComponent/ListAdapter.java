@@ -2,6 +2,7 @@ package com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,14 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.liuxuecanada.liuxuecanada.R;
+import com.liuxuecanada.liuxuecanada.Utils.JSONToComponentService;
 
 import java.util.List;
 
 
 public class ListAdapter extends ArrayAdapter<ContentItem> {
+
+    private int index = -1;
 
     public ListAdapter(Context context, List<ContentItem> objects) {
         super(context, 0, objects);
@@ -52,13 +56,26 @@ public class ListAdapter extends ArrayAdapter<ContentItem> {
         holder.listButton.setClickable(false);
         holder.listButton.setFocusableInTouchMode(false);
 
-        convertView.setBackgroundResource(R.drawable.listview_selector);
+        if(position == getIndex()){
+            convertView.setBackgroundColor(Color.RED);
+        } else{
+            convertView.setBackgroundColor(Color.TRANSPARENT);
+        }
+        //convertView.setBackgroundResource(R.drawable.listview_selector);
 
         return convertView;
     }
 
     private class ViewHolder {
         Button listButton;
+    }
+
+    public int getIndex(){
+        return this.index;
+    }
+
+    public void setIndex(int indexNumber){
+        this.index = indexNumber;
     }
 }
 

@@ -12,6 +12,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -37,6 +38,7 @@ public class JSONToComponentService {
     private static String alignment;
     private static String relation;
     private static String relationId;
+    //private static int index=-1;
 
     public static TextView createTextView(JSONObject jsonObject, Context context) {
         String name;
@@ -117,10 +119,7 @@ public class JSONToComponentService {
     }
 
     public static ListView createListView(JSONObject jsonObject, Context context) {
-        String alignment;
         String values;
-
-        Log.d("7s73hs82h ", "AAA");
 
         try {
             jsonObject.getString("type").equals("listview");
@@ -136,12 +135,11 @@ public class JSONToComponentService {
         int count3 = 0;
         ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
         while (count3 < valueArray.length) {
-            Log.d("asd8d ", " 3 " + valueArray[count3]);
             objects.add(new ContentItem(valueArray[count3], PaintService.paintLevelIconDrawable(context, "S")));
             count3++;
         }
 
-        ListAdapter adapter = new ListAdapter(context, objects);
+        final ListAdapter adapter = new ListAdapter(context, objects);
         ListView lv = new ListView(context);
 
         lv.setAdapter(adapter);
@@ -152,6 +150,20 @@ public class JSONToComponentService {
         lv.setScrollbarFadingEnabled(false);
         lv.setBackgroundColor(Color.TRANSPARENT);
         lv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (adapter.getIndex() == -1) {
+                    view.setBackgroundColor(Color.RED);
+                } else if (adapter.getIndex() != position) {
+                    parent.getChildAt(adapter.getIndex()).setBackgroundColor(Color.TRANSPARENT);
+                    view.setBackgroundColor(Color.RED);
+                }
+                adapter.setIndex(position);
+            }
+        });
+
         return lv;
     }
 
