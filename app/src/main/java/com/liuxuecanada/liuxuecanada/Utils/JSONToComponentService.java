@@ -1,6 +1,5 @@
 package com.liuxuecanada.liuxuecanada.Utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,6 +12,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -62,6 +62,33 @@ public class JSONToComponentService {
         tv.setTextColor(Color.parseColor(getTextColor(jsonObject)));
 
         return tv;
+    }
+
+    public static Button createButton(JSONObject jsonObject, Context context) {
+        String name;
+        int textsize;
+
+        try {
+            jsonObject.getString("type").equals("button");
+            name = jsonObject.getString("name");
+            textsize = jsonObject.getInt("size");
+        } catch (JSONException ex) {
+            return null;
+        }
+
+        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+        Button bt = new Button(context);
+        setId(bt, getId(jsonObject));
+        setAlignment(bt, getAlignment(jsonObject), p);
+        setRelations(bt, getRelation(jsonObject), getRelationId(jsonObject), p);
+        bt.setText(name);
+        //bt.setBackgroundColor(Color.TRANSPARENT);
+        setBackgroundColor(bt, getBackgroundColor(jsonObject));
+        bt.setTextSize(TypedValue.COMPLEX_UNIT_SP, textsize);
+        bt.setTextColor(Color.parseColor(getTextColor(jsonObject)));
+        bt.setElevation(2);
+        return bt;
     }
 
     public static EditText createEditText(JSONObject jsonObject, Context context) {
@@ -291,10 +318,10 @@ public class JSONToComponentService {
         p2.addRule(RelativeLayout.BELOW, textid1);
         seekBar1.setLayoutParams(p2);
 
-        p3.addRule(RelativeLayout.BELOW,seekbarid1);
+        p3.addRule(RelativeLayout.BELOW, seekbarid1);
         tv2.setLayoutParams(p3);
 
-        p4.addRule(RelativeLayout.BELOW,textid2);
+        p4.addRule(RelativeLayout.BELOW, textid2);
         seekBar2.setLayoutParams(p4);
 
 
@@ -376,7 +403,7 @@ public class JSONToComponentService {
             }
         });
 
-        return new View[]{tv1,seekBar1,tv2,seekBar2};
+        return new View[]{tv1, seekBar1, tv2, seekBar2};
     }
 
     private static int getId(JSONObject jsonObject) {
@@ -495,5 +522,25 @@ public class JSONToComponentService {
             return String.format("%s", (int) number);
         else
             return String.format("%s", number);
+    }
+
+    private static String[] getBackgroundColor(JSONObject jsonObject) {
+        String rgb = "";
+        try {
+            rgb = jsonObject.getString("backgroundcolor");
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        String[] rgbArray = rgb.split(",");
+
+        return rgbArray;
+    }
+
+    private static void setBackgroundColor(View view, String[] colorArray) {
+        try {
+            view.setBackgroundColor(Color.rgb(Integer.parseInt(colorArray[0]), Integer.parseInt(colorArray[1]), Integer.parseInt(colorArray[2])));
+        } catch (Exception ex) {
+            view.setBackgroundColor(Color.TRANSPARENT);
+        }
     }
 }

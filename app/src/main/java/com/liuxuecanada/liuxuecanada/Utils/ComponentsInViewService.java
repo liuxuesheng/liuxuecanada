@@ -4,6 +4,7 @@ package com.liuxuecanada.liuxuecanada.Utils;
 import android.app.Activity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -12,7 +13,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.WheelSelector;
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.adapters.ArrayWheelAdapter;
 import com.liuxuecanada.liuxuecanada.R;
 
 import org.json.JSONArray;
@@ -39,6 +39,7 @@ public class ComponentsInViewService {
         SeekBar sb = null;
         EditText et = null;
         ListView lv = null;
+        Button bt = null;
 
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
@@ -54,26 +55,18 @@ public class ComponentsInViewService {
 
                 if (item.getString("type").equals("textview")) {
                     final TextView tv = JSONToComponentService.createTextView(item, currentActivity);
-
-                    Log.d("asdasdas2da2ad ", " ABC1 ");
+                    ll.addLast(tv);
+                    someView.addView(tv);
+                } else if (item.getString("type").equals("button")) {
+                    bt = JSONToComponentService.createButton(item, currentActivity);
                     try {
                         final String nextPage = item.getString("nextPage");
                         final String savedatatype = item.getString("savedatatype");
                         Log.d("asdasdas2da2ad ", " ABC2 ");
 
-                        tv.setOnClickListener(new View.OnClickListener() {
+                        bt.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (savedatatype.equals("wheelselectorview")) {
-                                    try {
-                                        int savedataid = item.getInt("savedataid");
-                                        WheelSelector ws = (WheelSelector) currentActivity.findViewById(savedataid);
-                                        int index = ws.getCurrentViewIndex();
-                                        Log.d("asdasdas2da2ad ", " ABC6 " + ((ArrayWheelAdapter<String>) ws.getViewAdapter()).getItemText(index));
-                                    } catch (JSONException ex) {
-                                        ex.printStackTrace();
-                                    }
-                                }
                                 clearAllContainers(currentActivity);
                                 Log.d("asdasdas2da2ad ", " ABC3 ");
                                 ServerResponse pud = new ServerResponse((AsyncResponse) currentActivity);
@@ -85,8 +78,8 @@ public class ComponentsInViewService {
 
                     }
 
-                    ll.addLast(tv);
-                    someView.addView(tv);
+                    ll.addLast(bt);
+                    someView.addView(bt);
                 } else if (item.getString("type").equals("progressbar")) {
                     pb = JSONToComponentService.createProgressBarView(item, currentActivity);
                     ll.addLast(pb);
@@ -112,7 +105,7 @@ public class ComponentsInViewService {
                     try {
                         View[] vlist = JSONToComponentService.createDoubleSeekBarView(item, currentActivity);
 
-                        for(int k = 0; k < vlist.length; k++){
+                        for (int k = 0; k < vlist.length; k++) {
 
                             ll.addLast(vlist[k]);
                             someView.addView(vlist[k]);
