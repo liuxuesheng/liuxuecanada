@@ -86,7 +86,6 @@ public class JSONToComponentService {
         setAlignment(bt, getAlignment(jsonObject), p);
         setRelations(bt, getRelation(jsonObject), getRelationId(jsonObject), p);
         bt.setText(name);
-        //bt.setBackgroundColor(Color.TRANSPARENT);
         setBackgroundColor(bt, getBackgroundColor(jsonObject));
         bt.setTextSize(TypedValue.COMPLEX_UNIT_SP, textsize);
         bt.setTextColor(Color.parseColor(getTextColor(jsonObject)));

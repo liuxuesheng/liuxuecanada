@@ -62,7 +62,6 @@ public class ComponentsInViewService {
                     bt = JSONToComponentService.createButton(item, currentActivity);
                     try {
                         final String nextPage = item.getString("nextPage");
-                        final String savedatatype = item.getString("savedatatype");
 
                         bt.setOnClickListener(new View.OnClickListener() {
                             @Override
