@@ -26,6 +26,7 @@ import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.L
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.WheelSelector;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.adapters.ArrayWheelAdapter;
 import com.liuxuecanada.liuxuecanada.R;
+import com.liuxuecanada.liuxuecanada.SchoolMatch.EnterStudentChoicesActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -138,7 +139,7 @@ public class JSONToComponentService {
         }
 
         final ListAdapter adapter = new ListAdapter(context, objects);
-        ListView lv = new ListView(context);
+        final ListView lv = new ListView(context);
 
         lv.setAdapter(adapter);
         setId(lv, getId(jsonObject));
@@ -152,11 +153,15 @@ public class JSONToComponentService {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Log.d("userselection: ", "lv " + ((Button)view).getText());
+                Log.d("userselection: ", "lv " + ((ContentItem) lv.getItemAtPosition(position)).getName()+" index= "+adapter.getIndex());
+                EnterStudentChoicesActivity.setUserSelection(Integer.toString(lv.getId()),((ContentItem) lv.getItemAtPosition(position)).getName());
                 if (adapter.getIndex() == -1) {
                     view.setBackgroundColor(Color.RED);
                 } else if (adapter.getIndex() != position) {
-                    parent.getChildAt(adapter.getIndex()).setBackgroundColor(Color.TRANSPARENT);
+                    for (int i = 0; i < parent.getChildCount(); i++){
+                        parent.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
+                    }
+                    //parent.getChildAt(adapter.getIndex()).setBackgroundColor(Color.TRANSPARENT);
                     view.setBackgroundColor(Color.RED);
                 }
                 adapter.setIndex(position);
