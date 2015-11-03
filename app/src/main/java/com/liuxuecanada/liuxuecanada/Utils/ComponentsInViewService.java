@@ -90,12 +90,13 @@ public class ComponentsInViewService {
                     int seekresultid;
 
                     try {
-                        seekresultid = item.getInt("seekresultid");
-                        TextView seekresult = (TextView) currentActivity.findViewById(seekresultid);
-                        sb = JSONToComponentService.createSeekBarView(item, seekresult, currentActivity);
-                        ll.addLast(sb);
-                        someView.addView(sb);
-                    } catch (JSONException ex) {
+                        View[] vlist = JSONToComponentService.createSeekBarView(item, currentActivity);
+                        for (int k = 0; k < vlist.length; k++) {
+
+                            ll.addLast(vlist[k]);
+                            someView.addView(vlist[k]);
+                        }
+                    } catch (Exception ex) {
                         ex.printStackTrace();
                     }
                 } else if (item.getString("type").equals("2seekbar")) {
@@ -107,8 +108,6 @@ public class ComponentsInViewService {
                             ll.addLast(vlist[k]);
                             someView.addView(vlist[k]);
                         }
-                        /*ll.addLast(sb);
-                        someView.addView(sb);*/
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }

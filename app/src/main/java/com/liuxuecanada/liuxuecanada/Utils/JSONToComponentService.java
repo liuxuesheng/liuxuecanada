@@ -244,22 +244,38 @@ public class JSONToComponentService {
         return layerDrawable;
     }
 
-    public static SeekBar createSeekBarView(JSONObject jsonObject, TextView seekresult, Context context) {
+    public static View[] createSeekBarView(JSONObject jsonObject, Context context) {
+        View[] va;
         final String name;
 
+        int textid, seekbarid;
+
         try {
-            jsonObject.getString("type").equals("progressbar");
-            name = jsonObject.getString("name");
+            jsonObject.getString("type").equals("seekbar");
+            name = jsonObject.getString("textname");
+            textid = jsonObject.getInt("textid");
+            seekbarid = jsonObject.getInt("seekbarid");
         } catch (JSONException ex) {
             return null;
         }
 
-        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams p1 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams p2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-        SeekBar seekBar = new SeekBar(context);
-        setId(seekBar, getId(jsonObject));
-        setAlignment(seekBar, getAlignment(jsonObject), p);
-        setRelations(seekBar, getRelation(jsonObject), getRelationId(jsonObject), p);
+        final TextView tv = new TextView(context);
+        final SeekBar seekBar = new SeekBar(context);
+
+        seekBar.setId(seekbarid);
+        tv.setId(textid);
+
+        setAlignment(tv, getAlignment(jsonObject), p1);
+        setRelations(tv, getRelation(jsonObject), getRelationId(jsonObject), p1);
+
+        p2.addRule(RelativeLayout.BELOW, textid);
+        seekBar.setLayoutParams(p2);
+
+
+
 
         int max = getSeekBarMaxValue(jsonObject);
         final int min = getSeekBarMinValue(jsonObject);
@@ -267,8 +283,7 @@ public class JSONToComponentService {
 
         seekBar.setMax((int) ((max - min) / factor));
 
-        final TextView seekBarResult = seekresult;
-        seekBarResult.setText("" + name + ": " + getFormatedString(factor, seekBar.getProgress()));
+        tv.setText("" + name + ": " + getFormatedString(factor, seekBar.getProgress()));
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int score = 0;
@@ -276,7 +291,7 @@ public class JSONToComponentService {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 score = progress;
-                seekBarResult.setText("" + name + ": " + (getFormatedString(factor, (double) min + ((double) progress * factor))));
+                tv.setText("" + name + ": " + (getFormatedString(factor, (double) min + ((double) progress * factor))));
             }
 
             @Override
@@ -290,7 +305,7 @@ public class JSONToComponentService {
             }
         });
 
-        return seekBar;
+        return new View[]{tv, seekBar};
     }
 
     public static View[] createDoubleSeekBarView(JSONObject jsonObject, Context context) {
