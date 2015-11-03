@@ -156,13 +156,13 @@ public class JSONToComponentService {
                 Log.d("userselection: ", "lv " + ((ContentItem) lv.getItemAtPosition(position)).getName()+" index= "+adapter.getIndex());
                 EnterStudentChoicesActivity.setUserSelection(Integer.toString(lv.getId()),((ContentItem) lv.getItemAtPosition(position)).getName());
                 if (adapter.getIndex() == -1) {
-                    view.setBackgroundColor(Color.RED);
+                    view.setBackgroundColor(Color.rgb(255, 165, 0));
                 } else if (adapter.getIndex() != position) {
                     for (int i = 0; i < parent.getChildCount(); i++){
                         parent.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
                     }
                     //parent.getChildAt(adapter.getIndex()).setBackgroundColor(Color.TRANSPARENT);
-                    view.setBackgroundColor(Color.RED);
+                    view.setBackgroundColor(Color.rgb(255,165,0));
                 }
                 adapter.setIndex(position);
             }

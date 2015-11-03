@@ -57,11 +57,10 @@ public class ListAdapter extends ArrayAdapter<ContentItem> {
         holder.listButton.setFocusableInTouchMode(false);
 
         if(position == getIndex()){
-            convertView.setBackgroundColor(Color.RED);
+            convertView.setBackgroundColor(Color.rgb(255,165,0));
         } else{
             convertView.setBackgroundColor(Color.TRANSPARENT);
         }
-        //convertView.setBackgroundResource(R.drawable.listview_selector);
 
         return convertView;
     }
