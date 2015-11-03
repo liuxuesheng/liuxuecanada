@@ -96,8 +96,6 @@ public class JSONToComponentService {
     public static EditText createEditText(JSONObject jsonObject, Context context) {
         String hint;
 
-        Log.d("7s73hs82h ", "AAA");
-
         try {
             jsonObject.getString("type").equals("edittext");
             hint = jsonObject.getString("hint");
@@ -154,6 +152,7 @@ public class JSONToComponentService {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Log.d("userselection: ", "lv " + ((Button)view).getText());
                 if (adapter.getIndex() == -1) {
                     view.setBackgroundColor(Color.RED);
                 } else if (adapter.getIndex() != position) {
@@ -260,7 +259,6 @@ public class JSONToComponentService {
         int max = getSeekBarMaxValue(jsonObject);
         final int min = getSeekBarMinValue(jsonObject);
         final double factor = getSeekBarFactor(jsonObject);
-        Log.d("asdjh8dhas ", "" + factor);
 
         seekBar.setMax((int) ((max - min) / factor));
 
@@ -476,7 +474,6 @@ public class JSONToComponentService {
     private static void setRelations(View view, String[] relationArray, String[] relationIdArray, RelativeLayout.LayoutParams p) {
         int count = 0;
         while (count < relationArray.length) {
-            Log.d("7s73hs82h ", "B");
             int myRelation = Integer.parseInt(relationArray[count]);
             int myRelatonId = Integer.parseInt(relationIdArray[count]);
             if ((myRelation != 0) && (myRelatonId != 0)) {

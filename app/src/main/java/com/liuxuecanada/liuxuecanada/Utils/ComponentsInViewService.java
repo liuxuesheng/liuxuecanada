@@ -63,13 +63,10 @@ public class ComponentsInViewService {
                     try {
                         final String nextPage = item.getString("nextPage");
                         final String savedatatype = item.getString("savedatatype");
-                        Log.d("asdasdas2da2ad ", " ABC2 ");
 
                         bt.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                clearAllContainers(currentActivity);
-                                Log.d("asdasdas2da2ad ", " ABC3 ");
                                 ServerResponse pud = new ServerResponse((AsyncResponse) currentActivity);
                                 pud.execute(mainURL + nextPage);
 
@@ -87,7 +84,6 @@ public class ComponentsInViewService {
                     someView.addView(pb);
                 } else if (item.getString("type").equals("wheelselectorview")) {
                     ws = JSONToComponentService.createWheelSelectorView(item, currentActivity);
-                    Log.d("asdasdasad ", " Y " + ws.getVisibleItems());
                     ll.addLast(ws);
                     someView.addView(ws);
                 } else if (item.getString("type").equals("seekbar")) {

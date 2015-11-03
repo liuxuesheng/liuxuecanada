@@ -35,11 +35,23 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     LinkedList<JSONArray> pagell = null;
     JSONArray arr = null;
 
-    private HashMap<String, String> userSelection = new HashMap<String, String>();
+    private static HashMap<String, String> userSelection;
+
+    public static void setUserSelection(String selectionName, String selectionValue) {
+        if (userSelection == null) {
+            userSelection = new HashMap<String, String>();
+        }
+        userSelection.put(selectionName, selectionValue);
+
+        Log.d("userselection: ", "" + userSelection.toString());
+
+    }
 
     @Override
     public void onTaskComplete(Object out) {
         try {
+            ComponentsInViewService.clearAllContainers(this);
+
             arr = new JSONArray((String) out);
             ComponentsInViewService.addObjectsToView(arr, this, mainURL);
 
