@@ -71,6 +71,12 @@ public class ServerResponse extends AsyncTask<String, Object, Object> {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return sb.toString();
     }

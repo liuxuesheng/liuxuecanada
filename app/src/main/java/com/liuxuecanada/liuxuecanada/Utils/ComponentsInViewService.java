@@ -24,6 +24,7 @@ import java.util.LinkedList;
 public class ComponentsInViewService {
 
     public static void addObjectsToView(JSONArray jsonArray, Activity activity, String url) {
+
         final Activity currentActivity = activity;
         final String mainURL = url;
         final RelativeLayout topView = (RelativeLayout) currentActivity.findViewById(R.id.fragment_top_container);
