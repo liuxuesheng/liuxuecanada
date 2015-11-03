@@ -153,16 +153,16 @@ public class JSONToComponentService {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("userselection: ", "lv " + ((ContentItem) lv.getItemAtPosition(position)).getName()+" index= "+adapter.getIndex());
-                EnterStudentChoicesActivity.setUserSelection(Integer.toString(lv.getId()),((ContentItem) lv.getItemAtPosition(position)).getName());
+                Log.d("userselection: ", "lv " + ((ContentItem) lv.getItemAtPosition(position)).getName() + " index= " + adapter.getIndex());
+                EnterStudentChoicesActivity.setUserSelection(Integer.toString(lv.getId()), ((ContentItem) lv.getItemAtPosition(position)).getName());
                 if (adapter.getIndex() == -1) {
                     view.setBackgroundColor(Color.rgb(255, 165, 0));
                 } else if (adapter.getIndex() != position) {
-                    for (int i = 0; i < parent.getChildCount(); i++){
+                    for (int i = 0; i < parent.getChildCount(); i++) {
                         parent.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
                     }
                     //parent.getChildAt(adapter.getIndex()).setBackgroundColor(Color.TRANSPARENT);
-                    view.setBackgroundColor(Color.rgb(255,165,0));
+                    view.setBackgroundColor(Color.rgb(255, 165, 0));
                 }
                 adapter.setIndex(position);
             }
@@ -274,9 +274,6 @@ public class JSONToComponentService {
         p2.addRule(RelativeLayout.BELOW, textid);
         seekBar.setLayoutParams(p2);
 
-
-
-
         int max = getSeekBarMaxValue(jsonObject);
         final int min = getSeekBarMinValue(jsonObject);
         final double factor = getSeekBarFactor(jsonObject);
@@ -301,7 +298,7 @@ public class JSONToComponentService {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                //seekBarResult.setText("" + name + ": " + score);
+                EnterStudentChoicesActivity.setUserSelection(Integer.toString(seekBar.getId()), tv.getText().toString().substring(5));
             }
         });
 
@@ -408,7 +405,8 @@ public class JSONToComponentService {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                //seekBarResult.setText("" + name + ": " + score);
+                EnterStudentChoicesActivity.removeUserSelection(Integer.toString(seekBar2.getId()));
+                EnterStudentChoicesActivity.setUserSelection(Integer.toString(seekBar.getId()), tv1.getText().toString().substring(7));
             }
         });
 
@@ -429,7 +427,8 @@ public class JSONToComponentService {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                //seekBarResult.setText("" + name + ": " + score);
+                EnterStudentChoicesActivity.removeUserSelection(Integer.toString(seekBar1.getId()));
+                EnterStudentChoicesActivity.setUserSelection(Integer.toString(seekBar.getId()), tv2.getText().toString().substring(7));
             }
         });
 

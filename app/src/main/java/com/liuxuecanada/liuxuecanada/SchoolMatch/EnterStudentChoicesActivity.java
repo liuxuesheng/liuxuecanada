@@ -30,18 +30,28 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         ViewTreeObserver.OnGlobalLayoutListener,
         AsyncResponse {
 
+    private static HashMap<String, String> userSelection;
     private final String mainURL = "http://10.135.51.51/liuxuecanadaserver/tests/test1/index.php?page=";
     LinearLayout layout = null;
     LinkedList<JSONArray> pagell = null;
     JSONArray arr = null;
-
-    private static HashMap<String, String> userSelection;
 
     public static void setUserSelection(String selectionName, String selectionValue) {
         if (userSelection == null) {
             userSelection = new HashMap<String, String>();
         }
         userSelection.put(selectionName, selectionValue);
+
+        Log.d("userselection: ", "" + userSelection.toString());
+
+    }
+
+    public static void removeUserSelection(String selectionName) {
+        try {
+            userSelection.remove(selectionName);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         Log.d("userselection: ", "" + userSelection.toString());
 
