@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.WheelSelector;
 import com.liuxuecanada.liuxuecanada.R;
@@ -60,14 +61,28 @@ public class ComponentsInViewService {
                     someView.addView(tv);
                 } else if (item.getString("type").equals("button")) {
                     bt = JSONToComponentService.createButton(item, currentActivity);
+
+                    int blockid = -1;
+                    try {
+                        blockid = item.getInt("blockbyid");
+                    }catch (JSONException ex){
+                        ex.printStackTrace();
+                    }
+
+                    final int myBlockId = blockid;
+
                     try {
                         final String nextPage = item.getString("nextPage");
 
                         bt.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ServerResponse pud = new ServerResponse((AsyncResponse) currentActivity);
-                                pud.execute(mainURL + nextPage);
+                                if ((myBlockId != -1) && ((ListView) ((Activity) currentActivity).findViewById(myBlockId)).getCheckedItemPosition() == -1)
+                                    Toast.makeText(currentActivity, "请先选择 =)", Toast.LENGTH_SHORT).show();
+                                else {
+                                    ServerResponse pud = new ServerResponse((AsyncResponse) currentActivity);
+                                    pud.execute(mainURL + nextPage);
+                                }
 
                             }
                         });

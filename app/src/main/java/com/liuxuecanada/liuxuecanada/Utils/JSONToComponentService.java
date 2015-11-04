@@ -67,9 +67,10 @@ public class JSONToComponentService {
         return tv;
     }
 
-    public static Button createButton(JSONObject jsonObject, Context context) {
+    public static Button createButton(JSONObject jsonObject, final Context context) {
         String name;
         int textsize;
+        final Context myContext = context;
 
         try {
             jsonObject.getString("type").equals("button");
@@ -81,7 +82,7 @@ public class JSONToComponentService {
 
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-        Button bt = new Button(context);
+        Button bt = new Button(myContext);
         setId(bt, getId(jsonObject));
         setAlignment(bt, getAlignment(jsonObject), p);
         setRelations(bt, getRelation(jsonObject), getRelationId(jsonObject), p);
@@ -90,6 +91,7 @@ public class JSONToComponentService {
         bt.setTextSize(TypedValue.COMPLEX_UNIT_SP, textsize);
         bt.setTextColor(Color.parseColor(getTextColor(jsonObject)));
         bt.setElevation(2);
+
         return bt;
     }
 
