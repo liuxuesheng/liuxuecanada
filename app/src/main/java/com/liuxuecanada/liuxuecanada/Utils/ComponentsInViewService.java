@@ -20,7 +20,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 public class ComponentsInViewService {
 
@@ -62,14 +66,14 @@ public class ComponentsInViewService {
                 } else if (item.getString("type").equals("button")) {
                     bt = JSONToComponentService.createButton(item, currentActivity);
 
-                    int blockid = -1;
+                    List<String> blockids = null;
                     try {
-                        blockid = item.getInt("blockbyid");
-                    }catch (JSONException ex){
+                        blockids = Arrays.asList(item.getString("blockbyid").split(","));
+                    } catch (JSONException ex) {
                         ex.printStackTrace();
                     }
 
-                    final int myBlockId = blockid;
+                    final List<String> myBlockIds = blockids;
 
                     try {
                         final String nextPage = item.getString("nextPage");
@@ -77,13 +81,89 @@ public class ComponentsInViewService {
                         bt.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if ((myBlockId != -1) && ((ListView) ((Activity) currentActivity).findViewById(myBlockId)).getCheckedItemPosition() == -1)
-                                    Toast.makeText(currentActivity, "请先选择 =)", Toast.LENGTH_SHORT).show();
-                                else {
-                                    ServerResponse pud = new ServerResponse((AsyncResponse) currentActivity);
-                                    pud.execute(mainURL + nextPage);
+
+                                if (myBlockIds != null) {
+                                    ArrayList<String> localBlockIds = new ArrayList<String>(myBlockIds);
+
+                                    int singleId;
+                                    boolean flag = true;
+                                    while (localBlockIds.size() > 0) {
+                                        singleId = -1;
+                                        try {
+                                            singleId = Integer.parseInt(localBlockIds.get(0));
+                                        } catch (Exception ex) {
+                                            if (!checkRelatedBlockIds(localBlockIds, localBlockIds.get(0))) {
+                                                flag = false;
+                                                makeToast();
+                                                break;
+                                            } else {
+                                                continue;
+                                            }
+                                        }
+
+                                        View view = ((Activity) currentActivity).findViewById(singleId);
+                                        if ((view instanceof SeekBar) && (((SeekBar) view).getProgress() == 0)) {
+                                            flag = false;
+                                            makeToast();
+                                            break;
+                                        } else if ((view instanceof ListView) && (((ListView) view).getCheckedItemPosition() == -1)) {
+                                            flag = false;
+                                            makeToast();
+                                            break;
+                                        }
+                                        localBlockIds.remove(0);
+                                    }
+
+                                    if (flag)
+                                        goToNextPage();
+
+                                } else {
+                                    goToNextPage();
+                                }
+                            }
+
+                            private boolean checkRelatedBlockIds(ArrayList<String> idList, String referenceId) {
+                                int referenceIdNumber = Integer.parseInt(referenceId.substring(0, referenceId.length() - 1));
+                                String relatedLetter = referenceId.substring(referenceId.length() - 1);
+
+                                boolean flag = false;
+                                ArrayList toRemove = new ArrayList();
+
+                                for (String item : idList) {
+                                    String itemRelatedLetter = item.substring(item.length() - 1);
+                                    int singleId = Integer.parseInt(item.substring(0, item.length() - 1));
+
+                                    if (itemRelatedLetter.equals(relatedLetter)) {
+                                        View view = ((Activity) currentActivity).findViewById(singleId);
+                                        if (view instanceof SeekBar) {
+                                            if (((SeekBar) view).getProgress() == 0) {
+                                                flag = flag || false;
+                                            } else {
+                                                flag = flag || true;
+                                            }
+                                        } else if (view instanceof ListView) {
+                                            if (((ListView) view).getCheckedItemPosition() == -1)
+                                                flag = flag || false;
+                                            else
+                                                flag = flag || true;
+                                        }
+                                    }
+                                    toRemove.add(item);
                                 }
 
+                                if (toRemove != null)
+                                    idList.removeAll(toRemove);
+
+                                return flag;
+                            }
+
+                            private void makeToast() {
+                                Toast.makeText(currentActivity, "请先选择 =)", Toast.LENGTH_SHORT).show();
+                            }
+
+                            private void goToNextPage() {
+                                ServerResponse pud = new ServerResponse((AsyncResponse) currentActivity);
+                                pud.execute(mainURL + nextPage);
                             }
                         });
                     } catch (JSONException ex) {
