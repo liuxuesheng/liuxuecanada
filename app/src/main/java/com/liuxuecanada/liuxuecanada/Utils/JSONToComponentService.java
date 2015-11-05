@@ -23,8 +23,6 @@ import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ContentItem;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ListAdapter;
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.WheelSelector;
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.adapters.ArrayWheelAdapter;
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.EnterStudentChoicesActivity;
 
@@ -170,37 +168,6 @@ public class JSONToComponentService {
         });
 
         return lv;
-    }
-
-    public static WheelSelector createWheelSelectorView(JSONObject jsonObject, Context context) {
-        String name;
-        String values;
-
-        try {
-            jsonObject.getString("type").equals("wheelselectorview");
-            name = jsonObject.getString("name");
-            values = jsonObject.getString("values");
-        } catch (JSONException ex) {
-            return null;
-        }
-
-        String[] universities = values.split(",");
-
-        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-        WheelSelector universitySelector = new WheelSelector(context);
-
-        ArrayWheelAdapter<String> adapter =
-                new ArrayWheelAdapter<String>(context, universities);
-        adapter.setTextSize(12);
-        universitySelector.setViewAdapter(adapter);
-        universitySelector.setCurrentItem(universities.length / 2);
-        universitySelector.setVisibleItems(5);
-
-        setId(universitySelector, getId(jsonObject));
-        setAlignment(universitySelector, getAlignment(jsonObject), p);
-        setRelations(universitySelector, getRelation(jsonObject), getRelationId(jsonObject), p);
-        return universitySelector;
     }
 
     public static ProgressBar createProgressBarView(JSONObject jsonObject, Context context) {

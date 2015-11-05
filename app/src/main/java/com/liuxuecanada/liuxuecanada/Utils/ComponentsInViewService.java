@@ -13,7 +13,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.WheelSelector;
 import com.liuxuecanada.liuxuecanada.R;
 
 import org.json.JSONArray;
@@ -41,7 +40,6 @@ public class ComponentsInViewService {
         final LinkedList<View> ll = new LinkedList<>();
 
         ProgressBar pb = null;
-        WheelSelector ws = null;
         SeekBar sb = null;
         EditText et = null;
         ListView lv = null;
@@ -176,10 +174,6 @@ public class ComponentsInViewService {
                     pb = JSONToComponentService.createProgressBarView(item, currentActivity);
                     ll.addLast(pb);
                     someView.addView(pb);
-                } else if (item.getString("type").equals("wheelselectorview")) {
-                    ws = JSONToComponentService.createWheelSelectorView(item, currentActivity);
-                    ll.addLast(ws);
-                    someView.addView(ws);
                 } else if (item.getString("type").equals("seekbar")) {
                     int seekresultid;
 

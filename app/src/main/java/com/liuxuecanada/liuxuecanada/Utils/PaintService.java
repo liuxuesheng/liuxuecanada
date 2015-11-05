@@ -21,8 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.WheelSelector;
-
 import java.util.LinkedList;
 
 public class PaintService {
@@ -194,9 +192,7 @@ public class PaintService {
         LinkedList<TextView> tvlist = new LinkedList<TextView>();
         for (int i = 0; i < count; i++) {
             View view = viewgroup.getChildAt(i);
-            if (view instanceof WheelSelector)
-                continue;
-            else if (view instanceof ViewGroup)
+            if (view instanceof ViewGroup)
                 tvlist.addAll(findAllTextView((ViewGroup) view));
             else if (view instanceof TextView)
                 tvlist.addLast((TextView) view);
