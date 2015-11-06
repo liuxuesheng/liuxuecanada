@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -79,7 +80,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
     public void onTaskComplete(Object out) {
         try {
             arr = new JSONArray((String) out);
-            clearAllContainers(this);
+            clearAllContainers();
             Log.d("asdh8sdd ", "6");
 
             addObjectsToView(arr, this, getMainURL());
@@ -136,10 +137,11 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             // Intent, pass the Intent's extras to the fragment as arguments
             //firstFragment.setArguments(getIntent().getExtras());
 
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
 
             // Add the fragment to the 'fragment_container' FrameLayout
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_main_container, firstFragment).commit();
+            transaction.replace(R.id.fragment_main_container, firstFragment).addToBackStack(null).commit();
         }
 
     }
@@ -177,7 +179,7 @@ public class EnterStudentChoicesActivity extends FragmentActivity
             finish();
         } else {
             pagell.removeLast();
-            clearAllContainers(this);
+            clearAllContainers();
             PaintService.setTextPainted(false);
             addObjectsToView(pagell.getLast(), this, getMainURL());
         }
@@ -342,9 +344,11 @@ public class EnterStudentChoicesActivity extends FragmentActivity
                                     // Intent, pass the Intent's extras to the fragment as arguments
                                     nextFragment.setArguments(getIntent().getExtras());
 
+                                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                                    transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
+
                                     // Add the fragment to the 'fragment_container' FrameLayout
-                                    getSupportFragmentManager().beginTransaction()
-                                            .add(R.id.fragment_main_container, nextFragment).commit();
+                                    transaction.replace(R.id.fragment_main_container, nextFragment).addToBackStack(null).commit();
                                 }
                             }
                         });
@@ -396,33 +400,6 @@ public class EnterStudentChoicesActivity extends FragmentActivity
                 ex.printStackTrace();
             }
         }
-
-        Animation fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
-        fadeIn.setDuration(1500);
-
-       /* fadeIn.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });*/
-
-        //Animation enter = AnimationUtils.loadAnimation(activity, R.anim.enter);
-
-        //topView.startAnimation(enter);
-        //middleView.startAnimation(fadeIn);
-        //bottomView.startAnimation(enter);
     }
 
     private String getNextURL() {
@@ -441,58 +418,10 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         this.mainURL = getMainURL() + page;
     }
 
-    private void clearAllContainers(Activity activity) {
-        //public static void clearAllContainers(JSONArray jsonArray, Activity activity, String url) {
-        Animation exit = AnimationUtils.loadAnimation(activity, R.anim.exit);
-        final Animation enter = AnimationUtils.loadAnimation(activity, R.anim.enter);
-        Animation popExit = AnimationUtils.loadAnimation(activity, R.anim.popexit);
-
-        Animation fadeOut = new AlphaAnimation(1, 0);
-        fadeOut.setInterpolator(new AccelerateInterpolator()); //add this
-        fadeOut.setDuration(1500);
-
-        RelativeLayout rl1 = ((RelativeLayout) activity.findViewById(R.id.fragment_top_container_d));
-        final RelativeLayout rl2 = ((RelativeLayout) activity.findViewById(R.id.fragment_container_d));
-        RelativeLayout rl3 = ((RelativeLayout) activity.findViewById(R.id.fragment_bottom_container_d));
-
-
-        /*final JSONArray ja = jsonArray;
-        final Activity ac = activity;
-        final String ul = url;*/
-
-        final Animation fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
-        fadeIn.setDuration(1500);
-
-        //rl1.startAnimation(exit);
-        //fadeOutToBottom(rl2, true);
-
-        //rl2.startAnimation(fadeOut);
-        //rl2.startAnimation(exit);
-
-        //rl3.startAnimation(exit);
-
-        rl1.removeAllViews();
-        rl2.removeAllViews();
-        rl3.removeAllViews();
-
+    private void clearAllContainers() {
+        ((RelativeLayout) findViewById(R.id.fragment_top_container_d)).removeAllViews();
+        ((RelativeLayout) findViewById(R.id.fragment_container_d)).removeAllViews();
+        ((RelativeLayout) findViewById(R.id.fragment_bottom_container_d)).removeAllViews();
     }
-
-    private void fadeOutToBottom(View v, boolean animated) {
-        v.animate().
-                translationYBy(500).
-                alpha(0).
-                setDuration(animated ? 1000 : 0).
-                setInterpolator(new AccelerateInterpolator()).
-                start();
-    }
-
-    private void slideInToTop(View v, boolean animated) {
-        v.animate().
-                translationY(0).
-                alpha(1).
-                setDuration(animated ? 1000 : 0).
-                setInterpolator(new AccelerateInterpolator()).
-                start();
-    }
+    
 }
