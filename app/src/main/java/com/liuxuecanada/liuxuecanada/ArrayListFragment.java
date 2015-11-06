@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.liuxuecanada.liuxuecanada.RegistrationOffice.LoginActivity;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackActivity;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.EnterStudentChoicesActivity;
 
@@ -46,12 +45,17 @@ public class ArrayListFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         Log.i("FragmentList", "Item clicked: " + id);
         Intent myIntent = null;
-        if (id == 0)
+
+        if (id == 0) {
             myIntent = new Intent(activity, EnterStudentChoicesActivity.class);
+            myIntent.putExtra("test1",EnterStudentChoicesActivity.class);
+        }
         else if (id == 1)
             myIntent = new Intent(activity, ChoicesFeedbackActivity.class);
-        else if (id == 2)
-            myIntent = new Intent(activity, LoginActivity.class);
+        else if (id == 2) {
+            myIntent = new Intent(activity, EnterStudentChoicesActivity.class);
+            myIntent.putExtra("login",EnterStudentChoicesActivity.class);
+        }
         activity.startActivity(myIntent);
     }
 
