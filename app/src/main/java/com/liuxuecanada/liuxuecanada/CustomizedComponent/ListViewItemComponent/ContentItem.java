@@ -12,4 +12,8 @@ public class ContentItem {
         drawable = d;
     }
 
+    public String getName(){
+        return this.name;
+    }
+
 }

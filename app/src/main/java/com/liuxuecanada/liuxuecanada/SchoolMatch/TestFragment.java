@@ -1,29 +1,28 @@
 package com.liuxuecanada.liuxuecanada.SchoolMatch;
 
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.liuxuecanada.liuxuecanada.R;
 
-public class FragmentTop extends Fragment {
-
-    OnProgressCirclePageUpdateListener mCallback;
+public class TestFragment extends Fragment {
+    OnLayoutCreateListener mCallback;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_studentchoices_top, container, false);
+        Log.d("asdh8sdd ", "A");
+        //mCallback.updateLayout();
+        Log.d("asdh8sdd ", "B");
+        return inflater.inflate(R.layout.flow_main_double, container, false);
     }
-
-    // Container Activity must implement this interface
-    public interface OnProgressCirclePageUpdateListener {
-        void updateProgressCircle();
-    }
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -32,16 +31,23 @@ public class FragmentTop extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            mCallback = (OnProgressCirclePageUpdateListener) activity;
+            mCallback = (OnLayoutCreateListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnProgressCirclePageUpdateListener");
+                    + " must implement OnLayoutCreateListener");
         }
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-        mCallback.updateProgressCircle();
+        mCallback.updateLayout();
+
     }
+
+    public interface OnLayoutCreateListener {
+        void updateLayout();
+
+    }
+
 }

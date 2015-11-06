@@ -23,9 +23,8 @@ import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ContentItem;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ListAdapter;
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.WheelSelector;
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.WheelSelectorComponent.adapters.ArrayWheelAdapter;
 import com.liuxuecanada.liuxuecanada.R;
+import com.liuxuecanada.liuxuecanada.SchoolMatch.EnterStudentChoicesActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,9 +65,10 @@ public class JSONToComponentService {
         return tv;
     }
 
-    public static Button createButton(JSONObject jsonObject, Context context) {
+    public static Button createButton(JSONObject jsonObject, final Context context) {
         String name;
         int textsize;
+        final Context myContext = context;
 
         try {
             jsonObject.getString("type").equals("button");
@@ -80,23 +80,21 @@ public class JSONToComponentService {
 
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-        Button bt = new Button(context);
+        Button bt = new Button(myContext);
         setId(bt, getId(jsonObject));
         setAlignment(bt, getAlignment(jsonObject), p);
         setRelations(bt, getRelation(jsonObject), getRelationId(jsonObject), p);
         bt.setText(name);
-        //bt.setBackgroundColor(Color.TRANSPARENT);
         setBackgroundColor(bt, getBackgroundColor(jsonObject));
         bt.setTextSize(TypedValue.COMPLEX_UNIT_SP, textsize);
         bt.setTextColor(Color.parseColor(getTextColor(jsonObject)));
         bt.setElevation(2);
+
         return bt;
     }
 
     public static EditText createEditText(JSONObject jsonObject, Context context) {
         String hint;
-
-        Log.d("7s73hs82h ", "AAA");
 
         try {
             jsonObject.getString("type").equals("edittext");
@@ -140,7 +138,7 @@ public class JSONToComponentService {
         }
 
         final ListAdapter adapter = new ListAdapter(context, objects);
-        ListView lv = new ListView(context);
+        final ListView lv = new ListView(context);
 
         lv.setAdapter(adapter);
         setId(lv, getId(jsonObject));
@@ -154,48 +152,22 @@ public class JSONToComponentService {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("userselection: ", "lv " + ((ContentItem) lv.getItemAtPosition(position)).getName() + " index= " + adapter.getIndex());
+                EnterStudentChoicesActivity.setUserSelection(Integer.toString(lv.getId()), ((ContentItem) lv.getItemAtPosition(position)).getName());
                 if (adapter.getIndex() == -1) {
-                    view.setBackgroundColor(Color.RED);
+                    view.setBackgroundColor(Color.rgb(255, 165, 0));
                 } else if (adapter.getIndex() != position) {
-                    parent.getChildAt(adapter.getIndex()).setBackgroundColor(Color.TRANSPARENT);
-                    view.setBackgroundColor(Color.RED);
+                    for (int i = 0; i < parent.getChildCount(); i++) {
+                        parent.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
+                    }
+                    //parent.getChildAt(adapter.getIndex()).setBackgroundColor(Color.TRANSPARENT);
+                    view.setBackgroundColor(Color.rgb(255, 165, 0));
                 }
                 adapter.setIndex(position);
             }
         });
 
         return lv;
-    }
-
-    public static WheelSelector createWheelSelectorView(JSONObject jsonObject, Context context) {
-        String name;
-        String values;
-
-        try {
-            jsonObject.getString("type").equals("wheelselectorview");
-            name = jsonObject.getString("name");
-            values = jsonObject.getString("values");
-        } catch (JSONException ex) {
-            return null;
-        }
-
-        String[] universities = values.split(",");
-
-        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-        WheelSelector universitySelector = new WheelSelector(context);
-
-        ArrayWheelAdapter<String> adapter =
-                new ArrayWheelAdapter<String>(context, universities);
-        adapter.setTextSize(12);
-        universitySelector.setViewAdapter(adapter);
-        universitySelector.setCurrentItem(universities.length / 2);
-        universitySelector.setVisibleItems(5);
-
-        setId(universitySelector, getId(jsonObject));
-        setAlignment(universitySelector, getAlignment(jsonObject), p);
-        setRelations(universitySelector, getRelation(jsonObject), getRelationId(jsonObject), p);
-        return universitySelector;
     }
 
     public static ProgressBar createProgressBarView(JSONObject jsonObject, Context context) {
@@ -240,32 +212,43 @@ public class JSONToComponentService {
         return layerDrawable;
     }
 
-    public static SeekBar createSeekBarView(JSONObject jsonObject, TextView seekresult, Context context) {
+    public static View[] createSeekBarView(JSONObject jsonObject, Context context) {
+        View[] va;
         final String name;
 
+        int textid, seekbarid;
+
         try {
-            jsonObject.getString("type").equals("progressbar");
-            name = jsonObject.getString("name");
+            jsonObject.getString("type").equals("seekbar");
+            name = jsonObject.getString("textname");
+            textid = jsonObject.getInt("textid");
+            seekbarid = jsonObject.getInt("seekbarid");
         } catch (JSONException ex) {
             return null;
         }
 
-        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams p1 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams p2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-        SeekBar seekBar = new SeekBar(context);
-        setId(seekBar, getId(jsonObject));
-        setAlignment(seekBar, getAlignment(jsonObject), p);
-        setRelations(seekBar, getRelation(jsonObject), getRelationId(jsonObject), p);
+        final TextView tv = new TextView(context);
+        final SeekBar seekBar = new SeekBar(context);
+
+        seekBar.setId(seekbarid);
+        tv.setId(textid);
+
+        setAlignment(tv, getAlignment(jsonObject), p1);
+        setRelations(tv, getRelation(jsonObject), getRelationId(jsonObject), p1);
+
+        p2.addRule(RelativeLayout.BELOW, textid);
+        seekBar.setLayoutParams(p2);
 
         int max = getSeekBarMaxValue(jsonObject);
         final int min = getSeekBarMinValue(jsonObject);
         final double factor = getSeekBarFactor(jsonObject);
-        Log.d("asdjh8dhas ", "" + factor);
 
         seekBar.setMax((int) ((max - min) / factor));
 
-        final TextView seekBarResult = seekresult;
-        seekBarResult.setText("" + name + ": " + getFormatedString(factor, seekBar.getProgress()));
+        tv.setText("" + name + ": " + getFormatedString(factor, seekBar.getProgress()));
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int score = 0;
@@ -273,7 +256,7 @@ public class JSONToComponentService {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 score = progress;
-                seekBarResult.setText("" + name + ": " + (getFormatedString(factor, (double) min + ((double) progress * factor))));
+                tv.setText("" + name + ": " + (getFormatedString(factor, (double) min + ((double) progress * factor))));
             }
 
             @Override
@@ -283,11 +266,11 @@ public class JSONToComponentService {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                //seekBarResult.setText("" + name + ": " + score);
+                EnterStudentChoicesActivity.setUserSelection(Integer.toString(seekBar.getId()), tv.getText().toString().substring(5));
             }
         });
 
-        return seekBar;
+        return new View[]{tv, seekBar};
     }
 
     public static View[] createDoubleSeekBarView(JSONObject jsonObject, Context context) {
@@ -390,7 +373,8 @@ public class JSONToComponentService {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                //seekBarResult.setText("" + name + ": " + score);
+                EnterStudentChoicesActivity.removeUserSelection(Integer.toString(seekBar2.getId()));
+                EnterStudentChoicesActivity.setUserSelection(Integer.toString(seekBar.getId()), tv1.getText().toString().substring(7));
             }
         });
 
@@ -411,7 +395,8 @@ public class JSONToComponentService {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                //seekBarResult.setText("" + name + ": " + score);
+                EnterStudentChoicesActivity.removeUserSelection(Integer.toString(seekBar1.getId()));
+                EnterStudentChoicesActivity.setUserSelection(Integer.toString(seekBar.getId()), tv2.getText().toString().substring(7));
             }
         });
 
@@ -476,7 +461,6 @@ public class JSONToComponentService {
     private static void setRelations(View view, String[] relationArray, String[] relationIdArray, RelativeLayout.LayoutParams p) {
         int count = 0;
         while (count < relationArray.length) {
-            Log.d("7s73hs82h ", "B");
             int myRelation = Integer.parseInt(relationArray[count]);
             int myRelatonId = Integer.parseInt(relationIdArray[count]);
             if ((myRelation != 0) && (myRelatonId != 0)) {
