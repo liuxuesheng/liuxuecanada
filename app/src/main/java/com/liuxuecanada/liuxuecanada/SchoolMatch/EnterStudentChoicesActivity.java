@@ -10,11 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -25,6 +22,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.PieChartComponent.PieChart;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.PieChartComponent.RadarChart;
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
 import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
@@ -115,10 +114,10 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         Intent intent = getIntent();
         if (intent.hasExtra("test1")) {
-            setMaintURL("http://10.135.51.51/liuxuecanadaserver/tests/test1/index.php?page=");
+            setMaintURL("http://10.135.53.114/liuxuecanadaserver/tests/test1/index.php?page=");
             setNextURL("1");
         } else if (intent.hasExtra("login")) {
-            setMaintURL("http://10.135.51.51/liuxuecanadaserver/login/index.php?page=");
+            setMaintURL("http://10.135.53.114/liuxuecanadaserver/login/index.php?page=");
             setNextURL("1");
         }
 
@@ -214,6 +213,8 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         EditText et = null;
         ListView lv = null;
         Button bt = null;
+        PieChart pc = null;
+        RadarChart rc = null;
 
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
@@ -389,12 +390,20 @@ public class EnterStudentChoicesActivity extends FragmentActivity
                     ll.addLast(et);
                     someView.addView(et);
                 } else if (item.getString("type").equals("listview")) {
-                    Log.d("asd8d ", " 1 ");
                     lv = JSONToComponentService.createListView(item, currentActivity);
-                    Log.d("asd8d ", " 2 ");
                     ll.addLast(lv);
-                    Log.d("asd8d ", " 3 ");
                     someView.addView(lv);
+                } else if (item.getString("type").equals("piechart")) {
+                    pc = JSONToComponentService.createPieChart(item, currentActivity);
+                    ll.addLast(pc);
+                    someView.addView(pc);
+                } else if (item.getString("type").equals("radarchart")) {
+                    Log.d("sdads0ds ","A");
+                    rc = JSONToComponentService.createRadarChart(item, currentActivity);
+                    Log.d("sdads0ds ","B");
+                    ll.addLast(rc);
+                    Log.d("sdads0ds ", "C");
+                    someView.addView(rc);
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -423,5 +432,5 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         ((RelativeLayout) findViewById(R.id.fragment_container_d)).removeAllViews();
         ((RelativeLayout) findViewById(R.id.fragment_bottom_container_d)).removeAllViews();
     }
-    
+
 }
