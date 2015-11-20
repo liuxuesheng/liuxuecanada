@@ -21,8 +21,13 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.components.Legend;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.components.XAxis;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.components.YAxis;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ContentItem;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ListAdapter;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.PieChartComponent.PieChart;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.PieChartComponent.RadarChart;
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.EnterStudentChoicesActivity;
 
@@ -210,6 +215,74 @@ public class JSONToComponentService {
         LayerDrawable layerDrawable = new LayerDrawable(new Drawable[]{
                 clipDrawable, shape});
         return layerDrawable;
+    }
+
+    public static PieChart createPieChart(JSONObject jsonObject, Context context){
+        String[] mParties = new String[]{"Lakehead University", "York University", "Toronto University", "university of alberta"};
+        float[] mValue = new float[]{30, 40, 30, 10};
+
+        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+
+        PieChart mPieChart = new PieChart(context);
+
+        mPieChart.setUsePercentValues(true);
+        mPieChart.setDragDecelerationFrictionCoef(0.95f);
+        mPieChart.setDrawHoleEnabled(true);
+        mPieChart.setHoleColorTransparent(false);
+        mPieChart.setTransparentCircleColor(Color.WHITE);
+        mPieChart.setTransparentCircleAlpha(110);
+        mPieChart.setHoleRadius(58f);
+        mPieChart.setTransparentCircleRadius(61f);
+        mPieChart.setDrawCenterText(true);
+        mPieChart.setRotationAngle(0);
+        // enable rotation of the chart by touch
+        mPieChart.setRotationEnabled(true);
+        // add a selection listener
+        //mPieChart.setOnChartValueSelectedListener(this);
+        mPieChart.setCenterText("选校概率分析图");
+        //为生成的图形赋值：学校名称和对应的概率
+        mPieChart.setData(mParties, mValue);
+
+        setAlignment(mPieChart, getAlignment(jsonObject), p);
+        setRelations(mPieChart, getRelation(jsonObject), getRelationId(jsonObject), p);
+
+        mPieChart.setLayoutParams(p);
+
+        return mPieChart;
+    }
+
+
+    public static RadarChart createRadarChart(JSONObject jsonObject, Context context){
+        float[] mValue1 = new float[]{40, 23, 60, 43};
+        float[] mValue2 = new float[]{30, 41, 65, 40};
+        String[] mCategory = new String[]{"GPA", "University Rank", "IELTS", "Other"};
+
+        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+
+        RadarChart mRadarChart = new RadarChart(context);
+
+        mRadarChart.setDescription("");
+        mRadarChart.setWebLineWidth(1.5f);
+        mRadarChart.setWebLineWidthInner(0.75f);
+        mRadarChart.setWebAlpha(100);
+        XAxis xAxis = mRadarChart.getXAxis();
+        xAxis.setTextSize(9f);
+        YAxis yAxis = mRadarChart.getYAxis();
+        yAxis.setLabelCount(5, false);
+        yAxis.setTextSize(9f);
+        yAxis.setStartAtZero(true);
+        Legend l = mRadarChart.getLegend();
+        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(5f);
+        mRadarChart.setData(mCategory, mValue1, mValue2);
+
+        setAlignment(mRadarChart, getAlignment(jsonObject), p);
+        setRelations(mRadarChart, getRelation(jsonObject), getRelationId(jsonObject), p);
+
+        mRadarChart.setLayoutParams(p);
+
+        return mRadarChart;
     }
 
     public static View[] createSeekBarView(JSONObject jsonObject, Context context) {
