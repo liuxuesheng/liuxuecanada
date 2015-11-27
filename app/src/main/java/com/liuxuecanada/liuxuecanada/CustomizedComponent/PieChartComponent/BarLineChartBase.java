@@ -262,7 +262,6 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
 
         mLegendRenderer.renderLegend(canvas);
 
-        drawMarkers(canvas);
 
         drawDescription(canvas);
 
@@ -546,25 +545,6 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
 
         if (mXAxis.mAxisLabelModulus < 1)
             mXAxis.mAxisLabelModulus = 1;
-    }
-
-    @Override
-    protected float[] getMarkerPosition(Entry e, Highlight highlight) {
-
-        int dataSetIndex = highlight.getDataSetIndex();
-        float xPos = e.getXIndex();
-        float yPos = e.getVal();
-
-
-        // position of the marker depends on selected value index and value
-        float[] pts = new float[]{
-                xPos, yPos
-        };
-
-        getTransformer(mData.getDataSetByIndex(dataSetIndex).getAxisDependency())
-                .pointValuesToPixel(pts);
-
-        return pts;
     }
 
     /**

@@ -225,22 +225,31 @@ public class JSONToComponentService {
 
         PieChart mPieChart = new PieChart(context);
 
-        mPieChart.setUsePercentValues(true);
-        mPieChart.setDragDecelerationFrictionCoef(0.95f);
-        mPieChart.setDrawHoleEnabled(true);
-        mPieChart.setHoleColorTransparent(false);
+//        mPieChart.setUsePercentValues(true);
+//        mPieChart.setDragDecelerationFrictionCoef(0.95f);
+//        mPieChart.setDrawHoleEnabled(true);
+//        mPieChart.setHoleColorTransparent(false);
+//        mPieChart.setTransparentCircleColor(Color.WHITE);
+//        mPieChart.setTransparentCircleAlpha(110);
+//        mPieChart.setHoleRadius(58f);
+//        mPieChart.setTransparentCircleRadius(61f);
+//        mPieChart.setDrawCenterText(true);
+//        mPieChart.setRotationAngle(0);
+//        // enable rotation of the chart by touch
+//        mPieChart.setRotationEnabled(true);
+//        // add a selection listener
+//        //mPieChart.setOnChartValueSelectedListener(this);
+//        mPieChart.setCenterText("选校概率分析图");
+//        //为生成的图形赋值：学校名称和对应的概率
+//        mPieChart.setData(mParties, mValue);
+
+        mPieChart.setCenterText("选校概率分析图");
+        mPieChart.setHoleRadius(58f);
         mPieChart.setTransparentCircleColor(Color.WHITE);
         mPieChart.setTransparentCircleAlpha(110);
-        mPieChart.setHoleRadius(58f);
         mPieChart.setTransparentCircleRadius(61f);
-        mPieChart.setDrawCenterText(true);
-        mPieChart.setRotationAngle(0);
-        // enable rotation of the chart by touch
         mPieChart.setRotationEnabled(true);
-        // add a selection listener
         //mPieChart.setOnChartValueSelectedListener(this);
-        mPieChart.setCenterText("选校概率分析图");
-        //为生成的图形赋值：学校名称和对应的概率
         mPieChart.setData(mParties, mValue);
 
         setAlignment(mPieChart, getAlignment(jsonObject), p);
