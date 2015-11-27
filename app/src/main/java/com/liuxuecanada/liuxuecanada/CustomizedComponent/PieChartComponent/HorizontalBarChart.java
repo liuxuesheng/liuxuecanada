@@ -167,32 +167,6 @@ public class HorizontalBarChart extends BarChart {
     }
 
     @Override
-    public RectF getBarBounds(BarEntry e) {
-
-        BarDataSet set = mData.getDataSetForEntry(e);
-
-        if (set == null)
-            return null;
-
-        float barspace = set.getBarSpace();
-        float y = e.getVal();
-        float x = e.getXIndex();
-
-        float spaceHalf = barspace / 2f;
-
-        float top = x - 0.5f + spaceHalf;
-        float bottom = x + 0.5f - spaceHalf;
-        float left = y >= 0 ? y : 0;
-        float right = y <= 0 ? y : 0;
-
-        RectF bounds = new RectF(left, top, right, bottom);
-
-        getTransformer(set.getAxisDependency()).rectValueToPixel(bounds);
-
-        return bounds;
-    }
-
-    @Override
     public PointF getPosition(Entry e, YAxis.AxisDependency axis) {
 
         if (e == null)
@@ -280,6 +254,18 @@ public class HorizontalBarChart extends BarChart {
         BarData data = new BarData(xVals, dataSets);
         data.setValueTextSize(10f);
         this.setData(data);
+        XAxis xl = this.getXAxis();
+        xl.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xl.setDrawAxisLine(true);
+        xl.setDrawGridLines(true);
+        xl.setGridLineWidth(0.3f);
+        YAxis yl = this.getAxisLeft();
+        yl.setDrawAxisLine(true);
+        yl.setDrawGridLines(true);
+        yl.setGridLineWidth(0.3f);
+        YAxis yr = this.getAxisRight();
+        yr.setDrawAxisLine(true);
+        yr.setDrawGridLines(false);
     }
 }
 

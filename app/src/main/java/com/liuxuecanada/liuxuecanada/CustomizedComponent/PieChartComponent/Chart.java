@@ -24,7 +24,6 @@ import android.view.ViewParent;
 
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.animation.ChartAnimator;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.components.Legend;
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.components.MarkerView;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.ChartData;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.DataSet;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.Entry;
@@ -101,7 +100,7 @@ public abstract class Chart<T extends ChartData<? extends DataSet<? extends Entr
     /**
      * description text that appears in the bottom right corner of the chart
      */
-    protected String mDescription = "Description";
+    protected String mDescription = "";
     /**
      * flag that indicates if the chart has been fed with data yet
      */
@@ -152,14 +151,7 @@ public abstract class Chart<T extends ChartData<? extends DataSet<? extends Entr
      * chart
      */
     protected Highlight[] mIndicesToHighlight;
-    /**
-     * if set to true, the marker view is drawn when a value is clicked
-     */
-    protected boolean mDrawMarkerViews = true;
-    /**
-     * the view that represents the marker
-     */
-    protected MarkerView mMarkerView;
+
     /**
      * tasks to be done after the view is setup
      */

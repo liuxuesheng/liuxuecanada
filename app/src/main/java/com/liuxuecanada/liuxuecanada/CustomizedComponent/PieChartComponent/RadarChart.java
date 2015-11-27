@@ -136,11 +136,6 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
             return;
 
         calcMinMax();
-
-//        if (mYAxis.needsDefaultFormatter()) {
-//            mYAxis.setValueFormatter(mDefaultFormatter);
-//        }
-
         mYAxisRenderer.computeAxis(mYAxis.mAxisMinimum, mYAxis.mAxisMaximum);
         mXAxisRenderer.computeAxis(mData.getXValAverageLength(), mData.getXVals());
 
@@ -299,16 +294,6 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
         return mWebColorInner;
     }
 
-    /**
-     * Sets the color for the web lines in between the lines that come from the
-     * center. Don't forget to use getResources().getColor(...) when loading a
-     * color from the resources. Default: Color.rgb(122, 122, 122)
-     *
-     * @param color
-     */
-    public void setWebColorInner(int color) {
-        mWebColorInner = color;
-    }
 
     /**
      * If set to true, drawing the web is enabled, if set to false, drawing the
@@ -327,17 +312,6 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
      */
     public int getSkipWebLineCount() {
         return mSkipWebLineCount;
-    }
-
-    /**
-     * Sets the number of web-lines that should be skipped on chart web before the
-     * next one is drawn. This targets the lines that come from the center of the RadarChart.
-     *
-     * @param count if count = 1 -> 1 line is skipped in between
-     */
-    public void setSkipWebLineCount(int count) {
-
-        mSkipWebLineCount = Math.max(0, count);
     }
 
     @Override
@@ -393,9 +367,6 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
         ArrayList<Entry> yVals1 = new ArrayList<Entry>();
         ArrayList<Entry> yVals2 = new ArrayList<Entry>();
 
-        // IMPORTANT: In a PieChart, no values (Entry) should have the same
-        // xIndex (even if from different DataSets), since no values can be
-        // drawn above each other.
         for (int i = 0; i < value1.length; i++) {
             yVals1.add(new Entry(value1[i], i));
         }
@@ -428,7 +399,13 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
         data.setDrawValues(false);
 
         this.setData(data);
-
         this.invalidate();
+
+        XAxis xAxis = this.getXAxis();
+        xAxis.setTextSize(10f);
+        YAxis yAxis = this.getYAxis();
+        yAxis.setLabelCount(5, false);
+        yAxis.setTextSize(9f);
+        yAxis.setStartAtZero(true);
     }
 }
