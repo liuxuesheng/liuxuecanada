@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.components.Legend;
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.components.XAxis;
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.components.YAxis;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.Entry;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.highlight.Highlight;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.listener.OnChartValueSelectedListener;
@@ -62,75 +59,41 @@ public class ChoicesFeedbackDetailActivity extends FragmentActivity implements O
             setContentView(R.layout.activity_choicesfeedback_radarchart);
             mRadarChart = (RadarChart) findViewById(R.id.radarchartID);
 
-            mRadarChart.setDescription("");
             mRadarChart.setWebLineWidth(1.5f);
-            mRadarChart.setWebLineWidthInner(0.75f);
+            mRadarChart.setWebLineWidthInner(3.75f);
             mRadarChart.setWebAlpha(100);
-            XAxis xAxis = mRadarChart.getXAxis();
-            xAxis.setTextSize(9f);
-            YAxis yAxis = mRadarChart.getYAxis();
-            yAxis.setLabelCount(5, false);
-            yAxis.setTextSize(9f);
-            yAxis.setStartAtZero(true);
-            Legend l = mRadarChart.getLegend();
-            l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
-            l.setXEntrySpace(7f);
-            l.setYEntrySpace(5f);
+            mRadarChart.setWebColor(Color.BLUE);
             mRadarChart.setData(mCategory, mValue1, mValue2);
 
-        } else if (intent.hasExtra("BarChart")) {
+        }
+        //生成一般柱状图
+        else if (intent.hasExtra("BarChart")) {
             setContentView(R.layout.activity_choicesfeedback_barchart);
             mBarChart = (BarChart) findViewById(R.id.barchartID);
 
-            mBarChart.setDrawBarShadow(false);
             mBarChart.setDrawValueAboveBar(true);
-            mBarChart.setDescription("");
-            // if more than 60 entries are displayed in the chart, no values will be drawn
-            mBarChart.setMaxVisibleValueCount(60);
+            //比较的参数不能多余20个
+            mBarChart.setMaxVisibleValueCount(20);
             // scaling can now only be done on x- and y-axis separately
-            mBarChart.setPinchZoom(false);
-            // draw shadows for each bar that show the maximum value
-            // mChart.setDrawBarShadow(true);
-            // mChart.setDrawXLabels(false);
-            mBarChart.setDrawGridBackground(false);
-            // mChart.setDrawYLabels(false);
-            XAxis xAxis = mBarChart.getXAxis();
-            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xAxis.setDrawGridLines(false);
-            xAxis.setSpaceBetweenLabels(2);
+            mBarChart.setPinchZoom(true);
+            mBarChart.setDrawGridBackground(true);
             mBarChart.setData(year, mYearValue);
 
-        } else if (intent.hasExtra("HorizontalBarChart")) {
+        }
+        //生成水平柱状图
+        else if (intent.hasExtra("HorizontalBarChart")) {
             setContentView(R.layout.activity_choicesfeedback_horizontalbarchart);
             mHorizontalBarChart = (HorizontalBarChart) findViewById(R.id.horizontalBarChartID);
 
             mHorizontalBarChart.setDrawBarShadow(false);
             mHorizontalBarChart.setDrawValueAboveBar(true);
-            mHorizontalBarChart.setDescription("");
-            // if more than 60 entries are displayed in the chart, no values will be drawn
-            mHorizontalBarChart.setMaxVisibleValueCount(60);
+            //比较的参数不能多余20个
+            mHorizontalBarChart.setMaxVisibleValueCount(20);
             // scaling can now only be done on x- and y-axis separately
-            mHorizontalBarChart.setPinchZoom(false);
-            // draw shadows for each bar that show the maximum value
-            // mChart.setDrawBarShadow(true);
-            // mChart.setDrawXLabels(false);
-            mHorizontalBarChart.setDrawGridBackground(false);
-            XAxis xl = mHorizontalBarChart.getXAxis();
-            xl.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xl.setDrawAxisLine(true);
-            xl.setDrawGridLines(true);
-            xl.setGridLineWidth(0.3f);
-            YAxis yl = mHorizontalBarChart.getAxisLeft();
-            yl.setDrawAxisLine(true);
-            yl.setDrawGridLines(true);
-            yl.setGridLineWidth(0.3f);
-            // yl.setInverted(true);
-            YAxis yr = mHorizontalBarChart.getAxisRight();
-            yr.setDrawAxisLine(true);
-            yr.setDrawGridLines(false);
-            //yr.setInverted(true);
+            mHorizontalBarChart.setPinchZoom(true);
+            mHorizontalBarChart.setDrawGridBackground(true);
             mHorizontalBarChart.setData(year, mYearValue);
-            mHorizontalBarChart.animateY(2500);
+            mHorizontalBarChart.animateY(1000);
         }
     }
 
@@ -138,9 +101,7 @@ public class ChoicesFeedbackDetailActivity extends FragmentActivity implements O
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
         if (e == null)
             return;
-        Log.i("VAL SELECTED",
-                "Value: " + e.getVal() + ", xIndex: " + e.getXIndex()
-                        + ", DataSet index: " + dataSetIndex);
+        Log.i("VAL SELECTED", "Value: " + e.getVal() + ", xIndex: " + e.getXIndex() + ", DataSet index: " + dataSetIndex);
     }
 
     @Override

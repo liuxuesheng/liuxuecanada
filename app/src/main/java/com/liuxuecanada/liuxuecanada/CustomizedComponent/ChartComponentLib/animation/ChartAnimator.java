@@ -33,44 +33,6 @@ public class ChartAnimator {
         mListener = listener;
     }
 
-
-    /**
-     * ################ ################ ################ ################
-     */
-    /** METHODS FOR ANIMATION WITHOUT EASING */
-
-    /**
-     * Animates the drawing / rendering of the chart on both x- and y-axis with
-     * the specified animation time. If animate(...) is called, no further
-     * calling of invalidate() is necessary to refresh the chart.
-     *
-     * @param durationMillisX
-     * @param durationMillisY
-     */
-    public void animateXY(int durationMillisX, int durationMillisY) {
-
-        if (android.os.Build.VERSION.SDK_INT < 11)
-            return;
-
-        ObjectAnimator animatorY = ObjectAnimator.ofFloat(this, "phaseY", 0f, 1f);
-        animatorY.setDuration(
-                durationMillisY);
-        ObjectAnimator animatorX = ObjectAnimator.ofFloat(this, "phaseX", 0f, 1f);
-        animatorX.setDuration(
-                durationMillisX);
-
-        // make sure only one animator produces update-callbacks (which then
-        // call invalidate())
-        if (durationMillisX > durationMillisY) {
-            animatorX.addUpdateListener(mListener);
-        } else {
-            animatorY.addUpdateListener(mListener);
-        }
-
-        animatorX.start();
-        animatorY.start();
-    }
-
     /**
      * Animates the rendering of the chart on the x-axis with the specified
      * animation time. If animate(...) is called, no further calling of
@@ -116,14 +78,6 @@ public class ChartAnimator {
         return mPhaseY;
     }
 
-    /**
-     * This modifys the y-phase that is used to animate the values.
-     *
-     * @param phase
-     */
-    public void setPhaseY(float phase) {
-        mPhaseY = phase;
-    }
 
     /**
      * This gets the x-phase that is used to animate the values.
@@ -134,12 +88,4 @@ public class ChartAnimator {
         return mPhaseX;
     }
 
-    /**
-     * This modifys the x-phase that is used to animate the values.
-     *
-     * @param phase
-     */
-    public void setPhaseX(float phase) {
-        mPhaseX = phase;
-    }
 }

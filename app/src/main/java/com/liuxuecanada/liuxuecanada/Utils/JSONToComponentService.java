@@ -270,20 +270,25 @@ public class JSONToComponentService {
 
         RadarChart mRadarChart = new RadarChart(context);
 
-        mRadarChart.setDescription("");
+//        mRadarChart.setDescription("");
+//        mRadarChart.setWebLineWidth(1.5f);
+//        mRadarChart.setWebLineWidthInner(0.75f);
+//        mRadarChart.setWebAlpha(100);
+//        XAxis xAxis = mRadarChart.getXAxis();
+//        xAxis.setTextSize(9f);
+//        YAxis yAxis = mRadarChart.getYAxis();
+//        yAxis.setLabelCount(5, false);
+//        yAxis.setTextSize(9f);
+//        yAxis.setStartAtZero(true);
+//        Legend l = mRadarChart.getLegend();
+//        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+//        l.setXEntrySpace(7f);
+//        l.setYEntrySpace(5f);
+//        mRadarChart.setData(mCategory, mValue1, mValue2);
         mRadarChart.setWebLineWidth(1.5f);
-        mRadarChart.setWebLineWidthInner(0.75f);
+        mRadarChart.setWebLineWidthInner(3.75f);
         mRadarChart.setWebAlpha(100);
-        XAxis xAxis = mRadarChart.getXAxis();
-        xAxis.setTextSize(9f);
-        YAxis yAxis = mRadarChart.getYAxis();
-        yAxis.setLabelCount(5, false);
-        yAxis.setTextSize(9f);
-        yAxis.setStartAtZero(true);
-        Legend l = mRadarChart.getLegend();
-        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
-        l.setXEntrySpace(7f);
-        l.setYEntrySpace(5f);
+        mRadarChart.setWebColor(Color.BLUE);
         mRadarChart.setData(mCategory, mValue1, mValue2);
 
         setAlignment(mRadarChart, getAlignment(jsonObject), p);
