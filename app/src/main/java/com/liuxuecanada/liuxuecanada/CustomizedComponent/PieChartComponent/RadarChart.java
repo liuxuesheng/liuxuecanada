@@ -3,7 +3,6 @@ package com.liuxuecanada.liuxuecanada.CustomizedComponent.PieChartComponent;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
@@ -12,7 +11,6 @@ import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.compo
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.Entry;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.RadarData;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.data.RadarDataSet;
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.highlight.Highlight;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.renderer.RadarChartRenderer;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.renderer.XAxisRendererRadarChart;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.renderer.YAxisRendererRadarChart;
@@ -24,53 +22,44 @@ import java.util.ArrayList;
 
 public class RadarChart extends PieRadarChartBase<RadarData> {
 
+    protected YAxisRendererRadarChart mYAxisRenderer;
+    protected XAxisRendererRadarChart mXAxisRenderer;
     /**
      * width of the main web lines
      */
     private float mWebLineWidth = 2.5f;
-
     /**
      * width of the inner web lines
      */
     private float mInnerWebLineWidth = 1.5f;
-
     /**
      * color for the main web lines
      */
     private int mWebColor = Color.rgb(122, 122, 122);
-
     /**
      * color for the inner web
      */
     private int mWebColorInner = Color.rgb(122, 122, 122);
-
     /**
      * transparency the grid is drawn with (0-255)
      */
     private int mWebAlpha = 150;
-
     /**
      * flag indicating if the web lines should be drawn or not
      */
     private boolean mDrawWeb = true;
-
     /**
      * modulus that determines how many labels and web-lines are skipped before the next is drawn
      */
     private int mSkipWebLineCount = 1;
-
     /**
      * the object reprsenting the y-axis labels
      */
     private YAxis mYAxis;
-
     /**
      * the object representing the x-axis labels
      */
     private XAxis mXAxis;
-
-    protected YAxisRendererRadarChart mYAxisRenderer;
-    protected XAxisRendererRadarChart mXAxisRenderer;
 
     public RadarChart(Context context) {
         super(context);
@@ -142,21 +131,6 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
     }
 
     @Override
-    protected float[] getMarkerPosition(Entry e, Highlight highlight) {
-
-        float angle = getSliceAngle() * e.getXIndex() + getRotationAngle();
-        float val = e.getVal() * getFactor();
-        PointF c = getCenterOffsets();
-
-        PointF p = new PointF((float) (c.x + val * Math.cos(Math.toRadians(angle))),
-                (float) (c.y + val * Math.sin(Math.toRadians(angle))));
-
-        return new float[]{
-                p.x, p.y
-        };
-    }
-
-    @Override
     public void notifyDataSetChanged() {
         if (mDataNotSet)
             return;
@@ -203,7 +177,6 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
 
         drawDescription(canvas);
 
-        drawMarkers(canvas);
     }
 
     /**
@@ -261,6 +234,10 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
         return mXAxis;
     }
 
+    public float getWebLineWidth() {
+        return mWebLineWidth;
+    }
+
     /**
      * Sets the width of the web lines that come from the center.
      *
@@ -270,8 +247,8 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
         mWebLineWidth = Utils.convertDpToPixel(width);
     }
 
-    public float getWebLineWidth() {
-        return mWebLineWidth;
+    public float getWebLineWidthInner() {
+        return mInnerWebLineWidth;
     }
 
     /**
@@ -284,8 +261,13 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
         mInnerWebLineWidth = Utils.convertDpToPixel(width);
     }
 
-    public float getWebLineWidthInner() {
-        return mInnerWebLineWidth;
+    /**
+     * Returns the alpha value for all web lines.
+     *
+     * @return
+     */
+    public int getWebAlpha() {
+        return mWebAlpha;
     }
 
     /**
@@ -298,13 +280,8 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
         mWebAlpha = alpha;
     }
 
-    /**
-     * Returns the alpha value for all web lines.
-     *
-     * @return
-     */
-    public int getWebAlpha() {
-        return mWebAlpha;
+    public int getWebColor() {
+        return mWebColor;
     }
 
     /**
@@ -318,8 +295,8 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
         mWebColor = color;
     }
 
-    public int getWebColor() {
-        return mWebColor;
+    public int getWebColorInner() {
+        return mWebColorInner;
     }
 
     /**
@@ -333,10 +310,6 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
         mWebColorInner = color;
     }
 
-    public int getWebColorInner() {
-        return mWebColorInner;
-    }
-
     /**
      * If set to true, drawing the web is enabled, if set to false, drawing the
      * whole web is disabled. Default: true
@@ -348,6 +321,15 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
     }
 
     /**
+     * Returns the modulus that is used for skipping web-lines.
+     *
+     * @return
+     */
+    public int getSkipWebLineCount() {
+        return mSkipWebLineCount;
+    }
+
+    /**
      * Sets the number of web-lines that should be skipped on chart web before the
      * next one is drawn. This targets the lines that come from the center of the RadarChart.
      *
@@ -356,15 +338,6 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
     public void setSkipWebLineCount(int count) {
 
         mSkipWebLineCount = Math.max(0, count);
-    }
-
-    /**
-     * Returns the modulus that is used for skipping web-lines.
-     *
-     * @return
-     */
-    public int getSkipWebLineCount() {
-        return mSkipWebLineCount;
     }
 
     @Override
@@ -408,11 +381,12 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
 
     /**
      * set origin data for Radar chart
+     *
      * @param party
      * @param value1
      * @param value2
      */
-    public void setData(String[] party, float[] value1,float[] value2) {
+    public void setData(String[] party, float[] value1, float[] value2) {
 
         int count = party.length;
 

@@ -40,29 +40,25 @@ public class ChoicesFeedbackDetailActivity extends FragmentActivity implements O
 
         //从FeedbackViewAdapter.java 中的 onBindViewHolder 方法获取intent对象的参数
         Intent intent = getIntent();
-
+        //生成饼图对象
         if (intent.hasExtra("PieChart")) {
             setContentView(R.layout.activity_choicesfeedback_piechart);
             mPieChart = (PieChart) findViewById(R.id.piechartID);
 
-            mPieChart.setUsePercentValues(true);
-            mPieChart.setDragDecelerationFrictionCoef(0.95f);
-            mPieChart.setDrawHoleEnabled(true);
-            mPieChart.setHoleColorTransparent(false);
+            //为生成的图形赋值：学校名称和对应的概率
+            mPieChart.setCenterText("选校概率分析图");
+            mPieChart.setHoleRadius(58f);
             mPieChart.setTransparentCircleColor(Color.WHITE);
             mPieChart.setTransparentCircleAlpha(110);
-            mPieChart.setHoleRadius(58f);
             mPieChart.setTransparentCircleRadius(61f);
-            mPieChart.setDrawCenterText(true);
-            mPieChart.setRotationAngle(0);
-            // enable rotation of the chart by touch
             mPieChart.setRotationEnabled(true);
-            // add a selection listener
             mPieChart.setOnChartValueSelectedListener(this);
-            mPieChart.setCenterText("选校概率分析图");
-            //为生成的图形赋值：学校名称和对应的概率
             mPieChart.setData(mParties, mValue);
-        } else if (intent.hasExtra("RadarChart")) {
+
+
+        }
+        //生成雷达图对象
+        else if (intent.hasExtra("RadarChart")) {
             setContentView(R.layout.activity_choicesfeedback_radarchart);
             mRadarChart = (RadarChart) findViewById(R.id.radarchartID);
 

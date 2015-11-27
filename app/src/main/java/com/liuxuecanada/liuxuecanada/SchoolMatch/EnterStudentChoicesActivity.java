@@ -114,10 +114,10 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         Intent intent = getIntent();
         if (intent.hasExtra("test1")) {
-            setMaintURL("http://10.135.53.114/liuxuecanadaserver/tests/test1/index.php?page=");
+            setMaintURL("http://10.135.30.40/liuxuecanadaserver/tests/test1/index.php?page=");
             setNextURL("1");
         } else if (intent.hasExtra("login")) {
-            setMaintURL("http://10.135.53.114/liuxuecanadaserver/login/index.php?page=");
+            setMaintURL("http://10.135.30.40/liuxuecanadaserver/login/index.php?page=");
             setNextURL("1");
         }
 
