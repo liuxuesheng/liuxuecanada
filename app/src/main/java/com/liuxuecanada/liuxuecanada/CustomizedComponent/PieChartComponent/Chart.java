@@ -616,26 +616,6 @@ public abstract class Chart<T extends ChartData<? extends DataSet<? extends Entr
     }
 
     /**
-     * Returns the rectangle that defines the borders of the chart-value surface
-     * (into which the actual values are drawn).
-     *
-     * @return
-     */
-    @Override
-    public RectF getContentRect() {
-        return mViewPortHandler.getContentRect();
-    }
-
-    /**
-     * disables intercept touchevents
-     */
-    public void disableScroll() {
-        ViewParent parent = getParent();
-        if (parent != null)
-            parent.requestDisallowInterceptTouchEvent(true);
-    }
-
-    /**
      * enables intercept touchevents
      */
     public void enableScroll() {
@@ -767,10 +747,10 @@ public abstract class Chart<T extends ChartData<? extends DataSet<? extends Entr
             mRenderer = renderer;
     }
 
-    @Override
-    public PointF getCenterOfView() {
-        return getCenter();
-    }
+//    @Override
+//    public PointF getCenterOfView() {
+//        return getCenter();
+//    }
 
     /**
      * Returns the bitmap that represents the chart.

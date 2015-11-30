@@ -90,7 +90,7 @@ public class BarLineChartTouchListener extends ChartTouchListener<BarLineChartBa
 
                 if (event.getPointerCount() >= 2) {
 
-                    mChart.disableScroll();
+                    //mChart.disableScroll();
 
                     saveTouchStart(event);
 
@@ -123,12 +123,12 @@ public class BarLineChartTouchListener extends ChartTouchListener<BarLineChartBa
 
                 if (mTouchMode == DRAG) {
 
-                    mChart.disableScroll();
+                   // mChart.disableScroll();
                     performDrag(event);
 
                 } else if (mTouchMode == X_ZOOM || mTouchMode == Y_ZOOM || mTouchMode == PINCH_ZOOM) {
 
-                    mChart.disableScroll();
+                   // mChart.disableScroll();
 
                     if (mChart.isScaleXEnabled() || mChart.isScaleYEnabled())
                         performZoom(event);

@@ -410,11 +410,6 @@ public abstract class PieRadarChartBase<T extends ChartData<? extends DataSet<? 
      */
     protected abstract float getRequiredBaseOffset();
 
-    @Override
-    public float getYChartMax() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
 
     @Override
     public float getYChartMin() {
@@ -449,38 +444,4 @@ public abstract class PieRadarChartBase<T extends ChartData<? extends DataSet<? 
         return vals;
     }
 
-    /**
-     * ################ ################ ################ ################
-     */
-    /** CODE BELOW THIS RELATED TO ANIMATION */
-
-    /**
-     * Applys a spin animation to the Chart.
-     * 
-     * @param durationmillis
-     * @param fromangle
-     * @param toangle
-     */
-//    @SuppressLint("NewApi")
-//    public void spin(int durationmillis, float fromangle, float toangle, Easing.EasingOption easing) {
-//
-//        if (android.os.Build.VERSION.SDK_INT < 11)
-//            return;
-//
-//        setRotationAngle(fromangle);
-//
-//        ObjectAnimator spinAnimator = ObjectAnimator.ofFloat(this, "rotationAngle", fromangle,
-//                toangle);
-//        spinAnimator.setDuration(durationmillis);
-//        spinAnimator.setInterpolator(Easing.getEasingFunctionFromOption(easing));
-//
-//        spinAnimator.addUpdateListener(new AnimatorUpdateListener() {
-//
-//            @Override
-//            public void onAnimationUpdate(ValueAnimator animation) {
-//                postInvalidate();
-//            }
-//        });
-//        spinAnimator.start();
-//    }
 }
