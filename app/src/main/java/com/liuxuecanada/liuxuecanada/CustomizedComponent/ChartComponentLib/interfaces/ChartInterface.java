@@ -16,7 +16,6 @@ public interface
 
     float getYChartMin();
 
-    float getYChartMax();
 
     int getXValCount();
 
@@ -24,13 +23,9 @@ public interface
 
     int getHeight();
 
-    PointF getCenterOfView();
 
     PointF getCenterOffsets();
 
-    RectF getContentRect();
-
-    ValueFormatter getDefaultValueFormatter();
 
     ChartData getData();
 }

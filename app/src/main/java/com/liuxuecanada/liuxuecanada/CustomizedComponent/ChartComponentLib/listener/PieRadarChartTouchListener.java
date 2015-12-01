@@ -77,7 +77,7 @@ public class PieRadarChartTouchListener extends ChartTouchListener<PieRadarChart
                             > Utils.convertDpToPixel(8f)) {
                         mLastGesture = ChartGesture.ROTATE;
                         mTouchMode = ROTATE;
-                        mChart.disableScroll();
+                  //      mChart.disableScroll();
                     } else if (mTouchMode == ROTATE) {
                         updateGestureRotation(x, y);
                         mChart.invalidate();
