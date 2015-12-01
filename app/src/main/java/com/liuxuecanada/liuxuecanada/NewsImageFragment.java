@@ -22,6 +22,7 @@ public class NewsImageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_pager_news_images, container, false);
+
         /*View tv = v.findViewById(R.id.text);
         ((TextView) tv).setText(getArguments().getString("msg"));*/
         Log.d("sad8dn ","1");
