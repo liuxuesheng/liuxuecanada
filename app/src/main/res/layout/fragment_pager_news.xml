@@ -1,29 +1,18 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:drawable/gallery_thumb"
     android:orientation="vertical">
 
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager_news"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@color/Blue100" />
 
-    <TextView
-        android:id="@+id/text_news"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="hello_world"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager_news"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></android.support.v4.view.ViewPager>
-
-
-    <ListView
-        android:id="@+id/list_news"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawSelectorOnTop="false" />
-
-
-</LinearLayout>
+        <ListView
+            android:id="@+id/list_news"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="false"
+            android:layout_below="@id/pager_news" />
+</RelativeLayout>

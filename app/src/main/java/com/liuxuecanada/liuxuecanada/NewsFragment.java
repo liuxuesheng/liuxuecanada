@@ -1,6 +1,7 @@
 package com.liuxuecanada.liuxuecanada;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,11 +11,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ContentItem;
+import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ListAdapter;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackActivity;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackItem;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.FeedbackViewAdapter;
+import com.liuxuecanada.liuxuecanada.Utils.PaintService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +29,7 @@ public class NewsFragment extends Fragment {
 
     Activity activity;
     private List<ChoicesFeedbackItem> choicesFeedbackItems;
-    private RecyclerView recyclerView;
+    private ListView lv;
 
     public static NewsFragment newInstance(String text) {
         NewsFragment f = new NewsFragment();
@@ -45,27 +51,28 @@ public class NewsFragment extends Fragment {
         mPager.setCurrentItem(1);*/
 
 
-        View v = inflater.inflate(R.layout.activity_choicesfeedback, container, false);
-        LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
-        recyclerView= (RecyclerView) v.findViewById(R.id.choices_feedback_View);
+        View v = inflater.inflate(R.layout.fragment_pager_news, container, false);
 
-        initPersonData();
-        FeedbackViewAdapter adapter=new FeedbackViewAdapter(choicesFeedbackItems,getActivity());
+        //Build news image view
+        ViewPager mPager = (ViewPager) v.findViewById(R.id.pager_news);
+        NewsImageAdapter newsAdapter = new NewsImageAdapter(((FragmentActivity)activity).getSupportFragmentManager());
+        mPager.setAdapter(newsAdapter);
+        mPager.setCurrentItem(1);
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        //Build news list view
+        lv = (ListView) v.findViewById(R.id.list_news);
+
+        ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
+        for (int i = 1 ; i<= 5; i++) {
+            objects.add(new ContentItem("Our news story #"+i, PaintService.paintTextIconDrawable(getActivity(), "N")));
+        }
+        ListAdapter adapter = new ListAdapter(getActivity(), objects);
+        lv.setAdapter(adapter);
+        lv.setVerticalScrollBarEnabled(true);
+        lv.setScrollbarFadingEnabled(false);
+        lv.setBackgroundColor(Color.TRANSPARENT);
+        lv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         return v;
-    }
-
-    private void initPersonData() {
-        choicesFeedbackItems =new ArrayList<>();
-
-        choicesFeedbackItems.add(new ChoicesFeedbackItem("饼图展览", "分析选校情况和申报每所学校的概率!", R.drawable.feedback1));
-        choicesFeedbackItems.add(new ChoicesFeedbackItem("雷达图展览", "通过和其他学生对比，分析考生的优点缺点", R.drawable.feedback2));
-        choicesFeedbackItems.add(new ChoicesFeedbackItem("柱状图展览", "数据年份分析!", R.drawable.feedback3));
-        choicesFeedbackItems.add(new ChoicesFeedbackItem("横向柱状图展览", "数据年份分析!", R.drawable.feedback4));
-
     }
 
     @Override
