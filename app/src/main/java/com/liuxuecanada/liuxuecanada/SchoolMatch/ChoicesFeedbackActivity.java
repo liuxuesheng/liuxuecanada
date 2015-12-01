@@ -32,11 +32,6 @@ public class ChoicesFeedbackActivity extends Activity implements AsyncResponse {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choicesfeedback);
 
-        Button feedBackButton = (Button) findViewById(R.id.getFeedBackButton);
-        textViewButton = (TextView) findViewById(R.id.getTextViewButton);
-
-        getSpinner().setVisibility(View.GONE);
-
         //allow network access in the main thread for testing purpose
         /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);*/
@@ -52,21 +47,13 @@ public class ChoicesFeedbackActivity extends Activity implements AsyncResponse {
         recyclerView.setAdapter(adapter);
     }
 
-    private ProgressBar getSpinner() {
-        if (this.spinner == null)
-            spinner = (ProgressBar) findViewById(R.id.progressBar);
-        return this.spinner;
-    }
-
     @Override
     public void onTaskComplete(Object output) {
-        getSpinner().setVisibility(View.GONE);
         textViewButton.setText((String) output);
     }
 
     @Override
     public void onTaskStart() {
-        getSpinner().setVisibility(View.VISIBLE);
         textViewButton.setText("Processing");
     }
 
