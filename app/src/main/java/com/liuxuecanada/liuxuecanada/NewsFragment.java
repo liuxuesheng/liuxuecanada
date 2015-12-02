@@ -68,17 +68,6 @@ public class NewsFragment extends Fragment
         lv.setScrollbarFadingEnabled(false);
         lv.setBackgroundColor(Color.TRANSPARENT);
         lv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("saddsd ", "" + id);
-
-                Intent myIntent = null;
-                myIntent = new Intent(activity, NewsDisplayActivity.class);
-                myIntent.putExtra("news", NewsDisplayActivity.class);
-                activity.startActivity(myIntent);
-            }
-        });
         return v;
     }
 
@@ -88,6 +77,7 @@ public class NewsFragment extends Fragment
             arr = new JSONArray((String) out);
             Log.d("asd8d ", "4 " + arr);
 
+            ArrayList<String> ids = new ArrayList<String>();
             ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
 /*        for (int i = 1; i < arr.length(); i++) {
             objects.add(new ContentItem("Our news story #" + i, PaintService.paintTextIconDrawable(getActivity(), "N")));
@@ -98,13 +88,27 @@ public class NewsFragment extends Fragment
                     JSONObject item = arr.getJSONObject(i);
 
                     objects.add(new ContentItem(item.getString("news_title"), PaintService.paintTextIconDrawable(getActivity(), "N")));
+                    ids.add(item.getString("id"));
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
 
+            final ArrayList<String> myids = ids;
+
             ListAdapter adapter = new ListAdapter(getActivity(), objects);
             lv.setAdapter(adapter);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Log.d("saddsd ", "" + id+ "po "+position);
+
+                    Intent myIntent = null;
+                    myIntent = new Intent(activity, NewsDisplayActivity.class);
+                    myIntent.putExtra("record", myids.get(position));
+                    activity.startActivity(myIntent);
+                }
+            });
 
         } catch (JSONException ex) {
             ex.printStackTrace();
