@@ -11,6 +11,7 @@ import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.R;
@@ -75,7 +76,7 @@ public class NewsDisplayActivity extends Activity
 
 
     private void addObjectsToView(JSONArray jsonArray, String url) {
-        LinearLayout mainView = (LinearLayout) this.findViewById(R.id.activity_news);
+        RelativeLayout mainView = (RelativeLayout) this.findViewById(R.id.activity_news);
         WebView wv = (WebView) this.findViewById(R.id.webview_news);
         TextView title = (TextView) this.findViewById(R.id.title_news);
         TextView subtitle = (TextView) this.findViewById(R.id.subtitle_news);
@@ -90,7 +91,7 @@ public class NewsDisplayActivity extends Activity
                     Point size = new Point();
                     this.getWindowManager().getDefaultDisplay().getSize(size);
                     int width = size.x;
-                    String data="<html><body ><img id=\"resizeImage\" src=\""+"http://10.135.30.40/liuxuecanadaserver/news/" + item.getString("url")+"\" width=\"95%\" style=\"display:block; margin:auto; \"/></body></html>";
+                    String data="<html><body ><img id=\"resizeImage\" src=\""+"http://10.135.30.40/liuxuecanadaserver/news/" + item.getString("url")+"\" width=\"100%\" style=\"display:block; margin:auto; \"/></body></html>";
                     //alt="" align="middle"
                     Log.d("sdasdasds ",""+data);
                     wv.loadData(data, "text/html; charset=UTF-8", null);
