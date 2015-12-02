@@ -2,10 +2,13 @@ package com.liuxuecanada.liuxuecanada.News;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.Display;
 import android.view.Window;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -81,10 +84,16 @@ public class NewsDisplayActivity extends Activity
 
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
-                final JSONObject item = jsonArray.getJSONObject(i);
+                JSONObject item = jsonArray.getJSONObject(i);
 
                 if (item.getString("type").equals("webview")){
-                    wv.loadUrl("http://10.135.30.40/liuxuecanadaserver/news/" + item.getString("url"));
+                    Point size = new Point();
+                    this.getWindowManager().getDefaultDisplay().getSize(size);
+                    int width = size.x;
+                    String data="<html><body ><img id=\"resizeImage\" src=\""+"http://10.135.30.40/liuxuecanadaserver/news/" + item.getString("url")+"\" width=\"100%\" alt=\"\" align=\"middle\" /></body></html>";
+                    Log.d("sdasdasds ",""+data);
+                    wv.loadData(data, "text/html; charset=UTF-8", null);
+                    //wv.loadUrl("http://10.135.30.40/liuxuecanadaserver/news/" + item.getString("url"));
                 }else if (item.getString("type").equals("title_news") ){
                     title.setText(item.getString("name"));
                 }else if (item.getString("type").equals("subtitle_news")){
