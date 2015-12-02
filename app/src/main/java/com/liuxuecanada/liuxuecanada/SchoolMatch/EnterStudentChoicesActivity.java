@@ -119,6 +119,9 @@ public class EnterStudentChoicesActivity extends FragmentActivity
         } else if (intent.hasExtra("login")) {
             setMaintURL("http://10.135.30.40/liuxuecanadaserver/login/index.php?page=");
             setNextURL("1");
+        } else if (intent.hasExtra("news")) {
+            setMaintURL("http://10.135.30.40/liuxuecanadaserver/news/news.php");
+            setNextURL("");
         }
 
         setContentView(R.layout.flow_main);

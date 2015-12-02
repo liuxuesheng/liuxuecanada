@@ -17,8 +17,8 @@ import android.widget.ListView;
 
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ContentItem;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ListAdapter;
+import com.liuxuecanada.liuxuecanada.News.NewsDisplayActivity;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackItem;
-import com.liuxuecanada.liuxuecanada.SchoolMatch.EnterStudentChoicesActivity;
 import com.liuxuecanada.liuxuecanada.Utils.PaintService;
 
 import java.util.ArrayList;
@@ -77,8 +77,8 @@ public class NewsFragment extends Fragment {
                 Log.d("saddsd ", "" + id);
 
                 Intent myIntent = null;
-                myIntent = new Intent(activity, EnterStudentChoicesActivity.class);
-                myIntent.putExtra("test1", EnterStudentChoicesActivity.class);
+                myIntent = new Intent(activity, NewsDisplayActivity.class);
+                myIntent.putExtra("news", NewsDisplayActivity.class);
                 activity.startActivity(myIntent);
             }
         });

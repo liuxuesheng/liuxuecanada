@@ -30,7 +30,7 @@
             android:name=".SchoolMatch.ChoicesFeedbackDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RegistrationOffice.LoginActivity"
+            android:name=".News.NewsDisplayActivity"
             android:screenOrientation="portrait" />
 
     </application>
