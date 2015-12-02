@@ -21,9 +21,5 @@ public class NewsImageAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         return NewsImageFragment.newInstance("最新消息");
-
-        //return ArrayListFragment.newInstance("2");
-
     }
-
 }

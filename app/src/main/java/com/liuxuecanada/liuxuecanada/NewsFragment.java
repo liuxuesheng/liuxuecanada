@@ -1,25 +1,24 @@
 package com.liuxuecanada.liuxuecanada;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ContentItem;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ListAdapter;
-import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackActivity;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackItem;
-import com.liuxuecanada.liuxuecanada.SchoolMatch.FeedbackViewAdapter;
+import com.liuxuecanada.liuxuecanada.SchoolMatch.EnterStudentChoicesActivity;
 import com.liuxuecanada.liuxuecanada.Utils.PaintService;
 
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ public class NewsFragment extends Fragment {
 
         //Build news image view
         ViewPager mPager = (ViewPager) v.findViewById(R.id.pager_news);
-        NewsImageAdapter newsAdapter = new NewsImageAdapter(((FragmentActivity)activity).getSupportFragmentManager());
+        NewsImageAdapter newsAdapter = new NewsImageAdapter(((FragmentActivity) activity).getSupportFragmentManager());
         mPager.setAdapter(newsAdapter);
         mPager.setCurrentItem(1);
 
@@ -63,8 +62,8 @@ public class NewsFragment extends Fragment {
         lv = (ListView) v.findViewById(R.id.list_news);
 
         ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
-        for (int i = 1 ; i<= 5; i++) {
-            objects.add(new ContentItem("Our news story #"+i, PaintService.paintTextIconDrawable(getActivity(), "N")));
+        for (int i = 1; i <= 5; i++) {
+            objects.add(new ContentItem("Our news story #" + i, PaintService.paintTextIconDrawable(getActivity(), "N")));
         }
         ListAdapter adapter = new ListAdapter(getActivity(), objects);
         lv.setAdapter(adapter);
@@ -72,6 +71,17 @@ public class NewsFragment extends Fragment {
         lv.setScrollbarFadingEnabled(false);
         lv.setBackgroundColor(Color.TRANSPARENT);
         lv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("saddsd ", "" + id);
+
+                Intent myIntent = null;
+                myIntent = new Intent(activity, EnterStudentChoicesActivity.class);
+                myIntent.putExtra("test1", EnterStudentChoicesActivity.class);
+                activity.startActivity(myIntent);
+            }
+        });
         return v;
     }
 
