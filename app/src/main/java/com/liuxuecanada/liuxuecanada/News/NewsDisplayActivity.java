@@ -90,7 +90,8 @@ public class NewsDisplayActivity extends Activity
                     Point size = new Point();
                     this.getWindowManager().getDefaultDisplay().getSize(size);
                     int width = size.x;
-                    String data="<html><body ><img id=\"resizeImage\" src=\""+"http://10.135.30.40/liuxuecanadaserver/news/" + item.getString("url")+"\" width=\"100%\" alt=\"\" align=\"middle\" /></body></html>";
+                    String data="<html><body ><img id=\"resizeImage\" src=\""+"http://10.135.30.40/liuxuecanadaserver/news/" + item.getString("url")+"\" width=\"95%\" style=\"display:block; margin:auto; \"/></body></html>";
+                    //alt="" align="middle"
                     Log.d("sdasdasds ",""+data);
                     wv.loadData(data, "text/html; charset=UTF-8", null);
                     //wv.loadUrl("http://10.135.30.40/liuxuecanadaserver/news/" + item.getString("url"));
