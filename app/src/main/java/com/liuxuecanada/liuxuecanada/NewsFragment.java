@@ -3,6 +3,7 @@ package com.liuxuecanada.liuxuecanada;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -19,14 +20,23 @@ import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.C
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ListAdapter;
 import com.liuxuecanada.liuxuecanada.News.NewsDisplayActivity;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackItem;
+import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
 import com.liuxuecanada.liuxuecanada.Utils.PaintService;
+import com.liuxuecanada.liuxuecanada.Utils.ServerResponse;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsFragment extends Fragment {
+public class NewsFragment extends Fragment
+        implements
+        AsyncResponse {
 
     Activity activity;
+    JSONArray arr = null;
     private List<ChoicesFeedbackItem> choicesFeedbackItems;
     private ListView lv;
 
@@ -40,16 +50,6 @@ public class NewsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        /*View v = inflater.inflate(R.layout.fragment_pager_news, container, false);
-        TextView tv = (TextView) v.findViewById(R.id.text_news);
-        ((TextView) tv).setText(getArguments().getString("msg"));
-
-        ViewPager mPager = (ViewPager) v.findViewById(R.id.pager_news);
-        NewsImageAdapter newsAdapter = new NewsImageAdapter(((FragmentActivity)activity).getSupportFragmentManager());
-        mPager.setAdapter(newsAdapter);
-        mPager.setCurrentItem(1);*/
-
-
         View v = inflater.inflate(R.layout.fragment_pager_news, container, false);
 
         //Build news image view
@@ -58,15 +58,12 @@ public class NewsFragment extends Fragment {
         mPager.setAdapter(newsAdapter);
         mPager.setCurrentItem(1);
 
+        //Search 5 latest news on server
+        ServerResponse pud = new ServerResponse(this);
+        pud.execute("http://10.135.30.40/liuxuecanadaserver/news/news_list.php");
+
         //Build news list view
         lv = (ListView) v.findViewById(R.id.list_news);
-
-        ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
-        for (int i = 1; i <= 5; i++) {
-            objects.add(new ContentItem("Our news story #" + i, PaintService.paintTextIconDrawable(getActivity(), "N")));
-        }
-        ListAdapter adapter = new ListAdapter(getActivity(), objects);
-        lv.setAdapter(adapter);
         lv.setVerticalScrollBarEnabled(true);
         lv.setScrollbarFadingEnabled(false);
         lv.setBackgroundColor(Color.TRANSPARENT);
@@ -83,6 +80,39 @@ public class NewsFragment extends Fragment {
             }
         });
         return v;
+    }
+
+    @Override
+    public void onTaskComplete(Object out) {
+        try {
+            arr = new JSONArray((String) out);
+            Log.d("asd8d ", "4 " + arr);
+
+            ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
+/*        for (int i = 1; i < arr.length(); i++) {
+            objects.add(new ContentItem("Our news story #" + i, PaintService.paintTextIconDrawable(getActivity(), "N")));
+        }*/
+
+            for (int i = 0; i < arr.length(); i++) {
+                try {
+                    JSONObject item = arr.getJSONObject(i);
+
+                    objects.add(new ContentItem(item.getString("news_title"), PaintService.paintTextIconDrawable(getActivity(), "N")));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            ListAdapter adapter = new ListAdapter(getActivity(), objects);
+            lv.setAdapter(adapter);
+
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onTaskStart() {
     }
 
     @Override
