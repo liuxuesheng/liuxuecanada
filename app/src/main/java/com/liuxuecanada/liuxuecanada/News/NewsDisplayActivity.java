@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Window;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -71,15 +72,27 @@ public class NewsDisplayActivity extends Activity
 
 
     private void addObjectsToView(JSONArray jsonArray, String url) {
-        final LinearLayout mainView = (LinearLayout) this.findViewById(R.id.activity_news);
+        LinearLayout mainView = (LinearLayout) this.findViewById(R.id.activity_news);
+        WebView wv = (WebView) this.findViewById(R.id.webview_news);
+        TextView title = (TextView) this.findViewById(R.id.title_news);
+        TextView subtitle = (TextView) this.findViewById(R.id.subtitle_news);
+        TextView date = (TextView) this.findViewById(R.id.date_news);
+        TextView body_news = (TextView) this.findViewById(R.id.body_news);
 
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 final JSONObject item = jsonArray.getJSONObject(i);
 
-                if (item.getString("type").equals("textview")) {
-                    final TextView tv = JSONToComponentService.createTextView(item, this);
-                    mainView.addView(tv);
+                if (item.getString("type").equals("webview")){
+                    wv.loadUrl("http://10.135.30.40/liuxuecanadaserver/news/" + item.getString("url"));
+                }else if (item.getString("type").equals("title_news") ){
+                    title.setText(item.getString("name"));
+                }else if (item.getString("type").equals("subtitle_news")){
+                    subtitle.setText(item.getString("name"));
+                }else if (item.getString("type").equals("date_news")){
+                    date.setText(item.getString("name"));
+                }else if (item.getString("type").equals("body_news")){
+                    body_news.setText(item.getString("name"));
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();

@@ -5,4 +5,29 @@
     android:orientation="vertical"
     android:id="@+id/activity_news">
 
+    <TextView
+        android:id="@+id/title_news"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/subtitle_news"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/date_news"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <WebView
+        android:id="@+id/webview_news"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></WebView>
+
+    <TextView
+        android:id="@+id/body_news"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
