@@ -56,7 +56,7 @@ public class NewsFragment extends Fragment
         ViewPager mPager = (ViewPager) v.findViewById(R.id.pager_news);
         NewsImageAdapter newsAdapter = new NewsImageAdapter(((FragmentActivity) activity).getSupportFragmentManager());
         mPager.setAdapter(newsAdapter);
-        mPager.setCurrentItem(1);
+        mPager.setCurrentItem(0);
 
         //Search 5 latest news on server
         ServerResponse pud = new ServerResponse(this);

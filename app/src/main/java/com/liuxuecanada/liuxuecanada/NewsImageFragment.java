@@ -14,10 +14,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.Toast;
 
 import com.liuxuecanada.liuxuecanada.News.NewsDisplayActivity;
-import com.liuxuecanada.liuxuecanada.SchoolMatch.EnterStudentChoicesActivity;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
 import com.liuxuecanada.liuxuecanada.Utils.ServerResponse;
 
@@ -26,12 +24,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class NewsImageFragment extends Fragment
         implements
         AsyncResponse,
         View.OnTouchListener, Handler.Callback {
 
+    static final int MAX_CLICK_DURATION = 200;
+    private static final int CLICK_ON_WEBVIEW = 1;
+    private static final int CLICK_ON_URL = 2;
+    static long startClickTime = 0;
+    private final Handler handler = new Handler(this);
     Activity activity;
     ArrayList<String> new_image_ids = null;
     ArrayList<String> imagsrc = null;
@@ -39,12 +43,6 @@ public class NewsImageFragment extends Fragment
     private WebView imageWebView = null;
     private String id = null;
     private String srcUrl = null;
-
-    private static final int CLICK_ON_WEBVIEW = 1;
-    private static final int CLICK_ON_URL = 2;
-
-    private final Handler handler = new Handler(this);
-
 
     public static NewsImageFragment newInstance(int pos) {
         Log.d("asd8sd7sd ", "pos " + pos);
@@ -90,7 +88,7 @@ public class NewsImageFragment extends Fragment
             imageWebView = (WebView) activity.findViewById(R.id.webview_news_slider);
             String imgsrc = (getArguments().getInt("pos") == 1) ? imagsrc.get(0) : imagsrc.get(1);
 
-            Log.d("asd8sd7sd ", "src " + imagsrc.get(0) + " " + imagsrc.get(1));
+            Log.d("asd8sd7sd ", "src " + getArguments().getInt("pos") + " " + imagsrc.get(0) + " " + imagsrc.get(1) + " " + imgsrc);
 
             Point size = new Point();
             activity.getWindowManager().getDefaultDisplay().getSize(size);
@@ -119,10 +117,33 @@ public class NewsImageFragment extends Fragment
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+
+
         Log.d("asd8sd7sd ", "AAA ");
-        if (v.getId() == R.id.webview_news_slider && event.getAction() == MotionEvent.ACTION_DOWN) {
+
+        if (v.getId() == R.id.webview_news_slider) {
             Log.d("asd8sd7sd ", "BBB ");
-            handler.sendEmptyMessageDelayed(CLICK_ON_WEBVIEW, 500);
+
+            //&& event.getAction() == MotionEvent.ACTION_DOWN
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN: {
+                    startClickTime = Calendar.getInstance().getTimeInMillis();
+                    Log.d("asd8sd7sd ", "start " + startClickTime);
+                    break;
+                }
+                case MotionEvent.ACTION_UP: {
+                    long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
+                    Log.d("asd8sd7sd ", "duration " + clickDuration);
+                    if (clickDuration < MAX_CLICK_DURATION) {
+                        //click event has occurred
+                        Intent myIntent = null;
+                        myIntent = new Intent(activity, NewsDisplayActivity.class);
+                        myIntent.putExtra("record", "" + getArguments().getInt("pos"));
+                        activity.startActivity(myIntent);
+                    }
+                }
+            }
         }
         return false;
     }
@@ -131,10 +152,7 @@ public class NewsImageFragment extends Fragment
     public boolean handleMessage(Message msg) {
         Log.d("asd8sd7sd ", "A ");
         if (msg.what == CLICK_ON_WEBVIEW) {
-            Intent myIntent = null;
-            myIntent = new Intent(activity, NewsDisplayActivity.class);
-            myIntent.putExtra("record", ""+getArguments().getInt("pos"));
-            activity.startActivity(myIntent);
+  
             return true;
         }
         return false;
