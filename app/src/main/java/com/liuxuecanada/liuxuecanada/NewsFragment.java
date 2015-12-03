@@ -74,14 +74,12 @@ public class NewsFragment extends Fragment
     @Override
     public void onTaskComplete(Object out) {
         try {
+            //news list
             arr = new JSONArray((String) out);
             Log.d("asd8d ", "4 " + arr);
 
             ArrayList<String> ids = new ArrayList<String>();
             ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
-/*        for (int i = 1; i < arr.length(); i++) {
-            objects.add(new ContentItem("Our news story #" + i, PaintService.paintTextIconDrawable(getActivity(), "N")));
-        }*/
 
             for (int i = 0; i < arr.length(); i++) {
                 try {

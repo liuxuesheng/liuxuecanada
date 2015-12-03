@@ -18,11 +18,6 @@ public class MyAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-       /* if (position != 1)
-            return ArrayListFragment.newInstance(position);
-        return null;
-*/
-
         switch (position) {
 
             case 0:
@@ -30,7 +25,7 @@ public class MyAdapter extends FragmentPagerAdapter {
             case 1:
                 return ArrayListFragment.newInstance("2");
             case 2:
-                return NewsImageFragment.newInstance("最新消息");
+                return ArrayListFragment.newInstance("2");
             default:
                 return NewsFragment.newInstance("最新消息");
         }
