@@ -20,7 +20,7 @@ public class NewsImageAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Log.d("asd8sd7sd ", "position " + position);
+        Log.d("asd8sd7sd ", "position news: " + position);
         return NewsImageFragment.newInstance(position);
     }
 }

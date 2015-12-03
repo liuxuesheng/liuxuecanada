@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -57,7 +56,7 @@ public class NewsImageFragment extends Fragment
         View v = inflater.inflate(R.layout.fragment_pager_news_images, container, false);
 
         ServerResponse pud = new ServerResponse(this);
-        pud.execute("http://10.135.30.40/liuxuecanadaserver/news/news_image_list.php");
+        pud.execute("http://10.135.30.40/liuxuecanadaserver/news/news_image_list.php" + "?image=" + getArguments().getInt("pos"));
 
         return v;
     }
@@ -66,7 +65,6 @@ public class NewsImageFragment extends Fragment
     public void onTaskComplete(Object out) {
         try {
             arr = new JSONArray((String) out);
-            Log.d("asd8d ", "4 " + arr);
 
             //Image slider
             new_image_ids = new ArrayList<String>();
@@ -88,14 +86,11 @@ public class NewsImageFragment extends Fragment
             //String imgsrc = (getArguments().getInt("pos") == 1) ? imagsrc.get(0) : imagsrc.get(1);
             String imgsrc = imagsrc.get(0);
 
-            Log.d("asd8sd7sd ", "src " + getArguments().getInt("pos") + " " + imagsrc.get(0) + " " + imgsrc);
-
             Point size = new Point();
             activity.getWindowManager().getDefaultDisplay().getSize(size);
             int width = size.x;
             String data = "<html><body ><img id=\"resizeImage\" src=\"" + "http://10.135.30.40/liuxuecanadaserver/news/" + imgsrc + "\" width=\"100%\" style=\"display:block; margin:auto; \"/></body></html>";
-            //alt="" align="middle"
-            Log.d("sdasdasds ", "" + data);
+
             imageWebView.loadData(data, "text/html; charset=UTF-8", null);
 
             imageWebView.setOnTouchListener(this);
@@ -140,7 +135,6 @@ public class NewsImageFragment extends Fragment
 
     @Override
     public boolean handleMessage(Message msg) {
-        Log.d("asd8sd7sd ", "A ");
         if (msg.what == CLICK_ON_WEBVIEW) {
 
             return true;

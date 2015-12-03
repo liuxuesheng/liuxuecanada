@@ -3,12 +3,10 @@ package com.liuxuecanada.liuxuecanada;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,7 +74,6 @@ public class NewsFragment extends Fragment
         try {
             //news list
             arr = new JSONArray((String) out);
-            Log.d("asd8d ", "4 " + arr);
 
             ArrayList<String> ids = new ArrayList<String>();
             ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
@@ -99,8 +96,6 @@ public class NewsFragment extends Fragment
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Log.d("saddsd ", "" + id+ "po "+position);
-
                     Intent myIntent = null;
                     myIntent = new Intent(activity, NewsDisplayActivity.class);
                     myIntent.putExtra("record", myids.get(position));

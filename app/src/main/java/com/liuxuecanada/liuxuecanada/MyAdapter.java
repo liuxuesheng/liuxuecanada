@@ -3,6 +3,7 @@ package com.liuxuecanada.liuxuecanada;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 public class MyAdapter extends FragmentPagerAdapter {
     static final int NUM_ITEMS = 3;
@@ -18,8 +19,8 @@ public class MyAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        Log.d("asd8sd7sd ", "position main: " + position);
         switch (position) {
-
             case 0:
                 return NewsFragment.newInstance("最新消息");
             case 1:
