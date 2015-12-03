@@ -45,7 +45,6 @@ public class NewsImageFragment extends Fragment
     private String srcUrl = null;
 
     public static NewsImageFragment newInstance(int pos) {
-        Log.d("asd8sd7sd ", "pos " + pos);
         NewsImageFragment f = new NewsImageFragment();
         Bundle b = new Bundle();
         b.putInt("pos", pos);
@@ -86,9 +85,10 @@ public class NewsImageFragment extends Fragment
 
             //10.135.31.47
             imageWebView = (WebView) activity.findViewById(R.id.webview_news_slider);
-            String imgsrc = (getArguments().getInt("pos") == 1) ? imagsrc.get(0) : imagsrc.get(1);
+            //String imgsrc = (getArguments().getInt("pos") == 1) ? imagsrc.get(0) : imagsrc.get(1);
+            String imgsrc = imagsrc.get(0);
 
-            Log.d("asd8sd7sd ", "src " + getArguments().getInt("pos") + " " + imagsrc.get(0) + " " + imagsrc.get(1) + " " + imgsrc);
+            Log.d("asd8sd7sd ", "src " + getArguments().getInt("pos") + " " + imagsrc.get(0)  + " " + imgsrc);
 
             Point size = new Point();
             activity.getWindowManager().getDefaultDisplay().getSize(size);
@@ -117,29 +117,19 @@ public class NewsImageFragment extends Fragment
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-
-
-        Log.d("asd8sd7sd ", "AAA ");
-
         if (v.getId() == R.id.webview_news_slider) {
-            Log.d("asd8sd7sd ", "BBB ");
-
-            //&& event.getAction() == MotionEvent.ACTION_DOWN
-
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN: {
                     startClickTime = Calendar.getInstance().getTimeInMillis();
-                    Log.d("asd8sd7sd ", "start " + startClickTime);
                     break;
                 }
                 case MotionEvent.ACTION_UP: {
                     long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
-                    Log.d("asd8sd7sd ", "duration " + clickDuration);
                     if (clickDuration < MAX_CLICK_DURATION) {
                         //click event has occurred
                         Intent myIntent = null;
                         myIntent = new Intent(activity, NewsDisplayActivity.class);
-                        myIntent.putExtra("record", "" + getArguments().getInt("pos"));
+                        myIntent.putExtra("record", "" + new_image_ids.get(0));
                         activity.startActivity(myIntent);
                     }
                 }

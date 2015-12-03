@@ -3,6 +3,7 @@ package com.liuxuecanada.liuxuecanada;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 
 public class NewsImageAdapter extends FragmentPagerAdapter {
@@ -19,6 +20,7 @@ public class NewsImageAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        Log.d("asd8sd7sd ", "position " + position);
         return NewsImageFragment.newInstance(position);
     }
 }
