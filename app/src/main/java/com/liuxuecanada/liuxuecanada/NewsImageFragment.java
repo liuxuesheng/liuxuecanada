@@ -58,7 +58,7 @@ public class NewsImageFragment extends Fragment
         View v = inflater.inflate(R.layout.fragment_pager_news_images, container, false);
 
         ServerResponse pud = new ServerResponse(this);
-        pud.execute("http://10.135.31.47/liuxuecanadaserver/news/news_image_list.php");
+        pud.execute("http://10.135.30.40/liuxuecanadaserver/news/news_image_list.php");
 
         return v;
     }
@@ -152,7 +152,7 @@ public class NewsImageFragment extends Fragment
     public boolean handleMessage(Message msg) {
         Log.d("asd8sd7sd ", "A ");
         if (msg.what == CLICK_ON_WEBVIEW) {
-  
+
             return true;
         }
         return false;
