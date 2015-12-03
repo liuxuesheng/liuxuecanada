@@ -6,8 +6,9 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/pager_news"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@color/Blue100" />
+            android:layout_height="175dp"
+            android:background="@color/Blue100"
+            android:layout_marginBottom="10dp"/>
 
         <ListView
             android:id="@+id/list_news"
