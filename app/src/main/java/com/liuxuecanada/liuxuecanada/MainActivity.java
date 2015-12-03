@@ -21,6 +21,7 @@ public class MainActivity extends FragmentActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
         mPager.setCurrentItem(1);
+        mPager.setOffscreenPageLimit(1);
 
         // Watch for button clicks.
         Button button = (Button) findViewById(R.id.goto_first);

@@ -84,11 +84,11 @@ public class NewsImageFragment extends Fragment
             }
 
             //10.135.31.47
-            imageWebView = (WebView) activity.findViewById(R.id.webview_news_slider);
+            imageWebView = (WebView) getView().findViewById(R.id.webview_news_slider);
             //String imgsrc = (getArguments().getInt("pos") == 1) ? imagsrc.get(0) : imagsrc.get(1);
             String imgsrc = imagsrc.get(0);
 
-            Log.d("asd8sd7sd ", "src " + getArguments().getInt("pos") + " " + imagsrc.get(0)  + " " + imgsrc);
+            Log.d("asd8sd7sd ", "src " + getArguments().getInt("pos") + " " + imagsrc.get(0) + " " + imgsrc);
 
             Point size = new Point();
             activity.getWindowManager().getDefaultDisplay().getSize(size);
@@ -147,4 +147,5 @@ public class NewsImageFragment extends Fragment
         }
         return false;
     }
+
 }
