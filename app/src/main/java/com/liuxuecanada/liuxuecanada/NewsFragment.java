@@ -89,6 +89,7 @@ public class NewsFragment extends Fragment
                 TextView tv = null;
                 boolean flag = false;
                 TextView sectionTextView = null;
+                String item_section = null;
 
                 try {
                     item = arr.getJSONObject(i);
@@ -112,6 +113,12 @@ public class NewsFragment extends Fragment
                 }
 
                 try {
+                    item_section = item.getString("item_section");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                try {
                     imageSrc = item.getString("news_imageURL");
                     Log.d("sdd9s9d ", "src " + imageSrc);
                     iv = new ImageView(activity);
@@ -132,6 +139,7 @@ public class NewsFragment extends Fragment
                 try {
                     currentId = item.getString("id");
                     final String newsId = currentId;
+                    final String current_item_section = item_section;
 
                     tv = new TextView(activity);
                     tv.setText(item.getString("news_title"));
@@ -144,6 +152,7 @@ public class NewsFragment extends Fragment
                             Intent myIntent = null;
                             myIntent = new Intent(activity, NewsDisplayActivity.class);
                             myIntent.putExtra("record", newsId);
+                            myIntent.putExtra("section", current_item_section);
                             activity.startActivity(myIntent);
                         }
                     });

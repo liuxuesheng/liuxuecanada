@@ -70,8 +70,8 @@ public class NewsDisplayActivity extends Activity
         setContentView(R.layout.activity_news);
 
         ServerResponse pud = new ServerResponse(this);
-        Log.d("saddsd ", "" + getMainURL()+"?page="+intent.getStringExtra("record"));
-        pud.execute(getMainURL()+"?page="+intent.getStringExtra("record"));
+        Log.d("saddsd ", "" + getMainURL()+"?page="+intent.getStringExtra("record")+ " BBBBBBBBBBBB "+intent.getStringExtra("section"));
+        pud.execute(getMainURL()+"?page="+intent.getStringExtra("record")+"&section="+intent.getStringExtra("section"));
 
     }
 

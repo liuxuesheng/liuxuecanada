@@ -42,6 +42,7 @@ public class NewsImageFragment extends Fragment
     private WebView imageWebView = null;
     private TextView imageTextView = null;
     private String news_title = null;
+    private String current_item_section = null;
 
     public static NewsImageFragment newInstance(int pos) {
         NewsImageFragment f = new NewsImageFragment();
@@ -73,6 +74,7 @@ public class NewsImageFragment extends Fragment
                 new_image_ids = item.getString("id");
                 imagsrc = item.getString("news_imageURL");
                 news_title = item.getString("news_title");
+                current_item_section = item.getString("section");;
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -119,6 +121,7 @@ public class NewsImageFragment extends Fragment
                         Intent myIntent = null;
                         myIntent = new Intent(activity, NewsDisplayActivity.class);
                         myIntent.putExtra("record", "" + new_image_ids);
+                        myIntent.putExtra("section", current_item_section);
                         activity.startActivity(myIntent);
                     }
                 }
