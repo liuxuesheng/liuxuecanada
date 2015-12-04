@@ -87,9 +87,8 @@ public class NewsFragment extends Fragment
             for (int i = 0; i < arr.length(); i++) {
                 String imageSrc = null;
                 TextView tv = null;
-                WebView imageWebView = null;
                 boolean flag = false;
-
+                TextView sectionTextView = null;
 
                 try {
                     item = arr.getJSONObject(i);
@@ -98,12 +97,27 @@ public class NewsFragment extends Fragment
                 }
 
                 try {
+                    String sectionName = item.getString("section");
+                    sectionTextView = new TextView(activity);
+                    sectionTextView.setText(sectionName);
+                    sectionTextView.setTextSize(22);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                if (sectionTextView != null) {
+                    news_container.addView(sectionTextView);
+                    Log.d("sdd9s9d ", "K");
+                    continue;
+                }
+
+                try {
                     imageSrc = item.getString("news_imageURL");
                     Log.d("sdd9s9d ", "src " + imageSrc);
                     iv = new ImageView(activity);
 
                     LoadImageFromURL loadImage = new LoadImageFromURL();
-                    loadImage.execute("http://10.135.31.47/liuxuecanadaserver/news/"+imageSrc, iv);
+                    loadImage.execute("http://10.135.31.47/liuxuecanadaserver/news/" + imageSrc, iv);
 
                     Log.d("sdd9s9d ", "src after");
                     iv.setBackgroundColor(Color.CYAN);
@@ -183,7 +197,7 @@ public class NewsFragment extends Fragment
 
             try {
                 Log.d("sdd9s9d ", "X");
-                URL url = new URL((String)params[0]);
+                URL url = new URL((String) params[0]);
                 localIv = (ImageView) params[1];
                 InputStream is = url.openConnection().getInputStream();
                 Bitmap bitMap = BitmapFactory.decodeStream(is);
@@ -200,11 +214,11 @@ public class NewsFragment extends Fragment
 
         }
 
-   /*     protected void onProgressUpdate(TextView... tv) {
-            // start the song here
+        /*     protected void onProgressUpdate(TextView... tv) {
+                 // start the song here
 
-        }
-*/
+             }
+     */
         @Override
         protected void onPostExecute(Bitmap result) {
             // TODO Auto-generated method stub
