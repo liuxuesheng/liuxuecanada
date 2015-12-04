@@ -2,32 +2,37 @@ package com.liuxuecanada.liuxuecanada;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
+import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ContentItem;
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ListAdapter;
 import com.liuxuecanada.liuxuecanada.News.NewsDisplayActivity;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackItem;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
-import com.liuxuecanada.liuxuecanada.Utils.PaintService;
 import com.liuxuecanada.liuxuecanada.Utils.ServerResponse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +42,7 @@ public class NewsFragment extends Fragment
 
     Activity activity;
     JSONArray arr = null;
+    ImageView iv = null;
     private List<ChoicesFeedbackItem> choicesFeedbackItems;
     private ListView lv;
     private LinearLayout news_container = null;
@@ -78,13 +84,42 @@ public class NewsFragment extends Fragment
             JSONObject item = null;
             String currentId = null;
 
-            for (int i = 0; i < arr.length(); i++){
+            for (int i = 0; i < arr.length(); i++) {
+                String imageSrc = null;
+                TextView tv = null;
+                WebView imageWebView = null;
+                boolean flag = false;
+
+
                 try {
                     item = arr.getJSONObject(i);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                try {
+                    imageSrc = item.getString("news_imageURL");
+                    Log.d("sdd9s9d ", "src " + imageSrc);
+                    iv = new ImageView(activity);
+
+                    LoadImageFromURL loadImage = new LoadImageFromURL();
+                    loadImage.execute();
+
+                    Log.d("sdd9s9d ", "src after");
+                    iv.setBackgroundColor(Color.CYAN);
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500, 300);
+                    iv.setLayoutParams(layoutParams);
+
+                } catch (Exception ex) {
+                    flag = true;
+                    ex.printStackTrace();
+                }
+
+                try {
                     currentId = item.getString("id");
                     final String newsId = currentId;
 
-                    TextView tv = new TextView(activity);
+                    tv = new TextView(activity);
                     tv.setText(item.getString("news_title"));
                     tv.setBackgroundColor(Color.WHITE);
                     tv.setPadding(20, 10, 20, 10);
@@ -98,9 +133,22 @@ public class NewsFragment extends Fragment
                             activity.startActivity(myIntent);
                         }
                     });
-                    news_container.addView(tv);
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
+                }
+
+                if (flag == true) {
+                    Log.d("sdd9s9d ", "A");
+                    news_container.addView(tv);
+                } else {
+                    Log.d("sdd9s9d ", "B" + (iv == null));
+                    LinearLayout ll = new LinearLayout(activity);
+                    ll.setOrientation(LinearLayout.HORIZONTAL);
+
+                    ll.addView(iv);
+                    ll.addView(tv);
+                    news_container.addView(ll);
                 }
 
             }
@@ -125,4 +173,37 @@ public class NewsFragment extends Fragment
         this.activity = activity;
     }
 
+    public class LoadImageFromURL extends AsyncTask<String, Void, Bitmap> {
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            // TODO Auto-generated method stub
+
+            try {
+                URL url = new URL("http://10.135.31.47/liuxuecanadaserver/news/image_3.png");
+                InputStream is = url.openConnection().getInputStream();
+                Bitmap bitMap = BitmapFactory.decodeStream(is);
+                return bitMap;
+
+            } catch (MalformedURLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            // TODO Auto-generated method stub
+            super.onPostExecute(result);
+            iv.setImageBitmap(result);
+        }
+
+    }
+
 }
+
