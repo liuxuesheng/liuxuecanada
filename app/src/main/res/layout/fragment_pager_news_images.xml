@@ -6,6 +6,13 @@
     <WebView
         android:id="@+id/webview_news_slider"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/subtitle_news" />
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/textview_news_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_gravity="bottom"/>
 </FrameLayout>

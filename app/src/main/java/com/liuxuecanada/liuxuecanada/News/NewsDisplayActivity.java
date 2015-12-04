@@ -65,7 +65,7 @@ public class NewsDisplayActivity extends Activity
         getActionBar().hide();
 
         Intent intent = getIntent();
-        setMaintURL("http://10.135.30.40/liuxuecanadaserver/news/news.php");
+        setMaintURL("http://10.135.31.47/liuxuecanadaserver/news/news.php");
 
         setContentView(R.layout.activity_news);
 
@@ -92,7 +92,7 @@ public class NewsDisplayActivity extends Activity
                     Point size = new Point();
                     this.getWindowManager().getDefaultDisplay().getSize(size);
                     int width = size.x;
-                    String data="<html><body ><img id=\"resizeImage\" src=\""+"http://10.135.30.40/liuxuecanadaserver/news/" + item.getString("url")+"\" width=\"100%\" style=\"display:block; margin:auto; \"/></body></html>";
+                    String data="<html><body ><img id=\"resizeImage\" src=\""+"http://10.135.31.47/liuxuecanadaserver/news/" + item.getString("url")+"\" width=\"100%\" style=\"display:block; margin:auto; \"/></body></html>";
                     //alt="" align="middle"
                     Log.d("sdasdasds ",""+data);
                     wv.loadData(data, "text/html; charset=UTF-8", null);

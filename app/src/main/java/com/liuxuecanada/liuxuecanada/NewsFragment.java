@@ -58,7 +58,7 @@ public class NewsFragment extends Fragment
 
         //Search 5 latest news on server
         ServerResponse pud = new ServerResponse(this);
-        pud.execute("http://10.135.30.40/liuxuecanadaserver/news/news_list.php");
+        pud.execute("http://10.135.31.47/liuxuecanadaserver/news/news_list.php");
 
         //Build news list view
         lv = (ListView) v.findViewById(R.id.list_news);
