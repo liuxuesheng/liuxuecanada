@@ -103,7 +103,7 @@ public class NewsFragment extends Fragment
                     iv = new ImageView(activity);
 
                     LoadImageFromURL loadImage = new LoadImageFromURL();
-                    loadImage.execute();
+                    loadImage.execute("http://10.135.31.47/liuxuecanadaserver/news/"+imageSrc, iv);
 
                     Log.d("sdd9s9d ", "src after");
                     iv.setBackgroundColor(Color.CYAN);
@@ -173,14 +173,18 @@ public class NewsFragment extends Fragment
         this.activity = activity;
     }
 
-    public class LoadImageFromURL extends AsyncTask<String, Void, Bitmap> {
+    public class LoadImageFromURL extends AsyncTask<Object, ImageView, Bitmap> {
+
+        ImageView localIv = null;
 
         @Override
-        protected Bitmap doInBackground(String... params) {
+        protected Bitmap doInBackground(Object... params) {
             // TODO Auto-generated method stub
 
             try {
-                URL url = new URL("http://10.135.31.47/liuxuecanadaserver/news/image_3.png");
+                Log.d("sdd9s9d ", "X");
+                URL url = new URL((String)params[0]);
+                localIv = (ImageView) params[1];
                 InputStream is = url.openConnection().getInputStream();
                 Bitmap bitMap = BitmapFactory.decodeStream(is);
                 return bitMap;
@@ -196,11 +200,16 @@ public class NewsFragment extends Fragment
 
         }
 
+   /*     protected void onProgressUpdate(TextView... tv) {
+            // start the song here
+
+        }
+*/
         @Override
         protected void onPostExecute(Bitmap result) {
             // TODO Auto-generated method stub
             super.onPostExecute(result);
-            iv.setImageBitmap(result);
+            localIv.setImageBitmap(result);
         }
 
     }
