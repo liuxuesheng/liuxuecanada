@@ -28,7 +28,7 @@ public class MyAdapter extends FragmentPagerAdapter {
             case 2:
                 return ArrayListFragment.newInstance("2");
             default:
-                return NewsFragment.newInstance("最新消息");
+                return null;
         }
     }
 }

@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ContentItem;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ListAdapter;
@@ -37,6 +39,7 @@ public class NewsFragment extends Fragment
     JSONArray arr = null;
     private List<ChoicesFeedbackItem> choicesFeedbackItems;
     private ListView lv;
+    private LinearLayout news_container = null;
 
     public static NewsFragment newInstance(String text) {
         NewsFragment f = new NewsFragment();
@@ -60,12 +63,8 @@ public class NewsFragment extends Fragment
         ServerResponse pud = new ServerResponse(this);
         pud.execute("http://10.135.31.47/liuxuecanadaserver/news/news_list.php");
 
-        //Build news list view
-        lv = (ListView) v.findViewById(R.id.list_news);
-        lv.setVerticalScrollBarEnabled(true);
-        lv.setScrollbarFadingEnabled(false);
-        lv.setBackgroundColor(Color.TRANSPARENT);
-        lv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        news_container = (LinearLayout) v.findViewById(R.id.container_news);
+
         return v;
     }
 
@@ -76,33 +75,35 @@ public class NewsFragment extends Fragment
             arr = new JSONArray((String) out);
 
             ArrayList<String> ids = new ArrayList<String>();
-            ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
+            JSONObject item = null;
+            String currentId = null;
 
-            for (int i = 0; i < arr.length(); i++) {
+            for (int i = 0; i < arr.length(); i++){
                 try {
-                    JSONObject item = arr.getJSONObject(i);
+                    item = arr.getJSONObject(i);
+                    currentId = item.getString("id");
+                    final String newsId = currentId;
 
-                    objects.add(new ContentItem(item.getString("news_title"), PaintService.paintTextIconDrawable(getActivity(), "N")));
-                    ids.add(item.getString("id"));
+                    TextView tv = new TextView(activity);
+                    tv.setText(item.getString("news_title"));
+                    tv.setBackgroundColor(Color.WHITE);
+                    tv.setPadding(20, 10, 20, 10);
+                    tv.setTextSize(16);
+                    tv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent myIntent = null;
+                            myIntent = new Intent(activity, NewsDisplayActivity.class);
+                            myIntent.putExtra("record", newsId);
+                            activity.startActivity(myIntent);
+                        }
+                    });
+                    news_container.addView(tv);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+
             }
-
-            final ArrayList<String> myids = ids;
-
-            ListAdapter adapter = new ListAdapter(getActivity(), objects);
-            lv.setAdapter(adapter);
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent myIntent = null;
-                    myIntent = new Intent(activity, NewsDisplayActivity.class);
-                    myIntent.putExtra("record", myids.get(position));
-                    activity.startActivity(myIntent);
-                }
-            });
-
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
