@@ -125,7 +125,7 @@ public class NewsFragment extends Fragment
 
                     LoadImageFromURL loadImage = new LoadImageFromURL();
                     loadImage.execute("http://192.168.0.12/liuxuecanadaserver/news/" + imageSrc, iv, true, 500, 300);
-                    
+
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500, 300);
                     layoutParams.setMargins(30, 3, 30, 3);
                     iv.setLayoutParams(layoutParams);
