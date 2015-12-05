@@ -110,7 +110,8 @@ public class NewsFragment extends Fragment
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
-                            new int[] {0xFFD0EAF2,0xFFffffff});
+                            new int[] {0xFFF0F8FF,0xFFffffff});
+
                     gd.setCornerRadius(1.0f);
 
                     sectionTextView.setBackground(gd);
@@ -250,7 +251,7 @@ public class NewsFragment extends Fragment
         protected void onPostExecute(Bitmap result) {
             // TODO Auto-generated method stub
             super.onPostExecute(result);
-            localIv.setImageBitmap(result);
+            localIv.setImageBitmap(Bitmap.createScaledBitmap(result, 500, 300, false));
         }
 
     }
