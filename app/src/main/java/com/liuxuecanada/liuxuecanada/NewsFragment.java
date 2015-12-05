@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -67,7 +69,7 @@ public class NewsFragment extends Fragment
 
         //Search 5 latest news on server
         ServerResponse pud = new ServerResponse(this);
-        pud.execute("http://10.135.31.47/liuxuecanadaserver/news/news_list.php");
+        pud.execute("http://192.168.0.12/liuxuecanadaserver/news/news_list.php");
 
         news_container = (LinearLayout) v.findViewById(R.id.container_news);
 
@@ -102,6 +104,21 @@ public class NewsFragment extends Fragment
                     sectionTextView = new TextView(activity);
                     sectionTextView.setText(sectionName);
                     sectionTextView.setTextSize(22);
+                    //sectionTextView.setTypeface(null, Typeface.BOLD);
+                    //sectionTextView.setTextColor(Color.parseColor("#1e90ff"));
+                    //sectionTextView.setBackgroundColor(Color.parseColor("#1e90ff"));
+
+                    GradientDrawable gd = new GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM,
+                            new int[] {0xFFD0EAF2,0xFFffffff});
+                    gd.setCornerRadius(1.0f);
+
+                    sectionTextView.setBackground(gd);
+
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    params.setMargins(0, 50, 0, 0);
+                    sectionTextView.setLayoutParams(params);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -124,7 +141,7 @@ public class NewsFragment extends Fragment
                     iv = new ImageView(activity);
 
                     LoadImageFromURL loadImage = new LoadImageFromURL();
-                    loadImage.execute("http://10.135.31.47/liuxuecanadaserver/news/" + imageSrc, iv);
+                    loadImage.execute("http://192.168.0.12/liuxuecanadaserver/news/" + imageSrc, iv);
 
                     Log.d("sdd9s9d ", "src after");
                     iv.setBackgroundColor(Color.CYAN);
@@ -145,7 +162,8 @@ public class NewsFragment extends Fragment
                     tv.setText(item.getString("news_title"));
                     tv.setBackgroundColor(Color.WHITE);
                     tv.setPadding(20, 10, 20, 10);
-                    tv.setTextSize(16);
+                    tv.setTextSize(18);
+                    tv.setBackgroundColor(Color.TRANSPARENT);
                     tv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

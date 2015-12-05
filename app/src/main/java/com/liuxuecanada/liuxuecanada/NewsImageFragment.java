@@ -57,7 +57,7 @@ public class NewsImageFragment extends Fragment
         View v = inflater.inflate(R.layout.fragment_pager_news_images, container, false);
 
         ServerResponse pud = new ServerResponse(this);
-        pud.execute("http://10.135.31.47/liuxuecanadaserver/news/news_image_list.php" + "?image=" + getArguments().getInt("pos"));
+        pud.execute("http://192.168.0.12/liuxuecanadaserver/news/news_image_list.php" + "?image=" + getArguments().getInt("pos"));
 
         return v;
     }
@@ -83,13 +83,13 @@ public class NewsImageFragment extends Fragment
             Point size = new Point();
             activity.getWindowManager().getDefaultDisplay().getSize(size);
             int width = size.x;
-            String data = "<html><body ><img id=\"resizeImage\" src=\"" + "http://10.135.31.47/liuxuecanadaserver/news/" + imagsrc + "\" width=\"100%\" style=\"display:block; margin:auto; \"/></body></html>";
+            String data = "<html><body ><img id=\"resizeImage\" src=\"" + "http://192.168.0.12/liuxuecanadaserver/news/" + imagsrc + "\" width=\"100%\" style=\"display:block; margin:auto; \"/></body></html>";
             imageWebView.loadData(data, "text/html; charset=UTF-8", null);
             imageWebView.setOnTouchListener(this);
 
             imageTextView = (TextView) getView().findViewById(R.id.textview_news_slider);
             imageTextView.setText(news_title);
-            imageTextView.setBackgroundColor(Color.argb(125,255,255,255));
+            imageTextView.setBackgroundColor(Color.argb(125, 255, 255, 255));
 
         } catch (JSONException ex) {
             ex.printStackTrace();
