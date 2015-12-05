@@ -149,6 +149,20 @@ public class NewsFragment extends Fragment
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500, 300);
                     iv.setLayoutParams(layoutParams);
 
+                    currentId = item.getString("id");
+                    final String newsId = currentId;
+                    final String current_item_section = item_section;
+                    iv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent myIntent = null;
+                            myIntent = new Intent(activity, NewsDisplayActivity.class);
+                            myIntent.putExtra("record", newsId);
+                            myIntent.putExtra("section", current_item_section);
+                            activity.startActivity(myIntent);
+                        }
+                    });
+
                 } catch (Exception ex) {
                     flag = true;
                     ex.printStackTrace();
