@@ -102,13 +102,19 @@ public class NewsFragment extends Fragment
 
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                    params.setMargins(0,50,0,0);
                     sectionTextView.setLayoutParams(params);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
 
                 if (sectionTextView != null) {
+                    View divider = new View(activity);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT, 6);
+                    params.setMargins(0,50,0,0);
+                    divider.setLayoutParams(params);
+                    divider.setBackgroundColor(Color.rgb(30, 136, 229));
+                    news_container.addView(divider);
                     news_container.addView(sectionTextView);
                     continue;
                 }
