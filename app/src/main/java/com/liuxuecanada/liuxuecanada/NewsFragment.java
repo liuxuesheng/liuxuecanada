@@ -95,7 +95,7 @@ public class NewsFragment extends Fragment
                     String sectionName = item.getString("section");
                     sectionTextView = new TextView(activity);
                     sectionTextView.setText(sectionName);
-                    sectionTextView.setTextSize(22);
+                    sectionTextView.setTextSize(21);
                     sectionTextView.setTextColor(Color.rgb(30, 136, 229));
                     sectionTextView.setBackgroundColor(Color.WHITE);
                     sectionTextView.setPadding(20, 30, 0, 50);
@@ -158,7 +158,7 @@ public class NewsFragment extends Fragment
                     tv.setText(item.getString("news_title"));
                     tv.setBackgroundColor(Color.WHITE);
                     tv.setPadding(30, 10, 30, 10);
-                    tv.setTextSize(18);
+                    tv.setTextSize(17);
                     tv.setBackgroundColor(Color.TRANSPARENT);
                     tv.setOnClickListener(new View.OnClickListener() {
                         @Override
