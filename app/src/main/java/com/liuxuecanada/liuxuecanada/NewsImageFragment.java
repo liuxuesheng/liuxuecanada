@@ -6,14 +6,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -77,9 +73,7 @@ public class NewsImageFragment extends Fragment
             }
 
             LoadImageFromURL loadImage = new LoadImageFromURL();
-            loadImage.execute("http://192.168.0.12/liuxuecanadaserver/news/" + imagsrc, iv, true, 1000, dpToPx(175));
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-            iv.setLayoutParams(lp);
+            loadImage.execute("http://192.168.0.12/liuxuecanadaserver/news/" + imagsrc, iv, true, iv.getWidth(), iv.getHeight());
 
             final String newsId = news_image_ids;
             final String current_item_section = news_item_section;
@@ -111,10 +105,5 @@ public class NewsImageFragment extends Fragment
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = activity;
-    }
-    public int dpToPx(int dp) {
-        DisplayMetrics displayMetrics = activity.getResources().getDisplayMetrics();
-        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
-        return px;
     }
 }

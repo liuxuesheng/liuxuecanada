@@ -65,8 +65,8 @@ public class LoadImageFromURL extends AsyncTask<Object, ImageView, Bitmap> {
         }
     }
 
-    private void scaleImage(Bitmap bm, ImageView iv, int width, int length){
-        iv.setImageBitmap(Bitmap.createScaledBitmap(bm, width, length, false));
+    private void scaleImage(Bitmap bm, ImageView iv, int width, int height) {
+        iv.setImageBitmap(Bitmap.createScaledBitmap(bm, width, height, false));
     }
 
 }

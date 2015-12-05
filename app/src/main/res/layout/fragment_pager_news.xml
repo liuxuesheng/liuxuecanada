@@ -1,31 +1,26 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    android:layout_marginBottom="16dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginTop="16dp">
+    android:layout_height="fill_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager_news"
-            android:layout_width="match_parent"
-            android:layout_height="175dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/Blue100" />
+            android:layout_width="fill_parent"
+            android:layout_height="175dp" />
 
         <LinearLayout
             android:id="@+id/container_news"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical"
+            android:layout_marginBottom="16dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:divider="@drawable/news_divider"
+            android:orientation="vertical"
             android:showDividers="middle">
 
         </LinearLayout>
