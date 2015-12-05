@@ -2,12 +2,8 @@ package com.liuxuecanada.liuxuecanada;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -16,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -25,16 +20,13 @@ import android.widget.TextView;
 import com.liuxuecanada.liuxuecanada.News.NewsDisplayActivity;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackItem;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
+import com.liuxuecanada.liuxuecanada.Utils.LoadImageFromURL;
 import com.liuxuecanada.liuxuecanada.Utils.ServerResponse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,7 +102,7 @@ public class NewsFragment extends Fragment
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
-                            new int[] {0xFFF0F8FF,0xFFffffff});
+                            new int[]{0xFFF0F8FF, 0xFFffffff});
 
                     gd.setCornerRadius(1.0f);
 
@@ -142,7 +134,7 @@ public class NewsFragment extends Fragment
                     iv = new ImageView(activity);
 
                     LoadImageFromURL loadImage = new LoadImageFromURL();
-                    loadImage.execute("http://192.168.0.12/liuxuecanadaserver/news/" + imageSrc, iv);
+                    loadImage.execute("http://192.168.0.12/liuxuecanadaserver/news/" + imageSrc, iv, true);
 
                     Log.d("sdd9s9d ", "src after");
                     iv.setBackgroundColor(Color.CYAN);
@@ -227,47 +219,6 @@ public class NewsFragment extends Fragment
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = activity;
-    }
-
-    public class LoadImageFromURL extends AsyncTask<Object, ImageView, Bitmap> {
-
-        ImageView localIv = null;
-
-        @Override
-        protected Bitmap doInBackground(Object... params) {
-            // TODO Auto-generated method stub
-
-            try {
-                Log.d("sdd9s9d ", "X");
-                URL url = new URL((String) params[0]);
-                localIv = (ImageView) params[1];
-                InputStream is = url.openConnection().getInputStream();
-                Bitmap bitMap = BitmapFactory.decodeStream(is);
-                return bitMap;
-
-            } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            return null;
-
-        }
-
-        /*     protected void onProgressUpdate(TextView... tv) {
-                 // start the song here
-
-             }
-     */
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            // TODO Auto-generated method stub
-            super.onPostExecute(result);
-            localIv.setImageBitmap(Bitmap.createScaledBitmap(result, 500, 300, false));
-        }
-
     }
 
 }

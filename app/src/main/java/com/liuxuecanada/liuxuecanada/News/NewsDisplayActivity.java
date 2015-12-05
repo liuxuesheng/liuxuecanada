@@ -2,21 +2,15 @@ package com.liuxuecanada.liuxuecanada.News;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.Display;
 import android.view.Window;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
-import com.liuxuecanada.liuxuecanada.Utils.JSONToComponentService;
+import com.liuxuecanada.liuxuecanada.Utils.LoadImageFromURL;
 import com.liuxuecanada.liuxuecanada.Utils.PaintService;
 import com.liuxuecanada.liuxuecanada.Utils.ServerResponse;
 
@@ -24,14 +18,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.LinkedList;
-
 public class NewsDisplayActivity extends Activity
         implements
         AsyncResponse {
 
-    LinearLayout layout = null;
-    LinkedList<JSONArray> pagell = null;
     JSONArray arr = null;
     private String mainURL = "";
 
@@ -70,40 +60,36 @@ public class NewsDisplayActivity extends Activity
         setContentView(R.layout.activity_news);
 
         ServerResponse pud = new ServerResponse(this);
-        Log.d("saddsd ", "" + getMainURL()+"?page="+intent.getStringExtra("record")+ " BBBBBBBBBBBB "+intent.getStringExtra("section"));
-        pud.execute(getMainURL()+"?page="+intent.getStringExtra("record")+"&section="+intent.getStringExtra("section"));
+        Log.d("saddsd ", "" + getMainURL() + "?page=" + intent.getStringExtra("record") + " BBBBBBBBBBBB " + intent.getStringExtra("section"));
+        pud.execute(getMainURL() + "?page=" + intent.getStringExtra("record") + "&section=" + intent.getStringExtra("section"));
 
     }
 
-
     private void addObjectsToView(JSONArray jsonArray, String url) {
-        RelativeLayout mainView = (RelativeLayout) this.findViewById(R.id.activity_news);
-        WebView wv = (WebView) this.findViewById(R.id.webview_news);
         TextView title = (TextView) this.findViewById(R.id.title_news);
         TextView subtitle = (TextView) this.findViewById(R.id.subtitle_news);
         TextView date = (TextView) this.findViewById(R.id.date_news);
         TextView body_news = (TextView) this.findViewById(R.id.body_news);
+        ImageView iv = (ImageView) this.findViewById(R.id.imageview_news);
 
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject item = jsonArray.getJSONObject(i);
 
-                if (item.getString("type").equals("webview")){
-                    Point size = new Point();
-                    this.getWindowManager().getDefaultDisplay().getSize(size);
-                    int width = size.x;
-                    String data="<html><body ><img id=\"resizeImage\" src=\""+"http://192.168.0.12/liuxuecanadaserver/news/" + item.getString("url")+"\" width=\"100%\" style=\"display:block; margin:auto; \"/></body></html>";
-                    //alt="" align="middle"
-                    Log.d("sdasdasds ",""+data);
-                    wv.loadData(data, "text/html; charset=UTF-8", null);
-                    //wv.loadUrl("http://10.135.30.40/liuxuecanadaserver/news/" + item.getString("url"));
-                }else if (item.getString("type").equals("title_news") ){
+                if (item.getString("type").equals("webview")) {
+                    try {
+                        LoadImageFromURL loadImage = new LoadImageFromURL();
+                        loadImage.execute("http://192.168.0.12/liuxuecanadaserver/news/" + item.getString("url"), iv, false);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                } else if (item.getString("type").equals("title_news")) {
                     title.setText(item.getString("name"));
-                }else if (item.getString("type").equals("subtitle_news")){
+                } else if (item.getString("type").equals("subtitle_news")) {
                     subtitle.setText(item.getString("name"));
-                }else if (item.getString("type").equals("date_news")){
+                } else if (item.getString("type").equals("date_news")) {
                     date.setText(item.getString("name"));
-                }else if (item.getString("type").equals("body_news")){
+                } else if (item.getString("type").equals("body_news")) {
                     body_news.setText(item.getString("name"));
                 }
             } catch (Exception ex) {

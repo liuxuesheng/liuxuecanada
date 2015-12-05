@@ -7,7 +7,7 @@
     android:layout_marginRight="10dp"
     android:layout_marginTop="16dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/activity_news"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,37 +21,42 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/subtitle_news"
+        <RelativeLayout
+            android:id="@+id/subtitle_line"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:textSize="16sp"
-            android:layout_below="@id/title_news"/>
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/date_news"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@id/subtitle_news"/>
+            <TextView
+                android:id="@+id/subtitle_news"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:textSize="16sp" />
 
-        <WebView
-            android:id="@+id/webview_news"
+            <TextView
+                android:id="@+id/date_news"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/subtitle_news" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/imageview_news"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/subtitle_news"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp" />
 
 
         <TextView
             android:id="@+id/body_news"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:layout_below="@id/webview_news"/>
+            android:layout_below="@id/imageview_news"
+            android:textSize="14sp" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </ScrollView>
 
