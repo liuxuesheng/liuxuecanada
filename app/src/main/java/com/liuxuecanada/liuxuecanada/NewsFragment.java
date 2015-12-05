@@ -96,21 +96,13 @@ public class NewsFragment extends Fragment
                     sectionTextView = new TextView(activity);
                     sectionTextView.setText(sectionName);
                     sectionTextView.setTextSize(22);
-                    //sectionTextView.setTypeface(null, Typeface.BOLD);
-                    //sectionTextView.setTextColor(Color.parseColor("#1e90ff"));
-                    //sectionTextView.setBackgroundColor(Color.parseColor("#1e90ff"));
-
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            new int[]{0xFFF0F8FF, 0xFFffffff});
-
-                    gd.setCornerRadius(1.0f);
-
-                    sectionTextView.setBackground(gd);
+                    sectionTextView.setTextColor(Color.rgb(30, 136, 229));
+                    sectionTextView.setBackgroundColor(Color.WHITE);
+                    sectionTextView.setPadding(20, 30, 0, 50);
 
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    params.setMargins(0, 50, 0, 0);
+                            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                    params.setMargins(0,50,0,0);
                     sectionTextView.setLayoutParams(params);
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -118,7 +110,6 @@ public class NewsFragment extends Fragment
 
                 if (sectionTextView != null) {
                     news_container.addView(sectionTextView);
-                    Log.d("sdd9s9d ", "K");
                     continue;
                 }
 
@@ -130,15 +121,13 @@ public class NewsFragment extends Fragment
 
                 try {
                     imageSrc = item.getString("news_imageURL");
-                    Log.d("sdd9s9d ", "src " + imageSrc);
                     iv = new ImageView(activity);
 
                     LoadImageFromURL loadImage = new LoadImageFromURL();
                     loadImage.execute("http://192.168.0.12/liuxuecanadaserver/news/" + imageSrc, iv, true, 500, 300);
-
-                    Log.d("sdd9s9d ", "src after");
-                    iv.setBackgroundColor(Color.CYAN);
+                    
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500, 300);
+                    layoutParams.setMargins(30, 3, 30, 3);
                     iv.setLayoutParams(layoutParams);
 
                     currentId = item.getString("id");
@@ -168,7 +157,7 @@ public class NewsFragment extends Fragment
                     tv = new TextView(activity);
                     tv.setText(item.getString("news_title"));
                     tv.setBackgroundColor(Color.WHITE);
-                    tv.setPadding(20, 10, 20, 10);
+                    tv.setPadding(30, 10, 30, 10);
                     tv.setTextSize(18);
                     tv.setBackgroundColor(Color.TRANSPARENT);
                     tv.setOnClickListener(new View.OnClickListener() {
@@ -187,10 +176,8 @@ public class NewsFragment extends Fragment
                 }
 
                 if (flag == true) {
-                    Log.d("sdd9s9d ", "A");
                     news_container.addView(tv);
                 } else {
-                    Log.d("sdd9s9d ", "B" + (iv == null));
                     LinearLayout ll = new LinearLayout(activity);
                     ll.setOrientation(LinearLayout.HORIZONTAL);
 

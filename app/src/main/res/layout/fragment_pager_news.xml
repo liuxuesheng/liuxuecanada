@@ -16,9 +16,7 @@
             android:id="@+id/container_news"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginBottom="36dp"
             android:divider="@drawable/news_divider"
             android:orientation="vertical"
             android:showDividers="middle">
