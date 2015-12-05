@@ -134,7 +134,7 @@ public class NewsFragment extends Fragment
                     iv = new ImageView(activity);
 
                     LoadImageFromURL loadImage = new LoadImageFromURL();
-                    loadImage.execute("http://192.168.0.12/liuxuecanadaserver/news/" + imageSrc, iv, true);
+                    loadImage.execute("http://192.168.0.12/liuxuecanadaserver/news/" + imageSrc, iv, true, 500, 300);
 
                     Log.d("sdd9s9d ", "src after");
                     iv.setBackgroundColor(Color.CYAN);
