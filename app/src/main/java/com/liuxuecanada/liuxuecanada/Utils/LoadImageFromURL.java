@@ -51,7 +51,7 @@ public class LoadImageFromURL extends AsyncTask<Object, ImageView, Bitmap> {
             localIv.setImageBitmap(Bitmap.createScaledBitmap(result, 500, 300, false));
         else {
             localIv.setImageBitmap(result);
-            localIv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            localIv.setScaleType(ImageView.ScaleType.CENTER_CROP);
             localIv.setAdjustViewBounds(true);
         }
     }

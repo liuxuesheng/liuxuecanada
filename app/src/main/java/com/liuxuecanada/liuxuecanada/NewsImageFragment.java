@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -75,6 +76,8 @@ public class NewsImageFragment extends Fragment
 
             LoadImageFromURL loadImage = new LoadImageFromURL();
             loadImage.execute("http://192.168.0.12/liuxuecanadaserver/news/" + imagsrc, iv, false);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+            iv.setLayoutParams(lp);
 
             final String newsId = news_image_ids;
             final String current_item_section = news_item_section;
@@ -92,16 +95,6 @@ public class NewsImageFragment extends Fragment
             imageTextView = (TextView) getView().findViewById(R.id.textview_news_slider);
             imageTextView.setText(news_title);
             imageTextView.setBackgroundColor(Color.argb(225, 255, 255, 255));
-
-           /* imageWebView = (WebView) getView().findViewById(R.id.webview_news_slider);
-            Point size = new Point();
-            activity.getWindowManager().getDefaultDisplay().getSize(size);
-            int width = size.x;
-            String data = "<html><body ><img id=\"resizeImage\" src=\"" + "http://192.168.0.12/liuxuecanadaserver/news/" + imagsrc + "\" width=\"100%\" style=\"display:block; margin:auto; \"/></body></html>";
-            imageWebView.loadData(data, "text/html; charset=UTF-8", null);
-            imageWebView.setOnTouchListener(this);
-
-           ;*/
 
         } catch (JSONException ex) {
             ex.printStackTrace();
