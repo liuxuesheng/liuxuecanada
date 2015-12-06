@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.graphics.drawable.shapes.RectShape;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -112,35 +113,38 @@ public class PaintService {
         return path;
     }
 
-
     public static Drawable paintTextIconDrawable(Context context, String text) {
+        return paintTextIconDrawable(context, text, 40, 28,  new ShapeDrawable(new OvalShape()), Color.LTGRAY);
+    }
 
-        ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
-        drawable.getPaint().setColor(Color.GRAY);
+    public static Drawable paintTextIconDrawable(Context context, String text, int sizeIcon, int sizeText, ShapeDrawable drawable, int color) {
+        drawable.getPaint().setColor(color);
         drawable.getPaint().setStyle(Paint.Style.FILL);
         drawable.getPaint().setAntiAlias(true);
 
-        int iconPx = (int) dipToPixels(context, 40);
+        int iconPx = (int) dipToPixels(context, sizeIcon);
         Bitmap canvasBitmap = Bitmap.createBitmap(iconPx, iconPx,
                 Bitmap.Config.ARGB_8888);
         // Create a canvas, that will draw on to canvasBitmap.
         Canvas imageCanvas = new Canvas(canvasBitmap);
 
-        int textpx = (int) dipToPixels(context, 28);
+        int textpx = (int) dipToPixels(context, sizeText);
         // Set up the paint for use with our Canvas
         Paint imagePaint = new Paint();
         imagePaint.setTextAlign(Paint.Align.CENTER);
         imagePaint.setTextSize(textpx);
         imagePaint.setColor(Color.CYAN);
 
-        Rect bounds = new Rect();
-        imagePaint.getTextBounds(text, 0, 1, bounds);
+        if(text != null) {
+            Rect bounds = new Rect();
+            imagePaint.getTextBounds(text, 0, 1, bounds);
 
-        // Draw the image to our canvas
-        drawable.draw(imageCanvas);
+            // Draw the image to our canvas
+            drawable.draw(imageCanvas);
 
-        // Draw the text on top of our image
-        imageCanvas.drawText(text, iconPx / 2, iconPx / 2 + bounds.height() / 2, imagePaint);
+            // Draw the text on top of our image
+            imageCanvas.drawText(text, iconPx / 2, iconPx / 2 + bounds.height() / 2, imagePaint);
+        }
 
         // Combine background and text to a LayerDrawable
         LayerDrawable layerDrawable = new LayerDrawable(

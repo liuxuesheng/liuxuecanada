@@ -3,12 +3,13 @@ package com.liuxuecanada.liuxuecanada;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.liuxuecanada.liuxuecanada.News.NewsDisplayActivity;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackItem;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
 import com.liuxuecanada.liuxuecanada.Utils.LoadImageFromURL;
+import com.liuxuecanada.liuxuecanada.Utils.PaintService;
 import com.liuxuecanada.liuxuecanada.Utils.ServerResponse;
 
 import org.json.JSONArray;
@@ -99,6 +101,8 @@ public class NewsFragment extends Fragment
                     sectionTextView.setTextColor(Color.rgb(30, 136, 229));
                     sectionTextView.setBackgroundColor(Color.WHITE);
                     sectionTextView.setPadding(20, 30, 0, 50);
+                    sectionTextView.setCompoundDrawablesWithIntrinsicBounds(PaintService.paintTextIconDrawable(activity, null, 20, 16, new ShapeDrawable(new RectShape()), Color.rgb(30, 136, 229)), null, null, null);
+                    sectionTextView.setCompoundDrawablePadding(16);
 
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -111,7 +115,7 @@ public class NewsFragment extends Fragment
                     View divider = new View(activity);
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT, 6);
-                    params.setMargins(0,50,0,0);
+                    params.setMargins(0, 50, 0, 0);
                     divider.setLayoutParams(params);
                     divider.setBackgroundColor(Color.rgb(30, 136, 229));
                     news_container.addView(divider);
