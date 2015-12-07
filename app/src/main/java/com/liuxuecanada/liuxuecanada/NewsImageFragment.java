@@ -90,7 +90,8 @@ public class NewsImageFragment extends Fragment
 
             imageTextView = (TextView) getView().findViewById(R.id.textview_news_slider);
             imageTextView.setText(news_title);
-            imageTextView.setBackgroundColor(Color.argb(225, 255, 255, 255));
+            imageTextView.setTextColor(Color.WHITE);
+            imageTextView.setBackgroundColor(Color.argb(100, 0, 0, 0));
 
         } catch (JSONException ex) {
             ex.printStackTrace();
