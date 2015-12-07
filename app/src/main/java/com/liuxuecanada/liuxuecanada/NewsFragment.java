@@ -4,24 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.News.NewsDisplayActivity;
-import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackItem;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
 import com.liuxuecanada.liuxuecanada.Utils.LoadImageFromURL;
 import com.liuxuecanada.liuxuecanada.Utils.PaintService;
@@ -32,7 +28,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class NewsFragment extends Fragment
         implements
@@ -41,11 +36,10 @@ public class NewsFragment extends Fragment
     Activity activity;
     JSONArray arr = null;
     ImageView iv = null;
-    private List<ChoicesFeedbackItem> choicesFeedbackItems;
-    private ListView lv;
     private LinearLayout news_container = null;
     private int newsImageWidth = 0;
     private int newsImageHeight = 0;
+    private int screenWidth = 0;
 
     public static NewsFragment newInstance(String text) {
         NewsFragment f = new NewsFragment();
@@ -59,11 +53,18 @@ public class NewsFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_pager_news, container, false);
 
+        //Get Screen Width
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        screenWidth = displaymetrics.widthPixels;
+
         //Build news image view
         ViewPager mPager = (ViewPager) v.findViewById(R.id.pager_news);
         NewsImageAdapter newsAdapter = new NewsImageAdapter(((FragmentActivity) activity).getSupportFragmentManager());
         mPager.setAdapter(newsAdapter);
         mPager.setCurrentItem(0);
+        ViewGroup.LayoutParams params = mPager.getLayoutParams();
+        params.height = (int) (screenWidth * 0.5);
 
         //Search 5 latest news on server
         ServerResponse pud = new ServerResponse(this);
@@ -71,13 +72,16 @@ public class NewsFragment extends Fragment
 
         news_container = (LinearLayout) v.findViewById(R.id.container_news);
 
-        //Get screen width
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        newsImageWidth = displaymetrics.widthPixels * 7 / 24;
+        //Get News Image Dimensions
+        newsImageWidth = screenWidth * 7 / 24;
         newsImageHeight = (int) (newsImageWidth * 0.618);
 
         return v;
+    }
+
+    private int dpToPx(int dp) {
+        float density = activity.getResources().getDisplayMetrics().density;
+        return Math.round((float) dp * density);
     }
 
     @Override
@@ -143,7 +147,7 @@ public class NewsFragment extends Fragment
                     imageSrc = item.getString("news_imageURL");
                     iv = new ImageView(activity);
 
-                    if (newsImageHeight == 0 || newsImageWidth == 0){
+                    if (newsImageHeight == 0 || newsImageWidth == 0) {
                         newsImageWidth = 500;
                         newsImageHeight = 300;
                     }
