@@ -24,6 +24,11 @@ public class NewsDisplayActivity extends Activity
 
     JSONArray arr = null;
     private String mainURL = "";
+    private TextView title = null;
+    private TextView subtitle = null;
+    private TextView date = null;
+    private TextView body_news = null;
+    private ImageView iv = null;
 
     @Override
     public void onTaskComplete(Object out) {
@@ -56,18 +61,17 @@ public class NewsDisplayActivity extends Activity
         setMaintURL("http://192.168.0.12/liuxuecanadaserver/news/news.php");
 
         setContentView(R.layout.activity_news);
+        title = (TextView) this.findViewById(R.id.title_news);
+        subtitle = (TextView) this.findViewById(R.id.subtitle_news);
+        date = (TextView) this.findViewById(R.id.date_news);
+        body_news = (TextView) this.findViewById(R.id.body_news);
+        iv = (ImageView) this.findViewById(R.id.imageview_news);
 
         ServerResponse pud = new ServerResponse(this);
         pud.execute(getMainURL() + "?page=" + intent.getStringExtra("record") + "&section=" + intent.getStringExtra("section"));
     }
 
     private void addObjectsToView(JSONArray jsonArray, String url) {
-        TextView title = (TextView) this.findViewById(R.id.title_news);
-        TextView subtitle = (TextView) this.findViewById(R.id.subtitle_news);
-        TextView date = (TextView) this.findViewById(R.id.date_news);
-        TextView body_news = (TextView) this.findViewById(R.id.body_news);
-        ImageView iv = (ImageView) this.findViewById(R.id.imageview_news);
-
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject item = jsonArray.getJSONObject(i);
