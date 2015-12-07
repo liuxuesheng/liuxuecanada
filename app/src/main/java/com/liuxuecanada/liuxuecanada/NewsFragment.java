@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.News.NewsDisplayActivity;
@@ -113,9 +114,8 @@ public class NewsFragment extends Fragment
                     sectionTextView.setText(sectionName);
                     sectionTextView.setTextSize(21);
                     sectionTextView.setTextColor(Color.rgb(30, 136, 229));
-                    sectionTextView.setBackgroundColor(Color.WHITE);
                     sectionTextView.setPadding(20, 30, 0, 50);
-                    sectionTextView.setCompoundDrawablesWithIntrinsicBounds(PaintService.paintTextIconDrawable(activity, null, 20, 16, new ShapeDrawable(new RectShape()), Color.rgb(30, 136, 229)), null, null, null);
+                    sectionTextView.setCompoundDrawablesWithIntrinsicBounds(PaintService.paintTextIconDrawable(activity, null, 19, 16, new ShapeDrawable(new RectShape()), Color.rgb(30, 136, 229)), null, null, null);
                     sectionTextView.setCompoundDrawablePadding(16);
 
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -126,14 +126,9 @@ public class NewsFragment extends Fragment
                 }
 
                 if (sectionTextView != null) {
-                    View divider = new View(activity);
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT, 6);
-                    params.setMargins(0, 50, 0, 0);
-                    divider.setLayoutParams(params);
-                    divider.setBackgroundColor(Color.rgb(30, 136, 229));
-                    news_container.addView(divider);
+                    addDivider(news_container, Color.rgb(30, 136, 229), 6);
                     news_container.addView(sectionTextView);
+                    addDivider(news_container, Color.LTGRAY, 3);
                     continue;
                 }
 
@@ -214,6 +209,7 @@ public class NewsFragment extends Fragment
                     news_container.addView(ll);
                 }
 
+                addDivider(news_container, Color.LTGRAY, 3);
             }
         } catch (JSONException ex) {
             ex.printStackTrace();
@@ -234,6 +230,20 @@ public class NewsFragment extends Fragment
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = activity;
+    }
+
+    private void addDivider(LinearLayout ll,int color, int height){
+        try {
+            View divider = new View(activity);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, height);
+            params.setMargins(0, 0, 0, 0);
+            divider.setLayoutParams(params);
+            divider.setBackgroundColor(color);
+            ll.addView(divider);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 }
