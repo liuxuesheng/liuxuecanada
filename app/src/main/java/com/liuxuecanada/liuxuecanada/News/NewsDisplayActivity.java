@@ -35,7 +35,7 @@ public class NewsDisplayActivity extends Activity
         try {
             Log.d("system time2: ", ""+System.currentTimeMillis());
             arr = new JSONArray((String) out);
-            Log.d("system time3: ", ""+System.currentTimeMillis());
+            Log.d("system time3: ", "" + System.currentTimeMillis());
             addObjectsToView(arr, getMainURL());
             Log.d("system time4: ", "" + System.currentTimeMillis());
         } catch (JSONException ex) {
@@ -58,7 +58,7 @@ public class NewsDisplayActivity extends Activity
         getActionBar().hide();
 
         Intent intent = getIntent();
-        setMaintURL("http://192.168.0.12/liuxuecanadaserver/news/news.php");
+        setMaintURL("http://10.135.31.47/liuxuecanadaserver/news/news.php");
 
         setContentView(R.layout.activity_news);
         title = (TextView) this.findViewById(R.id.title_news);
@@ -80,7 +80,7 @@ public class NewsDisplayActivity extends Activity
                     try {
                         LoadImageFromURL loadImage = new LoadImageFromURL();
                         Log.d("system time5: ", "" + System.currentTimeMillis());
-                        loadImage.execute("http://192.168.0.12/liuxuecanadaserver/news/" + item.getString("url"), iv, false);
+                        loadImage.execute("http://10.135.31.47/liuxuecanadaserver/news/" + item.getString("url"), iv, false);
                         Log.d("system time6: ", "" + System.currentTimeMillis());
                     } catch (Exception ex) {
                         ex.printStackTrace();

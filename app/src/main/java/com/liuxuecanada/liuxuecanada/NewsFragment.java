@@ -10,13 +10,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Space;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.liuxuecanada.liuxuecanada.News.NewsDisplayActivity;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
@@ -29,6 +30,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class NewsFragment extends Fragment
         implements
@@ -37,10 +40,15 @@ public class NewsFragment extends Fragment
     Activity activity;
     JSONArray arr = null;
     ImageView iv = null;
+    Timer timer;
+    int page = 0;
+    int hit = 0;
+    boolean leftToRight = true;
     private LinearLayout news_container = null;
     private int newsImageWidth = 0;
     private int newsImageHeight = 0;
     private int screenWidth = 0;
+    private ViewPager mPager = null;
 
     public static NewsFragment newInstance(String text) {
         NewsFragment f = new NewsFragment();
@@ -60,7 +68,7 @@ public class NewsFragment extends Fragment
         screenWidth = displaymetrics.widthPixels;
 
         //Build news image view
-        ViewPager mPager = (ViewPager) v.findViewById(R.id.pager_news);
+        mPager = (ViewPager) v.findViewById(R.id.pager_news);
         NewsImageAdapter newsAdapter = new NewsImageAdapter(((FragmentActivity) activity).getSupportFragmentManager());
         mPager.setAdapter(newsAdapter);
         mPager.setCurrentItem(0);
@@ -69,13 +77,15 @@ public class NewsFragment extends Fragment
 
         //Search 5 latest news on server
         ServerResponse pud = new ServerResponse(this);
-        pud.execute("http://192.168.0.12/liuxuecanadaserver/news/news_list.php");
+        pud.execute("http://10.135.31.47/liuxuecanadaserver/news/news_list.php");
 
         news_container = (LinearLayout) v.findViewById(R.id.container_news);
 
         //Get News Image Dimensions
         newsImageWidth = screenWidth * 7 / 24;
         newsImageHeight = (int) (newsImageWidth * 0.618);
+
+        pageSwitcher(5);
 
         return v;
     }
@@ -147,7 +157,7 @@ public class NewsFragment extends Fragment
                         newsImageHeight = 300;
                     }
                     LoadImageFromURL loadImage = new LoadImageFromURL();
-                    loadImage.execute("http://192.168.0.12/liuxuecanadaserver/news/" + imageSrc, iv, true, newsImageWidth, newsImageHeight);
+                    loadImage.execute("http://10.135.31.47/liuxuecanadaserver/news/" + imageSrc, iv, true, newsImageWidth, newsImageHeight);
 
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(newsImageWidth, newsImageHeight);
                     layoutParams.setMargins(30, 3, 30, 3);
@@ -232,7 +242,7 @@ public class NewsFragment extends Fragment
         this.activity = activity;
     }
 
-    private void addDivider(LinearLayout ll,int color, int height){
+    private void addDivider(LinearLayout ll, int color, int height) {
         try {
             View divider = new View(activity);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -246,5 +256,46 @@ public class NewsFragment extends Fragment
         }
     }
 
+    public void pageSwitcher(int seconds) {
+        page = 0;
+        hit = 0;
+        timer = new Timer(); // A new Thread will be created
+        timer.scheduleAtFixedRate(new RemindTask(), 0, seconds * 1000);
+    }
+
+    class RemindTask extends TimerTask {
+
+        @Override
+        public void run() {
+
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
+
+                    Log.d("sds8dsds8ds ",""+page+ " h "+hit);
+                    if (page >= 2) {
+                        leftToRight = false;
+                        hit++;
+                    }
+
+                    if (page <= 0) {
+                        leftToRight = true;
+                        hit++;
+                    }
+
+                    if (hit >= 3) {
+                        mPager.setCurrentItem(0);
+                        timer.cancel();
+                        Toast.makeText(activity, "Timer stoped", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (leftToRight)
+                            mPager.setCurrentItem(page++);
+                        else
+                            mPager.setCurrentItem(page--);
+                    }
+                }
+            });
+
+        }
+    }
 }
 
