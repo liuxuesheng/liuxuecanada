@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +44,8 @@ public class NewsFragment extends Fragment
     private List<ChoicesFeedbackItem> choicesFeedbackItems;
     private ListView lv;
     private LinearLayout news_container = null;
+    private int newsImageWidth = 0;
+    private int newsImageHeight = 0;
 
     public static NewsFragment newInstance(String text) {
         NewsFragment f = new NewsFragment();
@@ -66,6 +70,12 @@ public class NewsFragment extends Fragment
         pud.execute("http://192.168.0.12/liuxuecanadaserver/news/news_list.php");
 
         news_container = (LinearLayout) v.findViewById(R.id.container_news);
+
+        //Get screen width
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        newsImageWidth = displaymetrics.widthPixels * 7 / 24;
+        newsImageHeight = (int) (newsImageWidth * 0.618);
 
         return v;
     }
@@ -133,10 +143,14 @@ public class NewsFragment extends Fragment
                     imageSrc = item.getString("news_imageURL");
                     iv = new ImageView(activity);
 
+                    if (newsImageHeight == 0 || newsImageWidth == 0){
+                        newsImageWidth = 500;
+                        newsImageHeight = 300;
+                    }
                     LoadImageFromURL loadImage = new LoadImageFromURL();
-                    loadImage.execute("http://192.168.0.12/liuxuecanadaserver/news/" + imageSrc, iv, true, 500, 300);
+                    loadImage.execute("http://192.168.0.12/liuxuecanadaserver/news/" + imageSrc, iv, true, newsImageWidth, newsImageHeight);
 
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500, 300);
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(newsImageWidth, newsImageHeight);
                     layoutParams.setMargins(30, 3, 30, 3);
                     iv.setLayoutParams(layoutParams);
 
