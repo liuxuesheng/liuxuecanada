@@ -28,13 +28,11 @@ public class NewsDisplayActivity extends Activity
     @Override
     public void onTaskComplete(Object out) {
         try {
+            Log.d("system time2: ", ""+System.currentTimeMillis());
             arr = new JSONArray((String) out);
-            Log.d("asdh8sdd ", "6");
-
+            Log.d("system time3: ", ""+System.currentTimeMillis());
             addObjectsToView(arr, getMainURL());
-            Log.d("asdh8sdd ", "7");
-            Log.d("asd8d ", "4 " + arr);
-
+            Log.d("system time4: ", "" + System.currentTimeMillis());
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
@@ -42,7 +40,7 @@ public class NewsDisplayActivity extends Activity
 
     @Override
     public void onTaskStart() {
-
+        Log.d("system time1: ", ""+System.currentTimeMillis());
     }
 
     @Override
@@ -60,9 +58,7 @@ public class NewsDisplayActivity extends Activity
         setContentView(R.layout.activity_news);
 
         ServerResponse pud = new ServerResponse(this);
-        Log.d("saddsd ", "" + getMainURL() + "?page=" + intent.getStringExtra("record") + " BBBBBBBBBBBB " + intent.getStringExtra("section"));
         pud.execute(getMainURL() + "?page=" + intent.getStringExtra("record") + "&section=" + intent.getStringExtra("section"));
-
     }
 
     private void addObjectsToView(JSONArray jsonArray, String url) {
@@ -79,7 +75,9 @@ public class NewsDisplayActivity extends Activity
                 if (item.getString("type").equals("webview")) {
                     try {
                         LoadImageFromURL loadImage = new LoadImageFromURL();
+                        Log.d("system time5: ", "" + System.currentTimeMillis());
                         loadImage.execute("http://192.168.0.12/liuxuecanadaserver/news/" + item.getString("url"), iv, false);
+                        Log.d("system time6: ", "" + System.currentTimeMillis());
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }

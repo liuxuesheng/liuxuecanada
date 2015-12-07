@@ -20,7 +20,7 @@ public class LoadImageFromURL extends AsyncTask<Object, ImageView, Bitmap> {
 
     @Override
     protected Bitmap doInBackground(Object... params) {
-        // TODO Auto-generated method stub
+        Log.d("system time7: ", "" + System.currentTimeMillis());
         Bitmap bitMap = null;
         URL url = null;
         InputStream is = null;
@@ -32,12 +32,30 @@ public class LoadImageFromURL extends AsyncTask<Object, ImageView, Bitmap> {
 
         }
         try {
-            Log.d("sdd9s9d ", "X");
             url = new URL((String) params[0]);
             localIv = (ImageView) params[1];
             scale = (Boolean) params[2];
+            Log.d("system timeXXX: ", "" + System.currentTimeMillis());
             is = url.openConnection().getInputStream();
-            bitMap = BitmapFactory.decodeStream(is);
+            Log.d("system timeYYY: ", "" + System.currentTimeMillis());
+            BitmapFactory.Options ops = new BitmapFactory.Options();
+            ops.inJustDecodeBounds = true;
+
+            final int REQUIRED_SIZE = 70;
+            int width_tmp = ops.outWidth, height_tmp = ops.outHeight;
+            int scale = 1;
+            while (true) {
+                if (width_tmp / 2 < REQUIRED_SIZE || height_tmp / 2 < REQUIRED_SIZE)
+                    break;
+                width_tmp /= 2;
+                height_tmp /= 2;
+                scale *= 2;
+            }
+
+            ops.inJustDecodeBounds = false;
+            ops.inSampleSize = scale;
+            bitMap = BitmapFactory.decodeStream(is, null, ops);
+            Log.d("system timeZZZ: ", "" + System.currentTimeMillis());
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
@@ -49,12 +67,13 @@ public class LoadImageFromURL extends AsyncTask<Object, ImageView, Bitmap> {
                 ex.printStackTrace();
             }
         }
+        Log.d("system time8: ", "" + System.currentTimeMillis());
         return bitMap;
     }
 
     @Override
     protected void onPostExecute(Bitmap result) {
-        // TODO Auto-generated method stub
+        Log.d("system time9: ", "" + System.currentTimeMillis());
         super.onPostExecute(result);
         if (scale) {
             scaleImage(result, localIv, scaleWidth, scaleLength);
@@ -63,6 +82,7 @@ public class LoadImageFromURL extends AsyncTask<Object, ImageView, Bitmap> {
             localIv.setScaleType(ImageView.ScaleType.CENTER_CROP);
             localIv.setAdjustViewBounds(true);
         }
+        Log.d("system time10: ", "" + System.currentTimeMillis());
     }
 
     private void scaleImage(Bitmap bm, ImageView iv, int width, int height) {
