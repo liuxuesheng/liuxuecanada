@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class NewsFragment extends Fragment
+public class FrontPageNewsFragment extends Fragment
         implements
         AsyncResponse {
 
@@ -50,8 +50,8 @@ public class NewsFragment extends Fragment
     private int screenWidth = 0;
     private ViewPager mPager = null;
 
-    public static NewsFragment newInstance(String text) {
-        NewsFragment f = new NewsFragment();
+    public static FrontPageNewsFragment newInstance(String text) {
+        FrontPageNewsFragment f = new FrontPageNewsFragment();
         Bundle b = new Bundle();
         b.putString("msg", text);
         f.setArguments(b);

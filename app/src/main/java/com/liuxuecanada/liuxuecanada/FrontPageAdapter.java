@@ -5,10 +5,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
-public class MyAdapter extends FragmentPagerAdapter {
+public class FrontPageAdapter extends FragmentPagerAdapter {
     static final int NUM_ITEMS = 3;
 
-    public MyAdapter(FragmentManager fm) {
+    public FrontPageAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -22,11 +22,11 @@ public class MyAdapter extends FragmentPagerAdapter {
         Log.d("asd8sd7sd ", "position main: " + position);
         switch (position) {
             case 0:
-                return NewsFragment.newInstance("最新消息");
+                return FrontPageNewsFragment.newInstance("最新消息");
             case 1:
-                return ArrayListFragment.newInstance("2");
+                return FrontPageTestFragment.newInstance("Hello");
             case 2:
-                return ArrayListFragment.newInstance("2");
+                return FrontPageForumFragment.newInstance("Hello");
             default:
                 return null;
         }
