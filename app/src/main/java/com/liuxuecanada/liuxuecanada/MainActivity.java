@@ -17,6 +17,8 @@ public class MainActivity extends FragmentActivity {
     private static int screenWidth = 0;
     private static int newsImageWidth = 0;
     private static int newsImageHeight = 0;
+    private static int testImageWidth = 0;
+    private static int testImageHeight = 0;
     boolean leftToRight = true;
     Timer timer;
     int page = 0;
@@ -37,6 +39,14 @@ public class MainActivity extends FragmentActivity {
         return newsImageHeight;
     }
 
+    public static int getTestImageWidth() {
+        return testImageWidth;
+    }
+
+    public static int getTestImageHeight() {
+        return testImageHeight;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +62,12 @@ public class MainActivity extends FragmentActivity {
         screenWidth = displaymetrics.widthPixels;
 
         //Get News Image Dimensions
-        newsImageWidth = screenWidth * 7 / 24;
-        newsImageHeight = (int) (newsImageWidth * 0.618);
+        newsImageWidth = getScreenWidth() * 7 / 24;
+        newsImageHeight = (int) (getNewsImageWidth() * 0.618);
+
+        //Get Test Image Dimensions
+        testImageWidth = getScreenWidth() / 2;
+        testImageHeight = (int) (getTestImageWidth() * 0.618);
 
         //Create pager
         mAdapter = new FrontPageAdapter(getSupportFragmentManager());

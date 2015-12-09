@@ -2,11 +2,15 @@ package com.liuxuecanada.liuxuecanada;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -83,44 +87,61 @@ public class FrontPageTestFragment extends Fragment
             TextView tv = new TextView(activity);
             ImageView iv = new ImageView(activity);
 
-            int newsImageWidth = 500;
-            int newsImageHeight = 300;
+            LoadImageFromURL loadImage = new LoadImageFromURL();
 
-            LinearLayout testRow = new LinearLayout(activity);
-            testRow.setOrientation(LinearLayout.HORIZONTAL);
+            for (int i = 0; i < arr.length(); i++) {
+                FrameLayout testRow = new FrameLayout(activity);
+                FrameLayout.LayoutParams fllp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+                testRow.setLayoutParams(fllp);
 
-            try {
-                item = arr.getJSONObject(0);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+                try {
+                    item = arr.getJSONObject(i);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
 
-            try {
-                LoadImageFromURL loadImage = new LoadImageFromURL();
-                loadImage.execute("http://10.135.31.47/liuxuecanadaserver/frontPage_Test/" + item.getString("imageURL"), iv, true, newsImageWidth, newsImageHeight);
-
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(newsImageWidth, newsImageHeight);
-                layoutParams.setMargins(30, 3, 30, 3);
-                iv.setLayoutParams(layoutParams);
-
-                iv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent myIntent = null;
-                        myIntent = new Intent(activity, EnterStudentChoicesActivity.class);
-                        myIntent.putExtra("test1", EnterStudentChoicesActivity.class);
-                        activity.startActivity(myIntent);
+                if (i == 0) {
+                    try {
+                        ImageView ivt = (ImageView) activity.findViewById(R.id.imageview_test);
+                        Log.d("opjwflwof9 ",""+"http://10.135.31.47/liuxuecanadaserver/frontPage_Test/" + item.getString("imageURL"));
+                        loadImage.execute("http://10.135.31.47/liuxuecanadaserver/frontPage_Test/" + item.getString("imageURL"), ivt, true, ivt.getWidth(), ivt.getHeight());
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
                     }
-                });
+                }
 
-                tv.setText(item.getString("name"));
+                try {
+                    loadImage.execute("http://10.135.31.47/liuxuecanadaserver/frontPage_Test/" + item.getString("imageURL"), iv, true, MainActivity.getTestImageWidth(), MainActivity.getTestImageHeight());
 
-                testRow.addView(iv);
-                testRow.addView(tv);
-                ll.addView(testRow);
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(MainActivity.getTestImageWidth(), MainActivity.getTestImageHeight());
+                    layoutParams.setMargins(30, 3, 30, 3);
+                    iv.setLayoutParams(layoutParams);
 
-            } catch (Exception ex) {
-                ex.printStackTrace();
+                    iv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent myIntent = null;
+                            myIntent = new Intent(activity, EnterStudentChoicesActivity.class);
+                            myIntent.putExtra("test1", EnterStudentChoicesActivity.class);
+                            activity.startActivity(myIntent);
+                        }
+                    });
+
+                    tv.setText(item.getString("name"));
+                    tv.setBackgroundColor(Color.WHITE);
+
+                    testRow.addView(iv);
+                    testRow.addView(tv);
+
+                    FrameLayout.LayoutParams fllptv = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+                    fllptv.gravity = Gravity.BOTTOM;
+                    tv.setLayoutParams(fllptv);
+
+                    ll.addView(testRow);
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
 
         } catch (JSONException ex) {
