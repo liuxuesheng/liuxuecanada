@@ -28,7 +28,7 @@ public class LoadImageFromURL extends AsyncTask<Object, ImageView, Bitmap> {
         try {
             scaleWidth = (int) params[3];
             scaleLength = (int) params[4];
-            Log.d("image debugger1: ", "" + scaleWidth+" "+scaleLength);
+            Log.d("image debugger1: ", "" + scaleWidth + " " + scaleLength);
         } catch (Exception ex) {
 
         }
@@ -36,7 +36,7 @@ public class LoadImageFromURL extends AsyncTask<Object, ImageView, Bitmap> {
             url = new URL((String) params[0]);
             localIv = (ImageView) params[1];
             scale = (Boolean) params[2];
-            Log.d("image debugger2: ", "" + url+" "+scale);
+            Log.d("image debugger2: ", "" + url + " " + scale);
 
             Log.d("system timeXXX: ", "" + System.currentTimeMillis());
             is = url.openConnection().getInputStream();
@@ -89,7 +89,7 @@ public class LoadImageFromURL extends AsyncTask<Object, ImageView, Bitmap> {
     }
 
     private void scaleImage(Bitmap bm, ImageView iv, int width, int height) {
-        Log.d("image debugger3: ", "" + width+" "+height);
+        Log.d("image debugger3: ", "" + width + " " + height);
         iv.setImageBitmap(Bitmap.createScaledBitmap(bm, width, height, false));
     }
 

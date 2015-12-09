@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,7 +86,6 @@ public class FrontPageTestFragment extends Fragment
             TextView tv = new TextView(activity);
             ImageView iv = new ImageView(activity);
 
-            LoadImageFromURL loadImage = new LoadImageFromURL();
 
             for (int i = 0; i < arr.length(); i++) {
                 FrameLayout testRow = new FrameLayout(activity);
@@ -103,7 +101,7 @@ public class FrontPageTestFragment extends Fragment
                 if (i == 0) {
                     try {
                         ImageView ivt = (ImageView) activity.findViewById(R.id.imageview_test);
-                        Log.d("opjwflwof9 ",""+"http://10.135.31.47/liuxuecanadaserver/frontPage_Test/" + item.getString("imageURL"));
+                        LoadImageFromURL loadImage = new LoadImageFromURL();
                         loadImage.execute("http://10.135.31.47/liuxuecanadaserver/frontPage_Test/" + item.getString("imageURL"), ivt, true, ivt.getWidth(), ivt.getHeight());
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -111,6 +109,7 @@ public class FrontPageTestFragment extends Fragment
                 }
 
                 try {
+                    LoadImageFromURL loadImage = new LoadImageFromURL();
                     loadImage.execute("http://10.135.31.47/liuxuecanadaserver/frontPage_Test/" + item.getString("imageURL"), iv, true, MainActivity.getTestImageWidth(), MainActivity.getTestImageHeight());
 
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(MainActivity.getTestImageWidth(), MainActivity.getTestImageHeight());
