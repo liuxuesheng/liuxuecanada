@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,10 +44,7 @@ public class FrontPageNewsFragment extends Fragment
     int hit = 0;
     boolean leftToRight = true;
     private LinearLayout news_container = null;
-    private int newsImageWidth = 0;
-    private int newsImageHeight = 0;
-    private int screenWidth = 0;
-    private ViewPager mPager = null;
+    private ViewPager newsPager = null;
 
     public static FrontPageNewsFragment newInstance(String text) {
         FrontPageNewsFragment f = new FrontPageNewsFragment();
@@ -62,28 +58,19 @@ public class FrontPageNewsFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_pager_news, container, false);
 
-        //Get Screen Width
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        screenWidth = displaymetrics.widthPixels;
-
         //Build news image view
-        mPager = (ViewPager) v.findViewById(R.id.pager_news);
+        newsPager = (ViewPager) v.findViewById(R.id.pager_news);
         NewsImageAdapter newsAdapter = new NewsImageAdapter(((FragmentActivity) activity).getSupportFragmentManager());
-        mPager.setAdapter(newsAdapter);
-        mPager.setCurrentItem(0);
-        ViewGroup.LayoutParams params = mPager.getLayoutParams();
-        params.height = (int) (screenWidth * 0.5);
+        newsPager.setAdapter(newsAdapter);
+        newsPager.setCurrentItem(0);
+        ViewGroup.LayoutParams params = newsPager.getLayoutParams();
+        params.height = (int) (MainActivity.getScreenWidth() * 0.5);
 
         //Search 5 latest news on server
         ServerResponse pud = new ServerResponse(this);
         pud.execute("http://10.135.31.47/liuxuecanadaserver/news/news_list.php");
 
         news_container = (LinearLayout) v.findViewById(R.id.container_news);
-
-        //Get News Image Dimensions
-        newsImageWidth = screenWidth * 7 / 24;
-        newsImageHeight = (int) (newsImageWidth * 0.618);
 
         pageSwitcher(5);
 
@@ -152,14 +139,10 @@ public class FrontPageNewsFragment extends Fragment
                     imageSrc = item.getString("news_imageURL");
                     iv = new ImageView(activity);
 
-                    if (newsImageHeight == 0 || newsImageWidth == 0) {
-                        newsImageWidth = 500;
-                        newsImageHeight = 300;
-                    }
                     LoadImageFromURL loadImage = new LoadImageFromURL();
-                    loadImage.execute("http://10.135.31.47/liuxuecanadaserver/news/" + imageSrc, iv, true, newsImageWidth, newsImageHeight);
+                    loadImage.execute("http://10.135.31.47/liuxuecanadaserver/news/" + imageSrc, iv, true, MainActivity.getNewsImageWidth(), MainActivity.getNewsImageHeight());
 
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(newsImageWidth, newsImageHeight);
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(MainActivity.getNewsImageWidth(), MainActivity.getNewsImageHeight());
                     layoutParams.setMargins(30, 3, 30, 3);
                     iv.setLayoutParams(layoutParams);
 
@@ -256,6 +239,12 @@ public class FrontPageNewsFragment extends Fragment
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        timer.cancel();
+    }
+
     public void pageSwitcher(int seconds) {
         page = 0;
         hit = 0;
@@ -271,7 +260,7 @@ public class FrontPageNewsFragment extends Fragment
             activity.runOnUiThread(new Runnable() {
                 public void run() {
 
-                    Log.d("sds8dsds8ds ",""+page+ " h "+hit);
+                    Log.d("sds8dsds8ds ", "" + page + " h " + hit);
                     if (page >= 2) {
                         leftToRight = false;
                         hit++;
@@ -283,19 +272,20 @@ public class FrontPageNewsFragment extends Fragment
                     }
 
                     if (hit >= 3) {
-                        mPager.setCurrentItem(0);
+                        newsPager.setCurrentItem(0);
                         timer.cancel();
                         Toast.makeText(activity, "Timer stoped", Toast.LENGTH_SHORT).show();
                     } else {
                         if (leftToRight)
-                            mPager.setCurrentItem(page++);
+                            newsPager.setCurrentItem(page++);
                         else
-                            mPager.setCurrentItem(page--);
+                            newsPager.setCurrentItem(page--);
                     }
                 }
             });
 
         }
+
     }
 }
 

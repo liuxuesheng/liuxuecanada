@@ -6,12 +6,36 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Timer;
+
 public class MainActivity extends FragmentActivity {
-    FrontPageAdapter mAdapter;
-    ViewPager mPager;
+
+    private static int screenWidth = 0;
+    private static int newsImageWidth = 0;
+    private static int newsImageHeight = 0;
+    boolean leftToRight = true;
+    Timer timer;
+    int page = 0;
+    int hit = 0;
+    private FrontPageAdapter mAdapter;
+    private ViewPager mPager;
+    private ViewPager newsPager = null;
+
+    public static int getScreenWidth() {
+        return screenWidth;
+    }
+
+    public static int getNewsImageWidth() {
+        return newsImageWidth;
+    }
+
+    public static int getNewsImageHeight() {
+        return newsImageHeight;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +45,15 @@ public class MainActivity extends FragmentActivity {
         //Set action bar color
         ActionBar bar = getActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(30, 136, 229)));
+
+        //Get Screen Width
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        screenWidth = displaymetrics.widthPixels;
+
+        //Get News Image Dimensions
+        newsImageWidth = screenWidth * 7 / 24;
+        newsImageHeight = (int) (newsImageWidth * 0.618);
 
         //Create pager
         mAdapter = new FrontPageAdapter(getSupportFragmentManager());
@@ -57,6 +90,5 @@ public class MainActivity extends FragmentActivity {
                 mPager.setCurrentItem(2);
             }
         });
-
     }
 }
