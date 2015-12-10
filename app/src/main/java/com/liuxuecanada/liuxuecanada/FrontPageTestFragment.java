@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackActivity;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.EnterStudentChoicesActivity;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
+import com.liuxuecanada.liuxuecanada.Utils.GlobalVariants;
 import com.liuxuecanada.liuxuecanada.Utils.LoadImageFromURL;
 import com.liuxuecanada.liuxuecanada.Utils.ServerResponse;
 
@@ -72,7 +73,7 @@ public class FrontPageTestFragment extends Fragment
         ll.addView(tv3);
 
         ServerResponse pud = new ServerResponse(this);
-        pud.execute("http://10.135.31.47/liuxuecanadaserver/frontPage_Test/index.php");
+        pud.execute(GlobalVariants.serverAddress+"/frontPage_Test/index.php");
 
         return v;
     }
@@ -102,7 +103,7 @@ public class FrontPageTestFragment extends Fragment
                     try {
                         ImageView ivt = (ImageView) activity.findViewById(R.id.imageview_test);
                         LoadImageFromURL loadImage = new LoadImageFromURL();
-                        loadImage.execute("http://10.135.31.47/liuxuecanadaserver/frontPage_Test/" + item.getString("imageURL"), ivt, true, ivt.getWidth(), ivt.getHeight());
+                        loadImage.execute(GlobalVariants.serverAddress+"/frontPage_Test/" + item.getString("imageURL"), ivt, true, ivt.getWidth(), ivt.getHeight());
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -110,7 +111,7 @@ public class FrontPageTestFragment extends Fragment
 
                 try {
                     LoadImageFromURL loadImage = new LoadImageFromURL();
-                    loadImage.execute("http://10.135.31.47/liuxuecanadaserver/frontPage_Test/" + item.getString("imageURL"), iv, true, MainActivity.getTestImageWidth(), MainActivity.getTestImageHeight());
+                    loadImage.execute(GlobalVariants.serverAddress+"/frontPage_Test/" + item.getString("imageURL"), iv, true, MainActivity.getTestImageWidth(), MainActivity.getTestImageHeight());
 
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(MainActivity.getTestImageWidth(), MainActivity.getTestImageHeight());
                     layoutParams.setMargins(30, 3, 30, 3);

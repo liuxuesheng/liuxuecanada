@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.News.NewsDisplayActivity;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
+import com.liuxuecanada.liuxuecanada.Utils.GlobalVariants;
 import com.liuxuecanada.liuxuecanada.Utils.LoadImageFromURL;
 import com.liuxuecanada.liuxuecanada.Utils.ServerResponse;
 
@@ -48,7 +49,7 @@ public class NewsImageFragment extends Fragment
         View v = inflater.inflate(R.layout.fragment_pager_news_images, container, false);
 
         ServerResponse pud = new ServerResponse(this);
-        pud.execute("http://10.135.31.47/liuxuecanadaserver/news/news_image_list.php" + "?image=" + getArguments().getInt("pos"));
+        pud.execute(GlobalVariants.serverAddress+"/news/news_image_list.php" + "?image=" + getArguments().getInt("pos"));
 
         return v;
     }
@@ -73,7 +74,7 @@ public class NewsImageFragment extends Fragment
             }
 
             LoadImageFromURL loadImage = new LoadImageFromURL();
-            loadImage.execute("http://10.135.31.47/liuxuecanadaserver/news/" + imagsrc, iv, true, iv.getWidth(), iv.getHeight());
+            loadImage.execute(GlobalVariants.serverAddress+"/news/" + imagsrc, iv, true, iv.getWidth(), iv.getHeight());
 
             final String newsId = news_image_ids;
             final String current_item_section = news_item_section;

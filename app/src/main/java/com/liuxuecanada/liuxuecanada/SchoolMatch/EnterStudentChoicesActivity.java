@@ -27,6 +27,7 @@ import com.liuxuecanada.liuxuecanada.CustomizedComponent.PieChartComponent.Radar
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
 import com.liuxuecanada.liuxuecanada.Utils.BlurDrawable;
+import com.liuxuecanada.liuxuecanada.Utils.GlobalVariants;
 import com.liuxuecanada.liuxuecanada.Utils.JSONToComponentService;
 import com.liuxuecanada.liuxuecanada.Utils.PaintService;
 import com.liuxuecanada.liuxuecanada.Utils.ServerResponse;
@@ -114,13 +115,13 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         Intent intent = getIntent();
         if (intent.hasExtra("test1")) {
-            setMaintURL("http://10.135.30.40/liuxuecanadaserver/tests/test1/index.php?page=");
+            setMaintURL(GlobalVariants.serverAddress+"/tests/test1/index.php?page=");
             setNextURL("1");
         } else if (intent.hasExtra("login")) {
-            setMaintURL("http://10.135.30.40/liuxuecanadaserver/login/index.php?page=");
+            setMaintURL(GlobalVariants.serverAddress+"/login/index.php?page=");
             setNextURL("1");
         } else if (intent.hasExtra("news")) {
-            setMaintURL("http://10.135.30.40/liuxuecanadaserver/news/news.php");
+            setMaintURL(GlobalVariants.serverAddress+"/news/news.php");
             setNextURL("");
         }
 

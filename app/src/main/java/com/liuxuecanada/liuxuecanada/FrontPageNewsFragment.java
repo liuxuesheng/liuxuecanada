@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.liuxuecanada.liuxuecanada.News.NewsDisplayActivity;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
+import com.liuxuecanada.liuxuecanada.Utils.GlobalVariants;
 import com.liuxuecanada.liuxuecanada.Utils.LoadImageFromURL;
 import com.liuxuecanada.liuxuecanada.Utils.PaintService;
 import com.liuxuecanada.liuxuecanada.Utils.ServerResponse;
@@ -68,7 +69,7 @@ public class FrontPageNewsFragment extends Fragment
 
         //Search 5 latest news on server
         ServerResponse pud = new ServerResponse(this);
-        pud.execute("http://10.135.31.47/liuxuecanadaserver/news/news_list.php");
+        pud.execute(GlobalVariants.serverAddress+"/news/news_list.php");
 
         news_container = (LinearLayout) v.findViewById(R.id.container_news);
 
@@ -140,7 +141,7 @@ public class FrontPageNewsFragment extends Fragment
                     iv = new ImageView(activity);
 
                     LoadImageFromURL loadImage = new LoadImageFromURL();
-                    loadImage.execute("http://10.135.31.47/liuxuecanadaserver/news/" + imageSrc, iv, true, MainActivity.getNewsImageWidth(), MainActivity.getNewsImageHeight());
+                    loadImage.execute(GlobalVariants.serverAddress+"/news/" + imageSrc, iv, true, MainActivity.getNewsImageWidth(), MainActivity.getNewsImageHeight());
 
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(MainActivity.getNewsImageWidth(), MainActivity.getNewsImageHeight());
                     layoutParams.setMargins(30, 3, 30, 3);

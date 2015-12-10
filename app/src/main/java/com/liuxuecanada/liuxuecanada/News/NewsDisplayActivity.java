@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.R;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
+import com.liuxuecanada.liuxuecanada.Utils.GlobalVariants;
 import com.liuxuecanada.liuxuecanada.Utils.LoadImageFromURL;
 import com.liuxuecanada.liuxuecanada.Utils.PaintService;
 import com.liuxuecanada.liuxuecanada.Utils.ServerResponse;
@@ -58,7 +59,7 @@ public class NewsDisplayActivity extends Activity
         getActionBar().hide();
 
         Intent intent = getIntent();
-        setMaintURL("http://10.135.31.47/liuxuecanadaserver/news/news.php");
+        setMaintURL(GlobalVariants.serverAddress+"/news/news.php");
 
         setContentView(R.layout.activity_news);
         title = (TextView) this.findViewById(R.id.title_news);
@@ -80,7 +81,7 @@ public class NewsDisplayActivity extends Activity
                     try {
                         LoadImageFromURL loadImage = new LoadImageFromURL();
                         Log.d("system time5: ", "" + System.currentTimeMillis());
-                        loadImage.execute("http://10.135.31.47/liuxuecanadaserver/news/" + item.getString("url"), iv, false);
+                        loadImage.execute(GlobalVariants.serverAddress+"/news/" + item.getString("url"), iv, false);
                         Log.d("system time6: ", "" + System.currentTimeMillis());
                     } catch (Exception ex) {
                         ex.printStackTrace();
