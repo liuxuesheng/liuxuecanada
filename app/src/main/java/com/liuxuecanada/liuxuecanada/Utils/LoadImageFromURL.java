@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.liuxuecanada.liuxuecanada.R;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -17,6 +19,7 @@ public class LoadImageFromURL extends AsyncTask<Object, ImageView, Bitmap> {
     Boolean scale = null;
     int scaleWidth = 0;
     int scaleLength = 0;
+    private boolean exist = false;
 
     @Override
     protected Bitmap doInBackground(Object... params) {
@@ -40,6 +43,10 @@ public class LoadImageFromURL extends AsyncTask<Object, ImageView, Bitmap> {
 
             Log.d("system timeXXX: ", "" + System.currentTimeMillis());
             is = url.openConnection().getInputStream();
+            if (is == null)
+                throw new NullPointerException();
+            else
+                setExistance(true);
             Log.d("system timeYYY: ", "" + System.currentTimeMillis());
             BitmapFactory.Options ops = new BitmapFactory.Options();
             ops.inJustDecodeBounds = true;
@@ -59,13 +66,17 @@ public class LoadImageFromURL extends AsyncTask<Object, ImageView, Bitmap> {
             ops.inSampleSize = scale;
             bitMap = BitmapFactory.decodeStream(is, null, ops);
             Log.d("system timeZZZ: ", "" + System.currentTimeMillis());
+        } catch (NullPointerException ex) {
+            setExistance(false);
+            ex.printStackTrace();
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {
             try {
-                is.close();
+                if (is != null)
+                    is.close();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -78,19 +89,35 @@ public class LoadImageFromURL extends AsyncTask<Object, ImageView, Bitmap> {
     protected void onPostExecute(Bitmap result) {
         Log.d("system time9: ", "" + System.currentTimeMillis());
         super.onPostExecute(result);
-        if (scale) {
-            scaleImage(result, localIv, scaleWidth, scaleLength);
-        } else {
-            localIv.setImageBitmap(result);
-            localIv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            localIv.setAdjustViewBounds(true);
+        try {
+            if (getExistance()) {
+                if (scale) {
+                    scaleImage(result, localIv, scaleWidth, scaleLength);
+                } else {
+                    localIv.setImageBitmap(result);
+                    localIv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    localIv.setAdjustViewBounds(true);
+                }
+            } else {
+                localIv.setImageResource(R.drawable.feedback1);
+            }
+            Log.d("system time10: ", "" + System.currentTimeMillis());
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        Log.d("system time10: ", "" + System.currentTimeMillis());
     }
 
     private void scaleImage(Bitmap bm, ImageView iv, int width, int height) {
         Log.d("image debugger3: ", "" + width + " " + height);
         iv.setImageBitmap(Bitmap.createScaledBitmap(bm, width, height, false));
+    }
+
+    private boolean getExistance() {
+        return this.exist;
+    }
+
+    private void setExistance(boolean existance) {
+        this.exist = existance;
     }
 
 }
