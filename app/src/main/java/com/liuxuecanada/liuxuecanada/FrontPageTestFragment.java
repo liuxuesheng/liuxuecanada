@@ -84,11 +84,13 @@ public class FrontPageTestFragment extends Fragment
             arr = new JSONArray((String) out);
 
             JSONObject item = null;
-            TextView tv = new TextView(activity);
-            ImageView iv = new ImageView(activity);
 
 
             for (int i = 0; i < arr.length(); i++) {
+
+                TextView tv = new TextView(activity);
+                ImageView iv = new ImageView(activity);
+
                 FrameLayout testRow = new FrameLayout(activity);
                 FrameLayout.LayoutParams fllp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
                 testRow.setLayoutParams(fllp);
