@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,8 +31,11 @@ public class FrontPageTestFragment extends Fragment
         AsyncResponse {
 
     LinearLayout ll = null;
+    GridLayout gl = null;
     private Activity activity;
     private JSONArray arr = null;
+    private int numOfCol = 0;
+    private int numOfRow = 0;
 
     public static FrontPageTestFragment newInstance(String text) {
         FrontPageTestFragment f = new FrontPageTestFragment();
@@ -72,8 +76,13 @@ public class FrontPageTestFragment extends Fragment
         ll.addView(tv2);
         ll.addView(tv3);
 
+        gl = (GridLayout) v.findViewById(R.id.grid_test);
+
+        numOfCol = gl.getColumnCount();
+        numOfRow = gl.getRowCount();
+
         ServerResponse pud = new ServerResponse(this);
-        pud.execute(GlobalVariants.serverAddress+"/frontPage_Test/index.php");
+        pud.execute(GlobalVariants.serverAddress + "/frontPage_Test/index.php");
 
         return v;
     }
@@ -92,8 +101,6 @@ public class FrontPageTestFragment extends Fragment
                 ImageView iv = new ImageView(activity);
 
                 FrameLayout testRow = new FrameLayout(activity);
-                FrameLayout.LayoutParams fllp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-                testRow.setLayoutParams(fllp);
 
                 try {
                     item = arr.getJSONObject(i);
@@ -105,7 +112,7 @@ public class FrontPageTestFragment extends Fragment
                     try {
                         ImageView ivt = (ImageView) activity.findViewById(R.id.imageview_test);
                         LoadImageFromURL loadImage = new LoadImageFromURL();
-                        loadImage.execute(GlobalVariants.serverAddress+"/frontPage_Test/" + item.getString("imageURL"), ivt, true, ivt.getWidth(), ivt.getHeight());
+                        loadImage.execute(GlobalVariants.serverAddress + "/frontPage_Test/" + item.getString("imageURL"), ivt, true, ivt.getWidth(), ivt.getHeight());
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -113,10 +120,10 @@ public class FrontPageTestFragment extends Fragment
 
                 try {
                     LoadImageFromURL loadImage = new LoadImageFromURL();
-                    loadImage.execute(GlobalVariants.serverAddress+"/frontPage_Test/" + item.getString("imageURL"), iv, true, MainActivity.getTestImageWidth(), MainActivity.getTestImageHeight());
+                    loadImage.execute(GlobalVariants.serverAddress + "/frontPage_Test/" + item.getString("imageURL"), iv, true, MainActivity.getTestImageWidth() - 60, MainActivity.getTestImageHeight() - 36);
 
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(MainActivity.getTestImageWidth(), MainActivity.getTestImageHeight());
-                    layoutParams.setMargins(30, 3, 30, 3);
+                    FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+                    layoutParams.setMargins(10, 10, 10, 0);
                     iv.setLayoutParams(layoutParams);
 
                     iv.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +137,9 @@ public class FrontPageTestFragment extends Fragment
                     });
 
                     tv.setText(item.getString("name"));
-                    tv.setBackgroundColor(Color.WHITE);
+                    tv.setTextColor(Color.WHITE);
+                    tv.setBackgroundColor(Color.argb(100, 0, 0, 0));
+                    tv.setGravity(Gravity.CENTER);
 
                     testRow.addView(iv);
                     testRow.addView(tv);
@@ -139,7 +148,14 @@ public class FrontPageTestFragment extends Fragment
                     fllptv.gravity = Gravity.BOTTOM;
                     tv.setLayoutParams(fllptv);
 
-                    ll.addView(testRow);
+                    GridLayout.LayoutParams param = new GridLayout.LayoutParams();
+                    param.height = GridLayout.LayoutParams.WRAP_CONTENT;
+                    param.width = GridLayout.LayoutParams.WRAP_CONTENT;
+                    param.setGravity(Gravity.CENTER);
+                    testRow.setLayoutParams(param);
+                    testRow.setBackgroundColor(Color.LTGRAY);
+
+                    gl.addView(testRow);
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -159,5 +175,13 @@ public class FrontPageTestFragment extends Fragment
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = activity;
+    }
+
+    private int getGridRowNumber() {
+        return this.numOfRow;
+    }
+
+    private int getGridColNumber() {
+        return this.numOfCol;
     }
 }

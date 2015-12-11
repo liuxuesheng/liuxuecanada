@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="16dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
     android:layout_marginTop="16dp">
 
     <LinearLayout
@@ -21,9 +19,16 @@
             android:id="@+id/activity_test"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical" />
 
-        </LinearLayout>
+        <GridLayout
+            android:id="@+id/grid_test"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light"
+            android:columnCount="2"
+            android:orientation="vertical"
+            android:rowCount="3" />
     </LinearLayout>
 
 </ScrollView>
