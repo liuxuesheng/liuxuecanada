@@ -163,7 +163,8 @@ public class FrontPageTestFragment extends Fragment
                     FrameLayout.LayoutParams fllpbt = new FrameLayout.LayoutParams((MainActivity.getTestImageHeight() - 36) / 6, (MainActivity.getTestImageHeight() - 36) / 6);
                     fllpbt.gravity = Gravity.TOP;
                     bt.setLayoutParams(fllpbt);
-                    bt.setBackgroundResource(R.drawable.ic_favorite_border_white_24dp);
+                    bt.setBackgroundResource(R.drawable.ic_star);
+                    bt.setPadding(20,10,20,10);
 
                     GridLayout.LayoutParams param = new GridLayout.LayoutParams();
                     param.height = GridLayout.LayoutParams.WRAP_CONTENT;
