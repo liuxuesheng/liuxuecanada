@@ -15,15 +15,13 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.components.Legend;
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.components.XAxis;
-import com.liuxuecanada.liuxuecanada.CustomizedComponent.ChartComponentLib.components.YAxis;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ContentItem;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.ListViewItemComponent.ListAdapter;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.PieChartComponent.PieChart;
@@ -217,7 +215,7 @@ public class JSONToComponentService {
         return layerDrawable;
     }
 
-    public static PieChart createPieChart(JSONObject jsonObject, Context context){
+    public static PieChart createPieChart(JSONObject jsonObject, Context context) {
         String[] mParties = new String[]{"Lakehead University", "York University", "Toronto University", "university of alberta"};
         float[] mValue = new float[]{30, 40, 30, 10};
 
@@ -261,7 +259,7 @@ public class JSONToComponentService {
     }
 
 
-    public static RadarChart createRadarChart(JSONObject jsonObject, Context context){
+    public static RadarChart createRadarChart(JSONObject jsonObject, Context context) {
         float[] mValue1 = new float[]{40, 23, 60, 43};
         float[] mValue2 = new float[]{30, 41, 65, 40};
         String[] mCategory = new String[]{"GPA", "University Rank", "IELTS", "Other"};
@@ -299,7 +297,7 @@ public class JSONToComponentService {
         return mRadarChart;
     }
 
-    public static View[] createSeekBarView(JSONObject jsonObject, Context context) {
+    public static LinearLayout createSeekBarView(JSONObject jsonObject, Context context) {
         View[] va;
         final String name;
 
@@ -314,20 +312,11 @@ public class JSONToComponentService {
             return null;
         }
 
-        RelativeLayout.LayoutParams p1 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams p2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-
         final TextView tv = new TextView(context);
         final SeekBar seekBar = new SeekBar(context);
 
         seekBar.setId(seekbarid);
         tv.setId(textid);
-
-        setAlignment(tv, getAlignment(jsonObject), p1);
-        setRelations(tv, getRelation(jsonObject), getRelationId(jsonObject), p1);
-
-        p2.addRule(RelativeLayout.BELOW, textid);
-        seekBar.setLayoutParams(p2);
 
         int max = getSeekBarMaxValue(jsonObject);
         final int min = getSeekBarMinValue(jsonObject);
@@ -357,10 +346,19 @@ public class JSONToComponentService {
             }
         });
 
-        return new View[]{tv, seekBar};
+        LinearLayout ll = new LinearLayout(context);
+        ll.setOrientation(LinearLayout.VERTICAL);
+        RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        setAlignment(ll, getAlignment(jsonObject), rllp);
+        setRelations(ll, getRelation(jsonObject), getRelationId(jsonObject), rllp);
+
+        ll.addView(tv);
+        ll.addView(seekBar);
+
+        return ll;
     }
 
-    public static View[] createDoubleSeekBarView(JSONObject jsonObject, Context context) {
+    public static LinearLayout createDoubleSeekBarView(JSONObject jsonObject, Context context) {
         View[] va;
         final String name1;
         final String name2;
@@ -379,11 +377,6 @@ public class JSONToComponentService {
             return null;
         }
 
-        RelativeLayout.LayoutParams p1 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams p2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams p3 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams p4 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-
         final TextView tv1 = new TextView(context);
         final TextView tv2 = new TextView(context);
         final SeekBar seekBar1 = new SeekBar(context);
@@ -393,19 +386,6 @@ public class JSONToComponentService {
         seekBar2.setId(seekbarid2);
         tv1.setId(textid1);
         tv2.setId(textid2);
-
-        setAlignment(tv1, getAlignment(jsonObject), p1);
-        setRelations(tv1, getRelation(jsonObject), getRelationId(jsonObject), p1);
-
-        p2.addRule(RelativeLayout.BELOW, textid1);
-        seekBar1.setLayoutParams(p2);
-
-        p3.addRule(RelativeLayout.BELOW, seekbarid1);
-        tv2.setLayoutParams(p3);
-
-        p4.addRule(RelativeLayout.BELOW, textid2);
-        seekBar2.setLayoutParams(p4);
-
 
         int max1 = 0;
         int max2 = 0;
@@ -426,14 +406,6 @@ public class JSONToComponentService {
 
         seekBar1.setMax((int) ((max1 - min1) / factor1));
         seekBar2.setMax((int) ((max2 - min2) / factor2));
-
-        /*try {
-            tv1 = (TextView) ((Activity)context).findViewById(textid1);
-            tv2 = (TextView) ((Activity)context).findViewById(textid2);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }*/
-
 
         tv1.setText("" + name1 + ": " + getFormatedString(factor1, seekBar1.getProgress()));
         tv2.setText("" + name2 + ": " + getFormatedString(factor2, seekBar2.getProgress()));
@@ -487,7 +459,18 @@ public class JSONToComponentService {
             }
         });
 
-        return new View[]{tv1, seekBar1, tv2, seekBar2};
+        LinearLayout ll = new LinearLayout(context);
+        ll.setOrientation(LinearLayout.VERTICAL);
+        RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        setAlignment(ll, getAlignment(jsonObject), rllp);
+        setRelations(ll, getRelation(jsonObject), getRelationId(jsonObject), rllp);
+
+        ll.addView(tv1);
+        ll.addView(seekBar1);
+        ll.addView(tv2);
+        ll.addView(seekBar2);
+
+        return ll;
     }
 
     private static int getId(JSONObject jsonObject) {

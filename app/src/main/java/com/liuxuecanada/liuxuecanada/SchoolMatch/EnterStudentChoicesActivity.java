@@ -115,13 +115,13 @@ public class EnterStudentChoicesActivity extends FragmentActivity
 
         Intent intent = getIntent();
         if (intent.hasExtra("test1")) {
-            setMaintURL(GlobalVariants.serverAddress+"/tests/test1/index.php?page=");
+            setMaintURL(GlobalVariants.serverAddress + "/tests/test1/index.php?page=");
             setNextURL("1");
         } else if (intent.hasExtra("login")) {
-            setMaintURL(GlobalVariants.serverAddress+"/login/index.php?page=");
+            setMaintURL(GlobalVariants.serverAddress + "/login/index.php?page=");
             setNextURL("1");
         } else if (intent.hasExtra("news")) {
-            setMaintURL(GlobalVariants.serverAddress+"/news/news.php");
+            setMaintURL(GlobalVariants.serverAddress + "/news/news.php");
             setNextURL("");
         }
 
@@ -368,24 +368,17 @@ public class EnterStudentChoicesActivity extends FragmentActivity
                     someView.addView(pb);
                 } else if (item.getString("type").equals("seekbar")) {
                     try {
-                        View[] vlist = JSONToComponentService.createSeekBarView(item, currentActivity);
-                        for (int k = 0; k < vlist.length; k++) {
-
-                            ll.addLast(vlist[k]);
-                            someView.addView(vlist[k]);
-                        }
+                        LinearLayout singleSeekBarLinearLayout = JSONToComponentService.createSeekBarView(item, currentActivity);
+                        ll.addLast(singleSeekBarLinearLayout);
+                        someView.addView(singleSeekBarLinearLayout);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
                 } else if (item.getString("type").equals("2seekbar")) {
                     try {
-                        View[] vlist = JSONToComponentService.createDoubleSeekBarView(item, currentActivity);
-
-                        for (int k = 0; k < vlist.length; k++) {
-
-                            ll.addLast(vlist[k]);
-                            someView.addView(vlist[k]);
-                        }
+                        LinearLayout doubleSeekBarLinearLayout = JSONToComponentService.createDoubleSeekBarView(item, currentActivity);
+                        ll.addLast(doubleSeekBarLinearLayout);
+                        someView.addView(doubleSeekBarLinearLayout);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -402,9 +395,9 @@ public class EnterStudentChoicesActivity extends FragmentActivity
                     ll.addLast(pc);
                     someView.addView(pc);
                 } else if (item.getString("type").equals("radarchart")) {
-                    Log.d("sdads0ds ","A");
+                    Log.d("sdads0ds ", "A");
                     rc = JSONToComponentService.createRadarChart(item, currentActivity);
-                    Log.d("sdads0ds ","B");
+                    Log.d("sdads0ds ", "B");
                     ll.addLast(rc);
                     Log.d("sdads0ds ", "C");
                     someView.addView(rc);
