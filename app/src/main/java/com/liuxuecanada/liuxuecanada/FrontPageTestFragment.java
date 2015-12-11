@@ -112,7 +112,16 @@ public class FrontPageTestFragment extends Fragment
                     try {
                         ImageView ivt = (ImageView) activity.findViewById(R.id.imageview_test);
                         LoadImageFromURL loadImage = new LoadImageFromURL();
-                        loadImage.execute(GlobalVariants.serverAddress + "/frontPage_Test/" + item.getString("imageURL"), ivt, true, ivt.getWidth(), ivt.getHeight());
+                        loadImage.execute(GlobalVariants.serverAddress + "/frontPage_Test/" + "image_1.jpg", ivt, true, ivt.getWidth(), ivt.getHeight());
+                        ivt.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent myIntent = null;
+                                myIntent = new Intent(activity, EnterStudentChoicesActivity.class);
+                                myIntent.putExtra("test1", EnterStudentChoicesActivity.class);
+                                activity.startActivity(myIntent);
+                            }
+                        });
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
