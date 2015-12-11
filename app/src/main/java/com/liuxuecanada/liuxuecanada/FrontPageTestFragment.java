@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -99,6 +100,7 @@ public class FrontPageTestFragment extends Fragment
 
                 TextView tv = new TextView(activity);
                 ImageView iv = new ImageView(activity);
+                Button bt = new Button(activity);
 
                 FrameLayout testRow = new FrameLayout(activity);
 
@@ -152,10 +154,16 @@ public class FrontPageTestFragment extends Fragment
 
                     testRow.addView(iv);
                     testRow.addView(tv);
+                    testRow.addView(bt);
 
                     FrameLayout.LayoutParams fllptv = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
                     fllptv.gravity = Gravity.BOTTOM;
                     tv.setLayoutParams(fllptv);
+
+                    FrameLayout.LayoutParams fllpbt = new FrameLayout.LayoutParams((MainActivity.getTestImageHeight() - 36) / 6, (MainActivity.getTestImageHeight() - 36) / 6);
+                    fllpbt.gravity = Gravity.TOP;
+                    bt.setLayoutParams(fllpbt);
+                    bt.setBackgroundResource(R.drawable.ic_favorite_border_white_24dp);
 
                     GridLayout.LayoutParams param = new GridLayout.LayoutParams();
                     param.height = GridLayout.LayoutParams.WRAP_CONTENT;
