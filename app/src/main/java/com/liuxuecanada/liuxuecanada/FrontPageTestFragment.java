@@ -149,7 +149,7 @@ public class FrontPageTestFragment extends Fragment
 
                     tv.setText(item.getString("name"));
                     tv.setTextColor(Color.WHITE);
-                    tv.setBackgroundColor(Color.argb(100, 0, 0, 0));
+                    tv.setBackgroundColor(Color.argb(150, 30, 136, 229));
                     tv.setGravity(Gravity.CENTER);
 
                     testRow.addView(iv);
