@@ -18,7 +18,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:background="@color/white"
+            android:background="@color/Blue300"
             android:elevation="3dp"
             android:gravity="center"
             android:orientation="vertical"
@@ -34,19 +34,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="李丽"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="北京大学附属中学"
-                android:textSize="14sp" />
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="北京市海淀区海淀黄庄大泥湾路 "
-                android:textSize="10sp" />
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -65,6 +69,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="教育经历"
@@ -101,7 +106,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="北京大学附属中学 "
-                        android:textSize="12sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -150,7 +156,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="北京七中"
-                        android:textSize="12sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -184,6 +191,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="社会活动"
@@ -202,7 +210,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="支教志愿者"
-                    android:textSize="12sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -235,6 +244,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="获奖证书论文"
@@ -253,7 +263,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="北京市十佳共青团员"
-                    android:textSize="12sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -276,7 +287,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="校计算器科学竞赛一等奖"
-                    android:textSize="12sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -303,6 +315,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="各类技能"
