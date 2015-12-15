@@ -94,12 +94,17 @@ public class MainActivity extends FragmentActivity {
         textButton1.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
         textButton2.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
         textButton3.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
+        textButton.setTextColor(Color.BLACK);
+        textButton1.setTextColor(Color.BLACK);
+        textButton2.setTextColor(Color.BLACK);
+        textButton3.setTextColor(Color.BLACK);
 
 
         textButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mPager.setCurrentItem(0);
                 textButton.setBackground(new ColorDrawable(Color.rgb(30, 136, 229)));
+                textButton.setTextColor(Color.WHITE);
                 ResetTextView(textButton1, textButton2, textButton3);
             }
         });
@@ -108,6 +113,7 @@ public class MainActivity extends FragmentActivity {
             public void onClick(View v) {
                 mPager.setCurrentItem(1);
                 textButton1.setBackground(new ColorDrawable(Color.rgb(30, 136, 229)));
+                textButton1.setTextColor(Color.WHITE);
                 ResetTextView(textButton, textButton2, textButton3);
             }
         });
@@ -116,6 +122,7 @@ public class MainActivity extends FragmentActivity {
             public void onClick(View v) {
                 mPager.setCurrentItem(2);
                 textButton2.setBackground(new ColorDrawable(Color.rgb(30, 136, 229)));
+                textButton2.setTextColor(Color.WHITE);
                 ResetTextView(textButton, textButton1, textButton3);
             }
         });
@@ -124,6 +131,7 @@ public class MainActivity extends FragmentActivity {
             public void onClick(View v) {
                 mPager.setCurrentItem(3);
                 textButton3.setBackground(new ColorDrawable(Color.rgb(30, 136, 229)));
+                textButton3.setTextColor(Color.WHITE);
                 ResetTextView(textButton, textButton1, textButton2);
             }
         });
@@ -133,5 +141,8 @@ public class MainActivity extends FragmentActivity {
         textView1.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
         textView2.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
         textView3.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
+        textView1.setTextColor(Color.BLACK);
+        textView2.setTextColor(Color.BLACK);
+        textView3.setTextColor(Color.BLACK);
     }
 }
