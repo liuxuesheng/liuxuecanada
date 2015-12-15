@@ -17,21 +17,27 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/goto_first"
+            android:id="@+id/goto_news"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="最新消息" />
+            android:text="信息导航" />
 
         <TextView
-            android:id="@+id/goto_middle"
+            android:id="@+id/goto_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="留学测评" />
+            android:text="个人信息" />
 
         <TextView
-            android:id="@+id/goto_last"
+            android:id="@+id/goto_suggestions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="互动社区" />
+            android:text="推荐系统" />
+
+        <TextView
+            android:id="@+id/goto_messages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="互动消息" />
     </LinearLayout>
 </LinearLayout>

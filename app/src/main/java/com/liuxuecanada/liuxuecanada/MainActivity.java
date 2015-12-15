@@ -77,32 +77,61 @@ public class MainActivity extends FragmentActivity {
         mPager.setOffscreenPageLimit(1);
 
         // Watch for text click
-        TextView textButton = (TextView) findViewById(R.id.goto_first);
-        TextView textButton2 = (TextView) findViewById(R.id.goto_middle);
-        TextView textButton3 = (TextView) findViewById(R.id.goto_last);
-        textButton.setPadding(100, 50, 100, 50);
-        textButton2.setPadding(100, 50, 100, 50);
-        textButton3.setPadding(100, 50, 100, 50);
-        textButton.setTextSize(16);
-        textButton2.setTextSize(16);
-        textButton3.setTextSize(16);
+        final TextView textButton = (TextView) findViewById(R.id.goto_news);
+        final TextView textButton1 = (TextView) findViewById(R.id.goto_profile);
+        final TextView textButton2 = (TextView) findViewById(R.id.goto_suggestions);
+        final TextView textButton3 = (TextView) findViewById(R.id.goto_messages);
+        textButton.setPadding(60, 50, 60, 50);
+        textButton1.setPadding(60, 50, 60, 50);
+        textButton2.setPadding(60, 50, 60, 50);
+        textButton3.setPadding(60, 50, 60, 50);
+        textButton.setTextSize(14);
+        textButton1.setTextSize(14);
+        textButton2.setTextSize(14);
+        textButton3.setTextSize(14);
+
+        textButton.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
+        textButton1.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
+        textButton2.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
+        textButton3.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
+
 
         textButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mPager.setCurrentItem(0);
+                textButton.setBackground(new ColorDrawable(Color.rgb(30, 136, 229)));
+                ResetTextView(textButton1, textButton2, textButton3);
+            }
+        });
+
+        textButton1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mPager.setCurrentItem(1);
+                textButton1.setBackground(new ColorDrawable(Color.rgb(30, 136, 229)));
+                ResetTextView(textButton, textButton2, textButton3);
             }
         });
 
         textButton2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                mPager.setCurrentItem(1);
+                mPager.setCurrentItem(2);
+                textButton2.setBackground(new ColorDrawable(Color.rgb(30, 136, 229)));
+                ResetTextView(textButton, textButton1, textButton3);
             }
         });
 
         textButton3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                mPager.setCurrentItem(2);
+                mPager.setCurrentItem(3);
+                textButton3.setBackground(new ColorDrawable(Color.rgb(30, 136, 229)));
+                ResetTextView(textButton, textButton1, textButton2);
             }
         });
+    }
+
+    private void ResetTextView(TextView textView1, TextView textView2, TextView textView3) {
+        textView1.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
+        textView2.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
+        textView3.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
     }
 }

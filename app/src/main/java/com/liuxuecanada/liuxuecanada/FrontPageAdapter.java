@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
 public class FrontPageAdapter extends FragmentPagerAdapter {
-    static final int NUM_ITEMS = 3;
+    static final int NUM_ITEMS = 4;
 
     public FrontPageAdapter(FragmentManager fm) {
         super(fm);
@@ -24,8 +24,10 @@ public class FrontPageAdapter extends FragmentPagerAdapter {
             case 0:
                 return FrontPageNewsFragment.newInstance("最新消息");
             case 1:
-                return FrontPageTestFragment.newInstance("Hello");
+                return FrontPageProfileFragment.newInstance("Hello");
             case 2:
+                return FrontPageTestFragment.newInstance("Hello");
+            case 3:
                 return FrontPageForumFragment.newInstance("Hello");
             default:
                 return null;
