@@ -13,32 +13,93 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:background="@color/white">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/goto_news"
+        <LinearLayout
+            android:id="@+id/goto_news_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="信息导航" />
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/goto_profile"
+            <ImageView
+                android:id="@+id/goto_news_iv"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_home_black_24dp" />
+
+            <TextView
+                android:id="@+id/goto_news"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="信息导航" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/goto_profile_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="个人信息" />
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/goto_suggestions"
+            <ImageView
+                android:id="@+id/goto_profile_iv"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_account_box_black_24dp" />
+
+            <TextView
+                android:id="@+id/goto_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="个人信息" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/goto_suggestions_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="推荐系统" />
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/goto_messages"
+            <ImageView
+                android:id="@+id/goto_suggestions_iv"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_filter_drama_black_24dp" />
+
+            <TextView
+                android:id="@+id/goto_suggestions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="推荐系统" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/goto_messages_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="互动消息" />
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/goto_messages_iv"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_message_black_24dp" />
+
+            <TextView
+                android:id="@+id/goto_messages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="互动消息" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
