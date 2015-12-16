@@ -79,7 +79,7 @@ public class MainActivity extends FragmentActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
         mPager.setCurrentItem(0);
-        mPager.setOffscreenPageLimit(1);
+        mPager.setOffscreenPageLimit(4);
 
         //Linear layout
         final LinearLayout ll = (LinearLayout) findViewById(R.id.goto_news_ll);

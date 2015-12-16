@@ -64,6 +64,7 @@ public class FrontPageNewsFragment extends Fragment
         NewsImageAdapter newsAdapter = new NewsImageAdapter(((FragmentActivity) activity).getSupportFragmentManager());
         newsPager.setAdapter(newsAdapter);
         newsPager.setCurrentItem(0);
+        newsPager.setOffscreenPageLimit(3);
         ViewGroup.LayoutParams params = newsPager.getLayoutParams();
         params.height = (int) (MainActivity.getScreenWidth() * 0.5);
 
