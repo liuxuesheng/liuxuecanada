@@ -242,7 +242,7 @@ public class FrontPageNewsFragment extends Fragment
     @Override
     public void onPause() {
         super.onPause();
-        timer.cancel();
+        //timer.cancel();
     }
 
     public void pageSwitcher(int seconds) {
