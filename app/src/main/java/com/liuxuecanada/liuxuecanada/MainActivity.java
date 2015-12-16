@@ -175,7 +175,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void ResetLayout() {
-        this.lastLayout.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
+        this.lastLayout.setBackground(new ColorDrawable(Color.rgb(238, 238, 238)));
         String lastString = this.lastTextView.getText().toString();
         if (lastString.equals("信息导航"))
             this.lastImageView.setImageResource(R.drawable.ic_home_black_24dp);
