@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:background="@color/Grey200"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:elevation="9dp">
 
         <LinearLayout
             android:id="@+id/goto_news_ll"
