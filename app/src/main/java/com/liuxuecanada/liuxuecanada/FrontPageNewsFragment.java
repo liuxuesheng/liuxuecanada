@@ -3,13 +3,12 @@ package com.liuxuecanada.liuxuecanada;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import com.liuxuecanada.liuxuecanada.News.NewsDisplayActivity;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
 import com.liuxuecanada.liuxuecanada.Utils.GlobalVariants;
 import com.liuxuecanada.liuxuecanada.Utils.LoadImageFromURL;
-import com.liuxuecanada.liuxuecanada.Utils.PaintService;
 import com.liuxuecanada.liuxuecanada.Utils.ServerResponse;
 
 import org.json.JSONArray;
@@ -70,7 +68,7 @@ public class FrontPageNewsFragment extends Fragment
 
         //Search 5 latest news on server
         ServerResponse pud = new ServerResponse(this);
-        pud.execute(GlobalVariants.serverAddress+"/news/news_list.php");
+        pud.execute(GlobalVariants.serverAddress + "/news/news_list.php");
 
         news_container = (LinearLayout) v.findViewById(R.id.container_news);
 
@@ -96,55 +94,43 @@ public class FrontPageNewsFragment extends Fragment
 
             for (int i = 0; i < arr.length(); i++) {
                 String imageSrc = null;
-                TextView tv = null;
+                TextView title = null;
+                TextView subtitle = null;
+                TextView date = null;
                 boolean flag = false;
-                TextView sectionTextView = null;
                 String item_section = null;
+                LinearLayout ll = new LinearLayout(activity);
+                ll.setOrientation(LinearLayout.VERTICAL);
+                LinearLayout.LayoutParams ll_layoutParams = new LinearLayout.LayoutParams(dpToPx(395), LinearLayout.LayoutParams.MATCH_PARENT);
+                ll_layoutParams.gravity = Gravity.CENTER;
+                ll_layoutParams.setMargins(30, 3, 30, 3);
+                ll.setLayoutParams(ll_layoutParams);
+                ll.setElevation(3);
+                ll.setBackgroundColor(Color.WHITE);
 
+                // Get response
                 try {
                     item = arr.getJSONObject(i);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
 
-                try {
-                    String sectionName = item.getString("section");
-                    sectionTextView = new TextView(activity);
-                    sectionTextView.setText(sectionName);
-                    sectionTextView.setTextSize(21);
-                    sectionTextView.setTextColor(Color.rgb(30, 136, 229));
-                    sectionTextView.setPadding(20, 30, 0, 50);
-                    sectionTextView.setCompoundDrawablesWithIntrinsicBounds(PaintService.paintTextIconDrawable(activity, null, 19, 16, new ShapeDrawable(new RectShape()), Color.rgb(30, 136, 229)), null, null, null);
-                    sectionTextView.setCompoundDrawablePadding(16);
-
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                    sectionTextView.setLayoutParams(params);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-
-                if (sectionTextView != null) {
-                    addDivider(news_container, Color.rgb(30, 136, 229), 6);
-                    news_container.addView(sectionTextView);
-                    addDivider(news_container, Color.LTGRAY, 3);
-                    continue;
-                }
-
+                //Get section
                 try {
                     item_section = item.getString("item_section");
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
 
+                // Get image
                 try {
                     imageSrc = item.getString("news_imageURL");
                     iv = new ImageView(activity);
 
                     LoadImageFromURL loadImage = new LoadImageFromURL();
-                    loadImage.execute(GlobalVariants.serverAddress+"/news/" + imageSrc, iv, true, MainActivity.getNewsImageWidth(), MainActivity.getNewsImageHeight());
+                    loadImage.execute(GlobalVariants.serverAddress + "/news/" + imageSrc, iv, true, dpToPx(360), dpToPx(150));
 
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(MainActivity.getNewsImageWidth(), MainActivity.getNewsImageHeight());
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                     layoutParams.setMargins(30, 3, 30, 3);
                     iv.setLayoutParams(layoutParams);
 
@@ -167,18 +153,19 @@ public class FrontPageNewsFragment extends Fragment
                     ex.printStackTrace();
                 }
 
+                // Get title
                 try {
                     currentId = item.getString("id");
                     final String newsId = currentId;
                     final String current_item_section = item_section;
 
-                    tv = new TextView(activity);
-                    tv.setText(item.getString("news_title"));
-                    tv.setBackgroundColor(Color.WHITE);
-                    tv.setPadding(30, 10, 30, 10);
-                    tv.setTextSize(17);
-                    tv.setBackgroundColor(Color.TRANSPARENT);
-                    tv.setOnClickListener(new View.OnClickListener() {
+                    title = new TextView(activity);
+                    title.setText(item.getString("news_title"));
+                    title.setBackgroundColor(Color.WHITE);
+                    title.setPadding(30, 10, 30, 10);
+                    title.setTextSize(17);
+                    title.setBackgroundColor(Color.TRANSPARENT);
+                    title.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent myIntent = null;
@@ -193,18 +180,43 @@ public class FrontPageNewsFragment extends Fragment
                     ex.printStackTrace();
                 }
 
-                if (flag == true) {
-                    news_container.addView(tv);
-                } else {
-                    LinearLayout ll = new LinearLayout(activity);
-                    ll.setOrientation(LinearLayout.HORIZONTAL);
+                // Get subtitle
+                try {
+                    subtitle = new TextView(activity);
+                    subtitle.setText(item.getString("news_subtitle"));
+                    subtitle.setBackgroundColor(Color.WHITE);
+                    subtitle.setPadding(30, 10, 30, 10);
+                    subtitle.setTextSize(14);
+                    subtitle.setBackgroundColor(Color.TRANSPARENT);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
 
+                // Get date
+                try {
+                    date = new TextView(activity);
+                    date.setText(item.getString("news_date"));
+                    date.setBackgroundColor(Color.WHITE);
+                    date.setPadding(30, 10, 30, 10);
+                    date.setTextSize(14);
+                    date.setBackgroundColor(Color.TRANSPARENT);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                // Put components in layout
+                if (flag == true) {
+                    news_container.addView(title);
+                    news_container.addView(subtitle);
+                    news_container.addView(date);
+                } else {
                     ll.addView(iv);
-                    ll.addView(tv);
+                    ll.addView(title);
+                    ll.addView(subtitle);
+                    ll.addView(date);
                     news_container.addView(ll);
                 }
 
-                addDivider(news_container, Color.LTGRAY, 3);
             }
         } catch (JSONException ex) {
             ex.printStackTrace();
@@ -225,20 +237,6 @@ public class FrontPageNewsFragment extends Fragment
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = activity;
-    }
-
-    private void addDivider(LinearLayout ll, int color, int height) {
-        try {
-            View divider = new View(activity);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, height);
-            params.setMargins(0, 0, 0, 0);
-            divider.setLayoutParams(params);
-            divider.setBackgroundColor(color);
-            ll.addView(divider);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
     @Override

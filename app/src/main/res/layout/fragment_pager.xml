@@ -8,7 +8,8 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="1"></android.support.v4.view.ViewPager>
+        android:layout_weight="1"
+        android:background="@color/Grey100" />
 
     <LinearLayout
         android:layout_width="match_parent"
