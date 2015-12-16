@@ -12,7 +12,7 @@
         android:background="@color/Grey100"
         android:orientation="vertical"
         android:paddingBottom="20dp"
-        android:paddingTop="20dp">
+        android:paddingTop="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,8 +28,8 @@
             android:paddingTop="20dp">
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:src="@drawable/feedback1" />
 
             <TextView
@@ -88,8 +88,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_marginBottom="3dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -138,8 +138,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_marginBottom="3dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
