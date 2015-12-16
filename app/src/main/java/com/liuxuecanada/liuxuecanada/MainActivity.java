@@ -1,6 +1,5 @@
 package com.liuxuecanada.liuxuecanada;
 
-import android.app.ActionBar;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.Timer;
-
 public class MainActivity extends FragmentActivity {
 
     private static int screenWidth = 0;
@@ -21,10 +18,6 @@ public class MainActivity extends FragmentActivity {
     private static int newsImageHeight = 0;
     private static int testImageWidth = 0;
     private static int testImageHeight = 0;
-    boolean leftToRight = true;
-    Timer timer;
-    int page = 0;
-    int hit = 0;
     private FrontPageAdapter mAdapter;
     private ViewPager mPager;
     private ViewPager newsPager = null;
@@ -56,10 +49,6 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_pager);
-
-        //Set action bar color
-        ActionBar bar = getActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(30, 136, 229)));
 
         //Get Screen Width
         DisplayMetrics displaymetrics = new DisplayMetrics();
