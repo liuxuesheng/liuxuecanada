@@ -73,6 +73,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="教育经历"
+                android:textColor="@color/Blue500"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -195,6 +196,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="社会活动"
+                android:textColor="@color/Blue500"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -248,6 +250,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="获奖证书论文"
+                android:textColor="@color/Blue500"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -319,6 +322,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="各类技能"
+                android:textColor="@color/Blue500"
                 android:textSize="16sp" />
 
             <TextView
