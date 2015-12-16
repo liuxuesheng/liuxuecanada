@@ -58,13 +58,13 @@ public class FrontPageNewsFragment extends Fragment
         View v = inflater.inflate(R.layout.fragment_pager_news, container, false);
 
         //Build news image view
-        newsPager = (ViewPager) v.findViewById(R.id.pager_news);
+        /*newsPager = (ViewPager) v.findViewById(R.id.pager_news);
         NewsImageAdapter newsAdapter = new NewsImageAdapter(((FragmentActivity) activity).getSupportFragmentManager());
         newsPager.setAdapter(newsAdapter);
         newsPager.setCurrentItem(0);
         newsPager.setOffscreenPageLimit(3);
         ViewGroup.LayoutParams params = newsPager.getLayoutParams();
-        params.height = (int) (MainActivity.getScreenWidth() * 0.5);
+        params.height = (int) (MainActivity.getScreenWidth() * 0.5);*/
 
         //Search 5 latest news on server
         ServerResponse pud = new ServerResponse(this);
@@ -72,7 +72,7 @@ public class FrontPageNewsFragment extends Fragment
 
         news_container = (LinearLayout) v.findViewById(R.id.container_news);
 
-        pageSwitcher(5);
+        /*pageSwitcher(5);*/
 
         return v;
     }
