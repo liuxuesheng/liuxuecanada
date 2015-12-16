@@ -105,10 +105,6 @@ public class MainActivity extends FragmentActivity {
         imageButton3.setPadding(0, 10, 0, 0);
 
         // Set text view properties
-        textButton.setPadding(60, 10, 60, 10);
-        textButton1.setPadding(60, 10, 60, 10);
-        textButton2.setPadding(60, 10, 60, 10);
-        textButton3.setPadding(60, 10, 60, 10);
         textButton.setTextSize(14);
         textButton1.setTextSize(14);
         textButton2.setTextSize(14);
@@ -166,13 +162,13 @@ public class MainActivity extends FragmentActivity {
     private void ResetLayout() {
         this.lastLayout.setBackground(new ColorDrawable(Color.rgb(238, 238, 238)));
         String lastString = this.lastTextView.getText().toString();
-        if (lastString.equals("信息导航"))
+        if (lastString.equals("首页"))
             this.lastImageView.setImageResource(R.drawable.ic_home_black_24dp);
-        else if (lastString.equals("个人信息"))
+        else if (lastString.equals("足迹"))
             this.lastImageView.setImageResource(R.drawable.ic_account_box_black_24dp);
-        else if (lastString.equals("推荐系统"))
+        else if (lastString.equals("规划"))
             this.lastImageView.setImageResource(R.drawable.ic_filter_drama_black_24dp);
-        else if (lastString.equals("互动消息"))
+        else if (lastString.equals("互联"))
             this.lastImageView.setImageResource(R.drawable.ic_message_black_24dp);
         this.lastTextView.setTextColor(Color.BLACK);
     }
