@@ -26,9 +26,9 @@ public class FrontPageAdapter extends FragmentPagerAdapter {
             case 1:
                 return FrontPageProfileFragment.newInstance("Hello");
             case 2:
-                return FrontPageTestFragment.newInstance("Hello");
+                return FrontPagePlanningFragment.newInstance("Hello");
             case 3:
-                return FrontPageForumFragment.newInstance("Hello");
+                return FrontPageConnectionFragment.newInstance("Hello");
             default:
                 return null;
         }

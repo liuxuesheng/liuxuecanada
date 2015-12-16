@@ -27,7 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class FrontPageTestFragment extends Fragment
+public class FrontPagePlanningFragment extends Fragment
         implements
         AsyncResponse {
 
@@ -38,8 +38,8 @@ public class FrontPageTestFragment extends Fragment
     private int numOfCol = 0;
     private int numOfRow = 0;
 
-    public static FrontPageTestFragment newInstance(String text) {
-        FrontPageTestFragment f = new FrontPageTestFragment();
+    public static FrontPagePlanningFragment newInstance(String text) {
+        FrontPagePlanningFragment f = new FrontPagePlanningFragment();
         Bundle b = new Bundle();
         b.putString("msg", text);
         f.setArguments(b);
@@ -48,7 +48,7 @@ public class FrontPageTestFragment extends Fragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_pager_test, container, false);
+        View v = inflater.inflate(R.layout.fragment_pager_planning, container, false);
 
         TextView tv2 = new TextView(activity);
         tv2.setText("测评结果");

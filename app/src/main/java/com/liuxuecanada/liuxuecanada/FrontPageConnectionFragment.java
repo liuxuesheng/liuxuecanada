@@ -9,13 +9,13 @@ import android.view.ViewGroup;
 
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
 
-public class FrontPageForumFragment extends Fragment
+public class FrontPageConnectionFragment extends Fragment
         implements
         AsyncResponse {
     private Activity activity;
 
-    public static FrontPageForumFragment newInstance(String text) {
-        FrontPageForumFragment f = new FrontPageForumFragment();
+    public static FrontPageConnectionFragment newInstance(String text) {
+        FrontPageConnectionFragment f = new FrontPageConnectionFragment();
         Bundle b = new Bundle();
         b.putString("msg", text);
         f.setArguments(b);
@@ -24,7 +24,7 @@ public class FrontPageForumFragment extends Fragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_pager_forum, container, false);
+        View v = inflater.inflate(R.layout.fragment_pager_connection, container, false);
 
         return v;
     }
