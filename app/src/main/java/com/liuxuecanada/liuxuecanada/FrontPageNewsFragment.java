@@ -103,7 +103,7 @@ public class FrontPageNewsFragment extends Fragment
                 ll.setOrientation(LinearLayout.VERTICAL);
                 LinearLayout.LayoutParams ll_layoutParams = new LinearLayout.LayoutParams(dpToPx(395), LinearLayout.LayoutParams.MATCH_PARENT);
                 ll_layoutParams.gravity = Gravity.CENTER;
-                ll_layoutParams.setMargins(30, 3, 30, 3);
+                ll_layoutParams.setMargins(dpToPx(10), dpToPx(5), dpToPx(10), dpToPx(5));
                 ll.setLayoutParams(ll_layoutParams);
                 ll.setElevation(3);
                 ll.setBackgroundColor(Color.WHITE);
