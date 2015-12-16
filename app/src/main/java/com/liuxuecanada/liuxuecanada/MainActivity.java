@@ -109,10 +109,17 @@ public class MainActivity extends FragmentActivity {
         imageButton.setImageResource(R.drawable.ic_home_white_24dp);
         textButton.setTextColor(Color.WHITE);
 
-        textButton.setPadding(60, 10, 60, 50);
-        textButton1.setPadding(60, 10, 60, 50);
-        textButton2.setPadding(60, 10, 60, 50);
-        textButton3.setPadding(60, 10, 60, 50);
+        // Set image view properties
+        imageButton.setPadding(0, 10, 0, 0);
+        imageButton1.setPadding(0, 10, 0, 0);
+        imageButton2.setPadding(0, 10, 0, 0);
+        imageButton3.setPadding(0, 10, 0, 0);
+
+        // Set text view properties
+        textButton.setPadding(60, 10, 60, 10);
+        textButton1.setPadding(60, 10, 60, 10);
+        textButton2.setPadding(60, 10, 60, 10);
+        textButton3.setPadding(60, 10, 60, 10);
         textButton.setTextSize(14);
         textButton1.setTextSize(14);
         textButton2.setTextSize(14);
@@ -122,48 +129,47 @@ public class MainActivity extends FragmentActivity {
         textButton2.setTextColor(Color.BLACK);
         textButton3.setTextColor(Color.BLACK);
 
-
-        textButton.setOnClickListener(new View.OnClickListener() {
+        ll.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                ResetLayout();
+                ResetLast(ll, imageButton, textButton);
                 mPager.setCurrentItem(0);
                 ll.setBackground(new ColorDrawable(Color.rgb(30, 136, 229)));
                 imageButton.setImageResource(R.drawable.ic_home_white_24dp);
                 textButton.setTextColor(Color.WHITE);
-                ResetLayout();
-                ResetLast(ll, imageButton, textButton);
             }
         });
 
-        textButton1.setOnClickListener(new View.OnClickListener() {
+        ll1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                ResetLayout();
+                ResetLast(ll1, imageButton1, textButton1);
                 mPager.setCurrentItem(1);
                 ll1.setBackground(new ColorDrawable(Color.rgb(30, 136, 229)));
                 imageButton1.setImageResource(R.drawable.ic_account_box_white_24dp);
                 textButton1.setTextColor(Color.WHITE);
-                ResetLayout();
-                ResetLast(ll1, imageButton1, textButton1);
             }
         });
 
-        textButton2.setOnClickListener(new View.OnClickListener() {
+        ll2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                ResetLayout();
+                ResetLast(ll2, imageButton2, textButton2);
                 mPager.setCurrentItem(2);
                 ll2.setBackground(new ColorDrawable(Color.rgb(30, 136, 229)));
                 imageButton2.setImageResource(R.drawable.ic_filter_drama_white_24dp);
                 textButton2.setTextColor(Color.WHITE);
-                ResetLayout();
-                ResetLast(ll2, imageButton2, textButton2);
             }
         });
 
-        textButton3.setOnClickListener(new View.OnClickListener() {
+        ll3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                ResetLayout();
+                ResetLast(ll3, imageButton3, textButton3);
                 mPager.setCurrentItem(3);
                 ll3.setBackground(new ColorDrawable(Color.rgb(30, 136, 229)));
                 imageButton3.setImageResource(R.drawable.ic_message_white_24dp);
                 textButton3.setTextColor(Color.WHITE);
-                ResetLayout();
-                ResetLast(ll3, imageButton3, textButton3);
             }
         });
     }
