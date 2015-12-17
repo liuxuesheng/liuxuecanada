@@ -163,7 +163,7 @@ public class FrontPageNewsFragment extends Fragment
                     title.setText(item.getString("news_title"));
                     title.setBackgroundColor(Color.WHITE);
                     title.setPadding(30, 10, 30, 10);
-                    title.setTextSize(17);
+                    title.setTextSize(16);
                     title.setBackgroundColor(Color.TRANSPARENT);
                     title.setOnClickListener(new View.OnClickListener() {
                         @Override
