@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,6 +25,7 @@ public class MainActivity extends FragmentActivity {
     private LinearLayout lastLayout = null;
     private TextView lastTextView = null;
     private ImageView lastImageView = null;
+    private int pageIndex = 0;
 
     public static int getScreenWidth() {
         return screenWidth;
@@ -62,13 +64,6 @@ public class MainActivity extends FragmentActivity {
         //Get Test Image Dimensions
         testImageWidth = getScreenWidth() / 2;
         testImageHeight = (int) (getTestImageWidth() * 0.618);
-
-        //Create pager
-        mAdapter = new FrontPageAdapter(getSupportFragmentManager());
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mPager.setAdapter(mAdapter);
-        mPager.setCurrentItem(0);
-        mPager.setOffscreenPageLimit(4);
 
         //Linear layout
         final LinearLayout ll = (LinearLayout) findViewById(R.id.goto_news_ll);
@@ -116,45 +111,116 @@ public class MainActivity extends FragmentActivity {
 
         ll.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Log.d("viewpager_test: ", "onPageSelected bt1");
                 ResetLayout();
                 ResetLast(ll, imageButton, textButton);
                 mPager.setCurrentItem(0);
                 ll.setBackground(new ColorDrawable(Color.rgb(30, 136, 229)));
                 imageButton.setImageResource(R.drawable.ic_home_white_24dp);
                 textButton.setTextColor(Color.WHITE);
+                setPageIndex(0);
             }
         });
 
         ll1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Log.d("viewpager_test: ", "onPageSelected bt2");
                 ResetLayout();
                 ResetLast(ll1, imageButton1, textButton1);
                 mPager.setCurrentItem(1);
                 ll1.setBackground(new ColorDrawable(Color.rgb(30, 136, 229)));
                 imageButton1.setImageResource(R.drawable.ic_account_box_white_24dp);
                 textButton1.setTextColor(Color.WHITE);
+                setPageIndex(1);
             }
         });
 
         ll2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Log.d("viewpager_test: ", "onPageSelected bt3");
                 ResetLayout();
                 ResetLast(ll2, imageButton2, textButton2);
                 mPager.setCurrentItem(2);
                 ll2.setBackground(new ColorDrawable(Color.rgb(30, 136, 229)));
                 imageButton2.setImageResource(R.drawable.ic_filter_drama_white_24dp);
                 textButton2.setTextColor(Color.WHITE);
+                setPageIndex(2);
             }
         });
 
         ll3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Log.d("viewpager_test: ", "onPageSelected bt4");
                 ResetLayout();
                 ResetLast(ll3, imageButton3, textButton3);
                 mPager.setCurrentItem(3);
                 ll3.setBackground(new ColorDrawable(Color.rgb(30, 136, 229)));
                 imageButton3.setImageResource(R.drawable.ic_message_white_24dp);
                 textButton3.setTextColor(Color.WHITE);
+                setPageIndex(3);
+            }
+        });
+
+        //Create pager
+        mAdapter = new FrontPageAdapter(getSupportFragmentManager());
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setAdapter(mAdapter);
+        mPager.setCurrentItem(0);
+        mPager.setOffscreenPageLimit(4);
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Log.d("viewpager_test: ", "onPageScrolled " + position);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.d("viewpager_test: ", "onPageSelected " + position);
+                LinearLayout myll = null;
+                ImageView myImageButton = null;
+                TextView myTextButton = null;
+
+                switch (position) {
+                    case 0:
+                        myll = ll;
+                        myImageButton = imageButton;
+                        myTextButton = textButton;
+                        break;
+                    case 1:
+                        myll = ll1;
+                        myImageButton = imageButton1;
+                        myTextButton = textButton1;
+                        break;
+                    case 2:
+                        myll = ll2;
+                        myImageButton = imageButton2;
+                        myTextButton = textButton2;
+                        break;
+                    case 3:
+                        myll = ll3;
+                        myImageButton = imageButton3;
+                        myTextButton = textButton3;
+                        break;
+                    default:
+                        myll = ll;
+                        myImageButton = imageButton;
+                        myTextButton = textButton;
+                        break;
+                }
+
+                if (position != getPageIndex()) {
+                    ResetLayout();
+                    ResetLast(myll, myImageButton, myTextButton);
+                    myll.setBackground(new ColorDrawable(Color.rgb(30, 136, 229)));
+                    myImageButton.setImageResource(R.drawable.ic_home_white_24dp);
+                    myTextButton.setTextColor(Color.WHITE);
+                    setPageIndex(position);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                Log.d("viewpager_test: ", "onPageScrollStateChanged " + state);
             }
         });
     }
@@ -177,6 +243,14 @@ public class MainActivity extends FragmentActivity {
         this.lastLayout = ll;
         this.lastImageView = iv;
         this.lastTextView = tv;
+    }
+
+    private int getPageIndex() {
+        return this.pageIndex;
+    }
+
+    private void setPageIndex(int index) {
+        this.pageIndex = index;
     }
 
 }
