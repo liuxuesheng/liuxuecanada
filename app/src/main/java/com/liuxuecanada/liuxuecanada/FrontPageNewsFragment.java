@@ -103,10 +103,11 @@ public class FrontPageNewsFragment extends Fragment
                 LinearLayout.LayoutParams carViewHolderLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                 carViewHolderLayoutParams.setMargins(dpToPx(10), dpToPx(5), dpToPx(10), dpToPx(5));
                 carViewHolder.setLayoutParams(carViewHolderLayoutParams);
-                carViewHolder.setElevation(3);
+                carViewHolder.setElevation(dpToPx(3));
                 carViewHolder.setBackgroundColor(Color.WHITE);
                 carViewHolder.setGravity(Gravity.CENTER_HORIZONTAL);
                 carViewHolder.setOrientation(LinearLayout.VERTICAL);
+                carViewHolder.setPadding(0, 30, 0, 30);
 
                 RelativeLayout cardView = new RelativeLayout(activity);
                 RelativeLayout.LayoutParams cardViewLayoutParams = new RelativeLayout.LayoutParams(dpToPx(395), RelativeLayout.LayoutParams.MATCH_PARENT);
@@ -233,7 +234,7 @@ public class FrontPageNewsFragment extends Fragment
                 actionBar.setOrientation(LinearLayout.HORIZONTAL);
 
                 LinearLayout.LayoutParams actionBarLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                actionBarLayoutParams.setMargins(30, 3, 30, 3);
+                actionBarLayoutParams.setMargins(30, 10, 30, 3);
                 actionBarLayoutParams.gravity = Gravity.CENTER_HORIZONTAL;
                 actionBar.setLayoutParams(actionBarLayoutParams);
 
@@ -242,7 +243,8 @@ public class FrontPageNewsFragment extends Fragment
                 Button btShare = new Button(activity);
 
                 LinearLayout.LayoutParams btLayoutParams = new LinearLayout.LayoutParams(dpToPx(20), dpToPx(20));
-                btLayoutParams.setMargins(150, 0, 150, 0);
+                btLayoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+                btLayoutParams.setMargins(180, 0, 180, 0);
 
                 btLike.setBackgroundResource(R.drawable.ic_main_like);
                 btComment.setBackgroundResource(R.drawable.ic_main_comment);
