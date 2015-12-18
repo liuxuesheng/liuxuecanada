@@ -21,11 +21,11 @@ public class ChoicesFeedbackDetailActivity extends FragmentActivity implements O
     //这是测试数据等待从服务器读入数据
     protected String[] mParties = new String[]{"Lakehead University", "York University", "Toronto University", "university of alberta"};
     protected float[] mValue = new float[]{30, 40, 30, 10};
-    protected float[] mValue1 = new float[]{40, 23, 60, 43};
-    protected float[] mValue2 = new float[]{30, 41, 65, 40};
-    protected String[] year = new String[]{"2010", "2011", "2012", "2013", "2014", "2015"};
-    protected float[] mYearValue = new float[]{30, 40, 30, 10, 25, 26};
-    private String[] mCategory = new String[]{"GPA", "University Rank", "IELTS", "Other"};
+    protected float[] mValue1 = new float[]{90, 85, 60, 83, 92, 78};
+    protected float[] mValue2 = new float[]{95, 98, 90, 92, 99, 100};
+    protected String[] year = new String[]{"6月", "7月", "8月", "9月", "10月", "11月"};
+    protected float[] mYearValue = new float[]{1130, 1150, 1110, 1140, 1210, 1205};
+    private String[] mCategory = new String[]{"语文", "数学", "英语", "物理", "化学", "生物"};
     private PieChart mPieChart;
     private RadarChart mRadarChart;
     private BarChart mBarChart;

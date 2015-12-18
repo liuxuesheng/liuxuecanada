@@ -14,11 +14,13 @@ import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.PieChartComponent.BarChart;
 import com.liuxuecanada.liuxuecanada.CustomizedComponent.PieChartComponent.RadarChart;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackActivity;
+import com.liuxuecanada.liuxuecanada.SchoolMatch.ChoicesFeedbackDetailActivity;
 import com.liuxuecanada.liuxuecanada.SchoolMatch.EnterStudentChoicesActivity;
 import com.liuxuecanada.liuxuecanada.Utils.AsyncResponse;
 import com.liuxuecanada.liuxuecanada.Utils.GlobalVariants;
@@ -33,19 +35,12 @@ public class FrontPagePlanningFragment extends Fragment
         implements
         AsyncResponse {
 
-    protected float[] mValue1 = new float[]{90, 85, 60, 83, 92, 78};
-    protected float[] mValue2 = new float[]{100, 100, 100, 100, 100, 100};
-    protected String[] year = new String[]{"6月", "7月", "8月", "9月", "10月", "11月"};
-    protected float[] mYearValue = new float[]{1130, 1150, 1110, 1140, 1210, 1205};
     LinearLayout ll = null;
     GridLayout gl = null;
     private Activity activity;
     private JSONArray arr = null;
     private int numOfCol = 0;
     private int numOfRow = 0;
-    private RadarChart mRadarChart;
-    private String[] mCategory = new String[]{"语文", "数学", "英语", "物理", "化学", "生物"};
-    private BarChart mBarChart;
 
     public static FrontPagePlanningFragment newInstance(String text) {
         FrontPagePlanningFragment f = new FrontPagePlanningFragment();
@@ -60,24 +55,32 @@ public class FrontPagePlanningFragment extends Fragment
         View v = inflater.inflate(R.layout.fragment_pager_planning, container, false);
 
         //Radar
-        mRadarChart = (RadarChart) v.findViewById(R.id.planning_radarchart);
+        RelativeLayout rl1 = (RelativeLayout) v.findViewById(R.id.planning_rl1);
 
-        mRadarChart.setWebLineWidth(1.5f);
-        mRadarChart.setWebLineWidthInner(3.75f);
-        mRadarChart.setWebAlpha(100);
-        mRadarChart.setWebColor(Color.BLUE);
-        mRadarChart.setData(mCategory, mValue1, mValue2);
+        rl1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ChoicesFeedbackDetailActivity.class);
+                intent.putExtra("RadarChart", ChoicesFeedbackDetailActivity.class);
+                v.getContext().startActivity(intent);
+
+            }
+        });
 
         //Bar
-        mBarChart = (BarChart) v.findViewById(R.id.planning_barchart);
+        RelativeLayout rl12 = (RelativeLayout) v.findViewById(R.id.planning_rl12);
 
-        mBarChart.setDrawValueAboveBar(true);
-        //比较的参数不能多余20个
-        mBarChart.setMaxVisibleValueCount(20);
-        // scaling can now only be done on x- and y-axis separately
-        mBarChart.setPinchZoom(true);
-        mBarChart.setDrawGridBackground(true);
-        mBarChart.setData(year, mYearValue);
+        rl12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ChoicesFeedbackDetailActivity.class);
+                intent.putExtra("BarChart", ChoicesFeedbackDetailActivity.class);
+                v.getContext().startActivity(intent);
+
+            }
+        });
+
+        //paintTextIconDrawable(context, text, 40, 28,  new ShapeDrawable(new OvalShape()), Color.LTGRAY);
 
         TextView tv2 = new TextView(activity);
         tv2.setText("测评结果");
