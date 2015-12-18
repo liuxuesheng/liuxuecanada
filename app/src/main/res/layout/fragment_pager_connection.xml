@@ -59,7 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="12日 9点35"
+                        android:text="9点35"
                         android:textSize="12sp" />
 
                     <TextView
@@ -106,7 +106,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="姐姐，你能借我看一下你的高一数学课本吗？ 我想自学一下 ：）"
+                    android:text="熙熙，期中考试的成绩发布了。我可是进步了不少！离高考的目标又缩小了5个点哦。"
                     android:textSize="12sp" />
 
                 <RelativeLayout
@@ -120,7 +120,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="12日 9点35"
+                        android:text="4点50"
                         android:textSize="12sp" />
 
                     <TextView
@@ -167,7 +167,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="姐姐，你能借我看一下你的高一数学课本吗？ 我想自学一下 ：）"
+                    android:text="妹，浙大在我们市的自主招生要求发布啦！赶紧早早的设定目标哦。哥在紫金港等你啊，哈哈。"
                     android:textSize="12sp" />
 
                 <RelativeLayout
@@ -181,7 +181,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="12日 9点35"
+                        android:text="12日 8点16"
                         android:textSize="12sp" />
 
                     <TextView
@@ -228,7 +228,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="姐姐，你能借我看一下你的高一数学课本吗？ 我想自学一下 ：）"
+                    android:text="听说全国统考明年来我们省啦。我们要加油哦！"
                     android:textSize="12sp" />
 
                 <RelativeLayout
@@ -242,7 +242,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="12日 9点35"
+                        android:text="12日 6点49"
                         android:textSize="12sp" />
 
                     <TextView
@@ -289,7 +289,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="姐姐，你能借我看一下你的高一数学课本吗？ 我想自学一下 ：）"
+                    android:text="阿姨让我看看你的学习进度。给个一天的灵泉吧，嘻嘻。"
                     android:textSize="12sp" />
 
                 <RelativeLayout
@@ -303,7 +303,68 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="12日 9点35"
+                        android:text="6月"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="更多"
+                        android:textColor="@color/Blue500"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="3dp"
+            android:elevation="3dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/junior_f" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="3dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="王老师的视屏上线啦，快来围观。 Http://www.wangblog.com.cn/latest/7254632.php"
+                    android:textSize="12sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="3月"
                         android:textSize="12sp" />
 
                     <TextView
