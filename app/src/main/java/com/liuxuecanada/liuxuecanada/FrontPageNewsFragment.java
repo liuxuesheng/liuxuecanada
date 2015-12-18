@@ -5,15 +5,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +28,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -88,7 +88,6 @@ public class FrontPageNewsFragment extends Fragment
             //news list
             arr = new JSONArray((String) out);
 
-            ArrayList<String> ids = new ArrayList<String>();
             JSONObject item = null;
             String currentId = null;
 
@@ -99,14 +98,19 @@ public class FrontPageNewsFragment extends Fragment
                 TextView date = null;
                 boolean flag = false;
                 String item_section = null;
-                LinearLayout ll = new LinearLayout(activity);
-                ll.setOrientation(LinearLayout.VERTICAL);
-                LinearLayout.LayoutParams ll_layoutParams = new LinearLayout.LayoutParams(dpToPx(395), LinearLayout.LayoutParams.MATCH_PARENT);
-                ll_layoutParams.gravity = Gravity.CENTER;
-                ll_layoutParams.setMargins(dpToPx(10), dpToPx(5), dpToPx(10), dpToPx(5));
-                ll.setLayoutParams(ll_layoutParams);
-                ll.setElevation(3);
-                ll.setBackgroundColor(Color.WHITE);
+
+                LinearLayout carViewHolder = new LinearLayout(activity);
+                LinearLayout.LayoutParams carViewHolderLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                carViewHolderLayoutParams.setMargins(dpToPx(10), dpToPx(5), dpToPx(10), dpToPx(5));
+                carViewHolder.setLayoutParams(carViewHolderLayoutParams);
+                carViewHolder.setElevation(3);
+                carViewHolder.setBackgroundColor(Color.WHITE);
+                carViewHolder.setGravity(Gravity.CENTER_HORIZONTAL);
+                carViewHolder.setOrientation(LinearLayout.VERTICAL);
+
+                RelativeLayout cardView = new RelativeLayout(activity);
+                RelativeLayout.LayoutParams cardViewLayoutParams = new RelativeLayout.LayoutParams(dpToPx(395), RelativeLayout.LayoutParams.MATCH_PARENT);
+                cardView.setLayoutParams(cardViewLayoutParams);
 
                 // Get response
                 try {
@@ -176,6 +180,10 @@ public class FrontPageNewsFragment extends Fragment
                         }
                     });
 
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                    layoutParams.setMargins(30, 3, 30, 3);
+                    title.setLayoutParams(layoutParams);
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -188,6 +196,14 @@ public class FrontPageNewsFragment extends Fragment
                     subtitle.setPadding(30, 10, 30, 10);
                     subtitle.setTextSize(14);
                     subtitle.setBackgroundColor(Color.TRANSPARENT);
+
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                    layoutParams.setMargins(30, 3, 30, 3);
+                    subtitle.setLayoutParams(layoutParams);
+
+                    subtitle.setId(987 + i);
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -200,21 +216,80 @@ public class FrontPageNewsFragment extends Fragment
                     date.setPadding(30, 10, 30, 10);
                     date.setTextSize(14);
                     date.setBackgroundColor(Color.TRANSPARENT);
+
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    layoutParams.setMargins(30, 3, 30, 3);
+                    layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                    date.setLayoutParams(layoutParams);
+
+                    date.setId(988 + i);
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
 
+                //Create action bar
+                LinearLayout actionBar = new LinearLayout(activity);
+                actionBar.setOrientation(LinearLayout.HORIZONTAL);
+
+                LinearLayout.LayoutParams actionBarLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                actionBarLayoutParams.setMargins(30, 3, 30, 3);
+                actionBarLayoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+                actionBar.setLayoutParams(actionBarLayoutParams);
+
+                Button btLike = new Button(activity);
+                Button btComment = new Button(activity);
+                Button btShare = new Button(activity);
+
+                LinearLayout.LayoutParams btLayoutParams = new LinearLayout.LayoutParams(dpToPx(20), dpToPx(20));
+                btLayoutParams.setMargins(150, 0, 150, 0);
+
+                btLike.setBackgroundResource(R.drawable.ic_main_like);
+                btComment.setBackgroundResource(R.drawable.ic_main_comment);
+                btShare.setBackgroundResource(R.drawable.ic_main_share);
+
+                btLike.setLayoutParams(btLayoutParams);
+                btComment.setLayoutParams(btLayoutParams);
+                btShare.setLayoutParams(btLayoutParams);
+
+                LinearLayout actionBarLike = new LinearLayout(activity);
+                actionBarLike.setOrientation(LinearLayout.HORIZONTAL);
+                LinearLayout.LayoutParams actionBarLikeLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                actionBarLike.setLayoutParams(actionBarLikeLayoutParams);
+
+                LinearLayout actionBarComment = new LinearLayout(activity);
+                actionBarComment.setOrientation(LinearLayout.HORIZONTAL);
+                LinearLayout.LayoutParams actionBarCommentLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                actionBarComment.setLayoutParams(actionBarCommentLayoutParams);
+
+                LinearLayout actionBarShare = new LinearLayout(activity);
+                actionBarShare.setOrientation(LinearLayout.HORIZONTAL);
+                LinearLayout.LayoutParams actionBarShareLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                actionBarShare.setLayoutParams(actionBarShareLayoutParams);
+
+                actionBarLike.addView(btLike);
+                actionBarShare.addView(btShare);
+                actionBarComment.addView(btComment);
+
+                actionBar.addView(actionBarShare);
+                actionBar.addView(actionBarLike);
+                actionBar.addView(actionBarComment);
+
+
                 // Put components in layout
                 if (flag == true) {
-                    news_container.addView(title);
+                   /* news_container.addView(title);
                     news_container.addView(subtitle);
-                    news_container.addView(date);
+                    news_container.addView(date);*/
                 } else {
-                    ll.addView(iv);
-                    ll.addView(title);
-                    ll.addView(subtitle);
-                    ll.addView(date);
-                    news_container.addView(ll);
+                    carViewHolder.addView(iv);
+                    carViewHolder.addView(title);
+                    cardView.addView(subtitle);
+                    cardView.addView(date);
+                    carViewHolder.addView(cardView);
+                    carViewHolder.addView(actionBar);
+
+                    news_container.addView(carViewHolder);
                 }
 
             }
